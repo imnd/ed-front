@@ -1,0 +1,22 @@
+* {
+  font-family: $font-family-default;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.2;
+  font-feature-settings: 'pnum' on, 'lnum' on;
+}
+
+a {
+  text-decoration: none;
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1270px;
+  }
+}

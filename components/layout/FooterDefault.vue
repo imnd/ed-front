@@ -1,0 +1,61 @@
+<template>
+  <footer>
+    <div class="container">
+      <div class="info">
+        <div class="ogrn">ООО Эдвизор, ОГРН 1234567890</div>
+        <a href="mailto:info@edvisor.ru" class="mail">info@edvisor.ru</a>
+      </div>
+      <div class="links">
+        <a href="#">Пользовательское соглашение</a>
+        <a href="#">Политика конфиденциальности</a>
+        <div class="copy">© Edvisor, 2021</div>
+      </div>
+    </div>
+  </footer>
+</template>
+
+<script>
+export default {
+  name: "FooterDefault"
+}
+</script>
+
+<style scoped lang="scss">
+footer {
+  margin-top: 80px;
+  padding: 23px 0;
+  background-color: #333333;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: #ffffff;
+  line-height: 150%;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+
+    .info {
+      .ogrn {
+        margin-bottom: 12px;
+      }
+
+      .mail {
+        color: #ffffff;
+      }
+    }
+
+    .links {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+
+      a {
+        color: #ffffff;
+      }
+    }
+  }
+}
+</style>
