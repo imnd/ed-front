@@ -11,7 +11,7 @@
 import MenuTop from "../MenuTop";
 
 export default {
-  name: "Default-header",
+  name: 'Default-header',
   components: {MenuTop}
 }
 </script>

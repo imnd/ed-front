@@ -1,21 +1,21 @@
 <template>
   <div class="menu">
-    <div :class="'menu__burger d-flex d-md-none' + (isOpen ? ' menu__burger--open' : '')" @click="toggle()">
+    <div :class="'menu__burger d-flex d-md-none' + (isOpen ? ' menu__burger_open' : '')" @click="isOpen = !isOpen">
       <span></span>
       <span></span>
       <span></span>
     </div>
-    <div :class="'menu__list' + (isOpen ? ' menu__list--open' : '')">
-      <div v-for="item in list" :class="isOpen ? 'menu__list__item menu__list--open__item' : 'menu__list__item'">
-        <a :href="item.route">{{ item.name }}</a>
-      </div>
-    </div>
+    <ul :class="'menu__list' + (isOpen ? ' menu__list_open' : '')">
+      <li v-for="item in list" :class="isOpen ? 'menu__list-item menu__list_open-item' : 'menu__list-item'">
+        <NuxtLink :to="item.route">{{ item.name }}</NuxtLink>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
-  name: "MenuTop",
+  name: 'MenuTop',
   data() {
     return {
       isOpen: false,
@@ -42,11 +42,6 @@ export default {
         }
       ]
     }
-  },
-  methods: {
-    toggle() {
-      this.isOpen = !this.isOpen;
-    }
   }
 }
 </script>
@@ -63,6 +58,8 @@ $mobile-items-gap: 20px;
     display: flex;
     align-items: center;
     gap: $items-gap;
+    list-style: none;
+    padding: 0;
 
     @media (max-width: 768px) {
       max-height: 0;
@@ -77,7 +74,7 @@ $mobile-items-gap: 20px;
       align-items: baseline;
       top: 100%;
 
-      &__item {
+      &-item {
         overflow: hidden;
 
         &:first-child {
@@ -94,7 +91,7 @@ $mobile-items-gap: 20px;
       }
     }
 
-    &__item {
+    &-item {
 
       a {
         font-weight: 500;
@@ -109,11 +106,11 @@ $mobile-items-gap: 20px;
       }
     }
 
-    &--open {
+    &_open {
       max-height: 15em;
       top: 100%;
 
-      &__item {
+      &-item {
         margin: 0;
         display: flex;
       }
@@ -134,15 +131,13 @@ $mobile-items-gap: 20px;
       transition: all 0.5s;
     }
 
-    &--open {
+    &_open {
       span {
         position: absolute;
         right: 30px;
 
         &:nth-child(1) {
-          transform: rotate(
-              45deg
-          );
+          transform: rotate(45deg);
         }
 
         &:nth-child(2) {
@@ -150,9 +145,7 @@ $mobile-items-gap: 20px;
         }
 
         &:nth-child(3) {
-          transform: rotate(
-              -45deg
-          );
+          transform: rotate(-45deg);
         }
       }
     }
