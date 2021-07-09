@@ -1,7 +1,4 @@
 import axios from 'axios';
-const $http = axios.create({
-  baseURL: process.env.baseApiUrl,
-});
 
 export default {
   state() {
@@ -16,8 +13,11 @@ export default {
   },
   actions: {
     async getLastReviews({ commit }) {
-      const { data: lastReviews } = await $http.get('/reviews/last');
-      commit('setState', { key: 'lastReviews', value: lastReviews });
+      const $http = axios.create({
+        baseURL: process.env.baseApiUrl,
+      });
+      const { data: { data: reviews } } = await $http.get('reviews/last?entity=school');
+      commit('setState', { key: 'lastReviews', value: reviews });
     },
   },
 };
