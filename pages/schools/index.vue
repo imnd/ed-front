@@ -38,10 +38,10 @@ export default {
     };
   },
   methods: {
-    ...mapActions('categories', ['getCategories']),
+    ...mapActions('courses-categories', ['getCategories']),
     ...mapActions('duration', ['getDuration']),
-    ...mapActions('education_formats', ['getEducationFormats']),
-    ...mapActions('payment_types', ['getPaymentTypes']),
+    ...mapActions('education-formats', ['getEducationFormats']),
+    ...mapActions('payment-types', ['getPaymentTypes']),
     ...mapActions('schools', ['getSchoolsList', 'loadMore']),
 
     async updateFiltersHandler(payload, needToRefreshPage = false) {

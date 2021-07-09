@@ -18,7 +18,7 @@ export default {
   },
   actions: {
     async getCategories({commit}) {
-      const {data: categories} = await $http.get('courses-categories');
+      const { data: { data: categories } } = await $http.get('courses-categories');
       commit('setState', {
         key: 'categories',
         value: categories
