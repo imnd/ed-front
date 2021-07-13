@@ -1,7 +1,4 @@
-import axios from 'axios';
-const $http = axios.create({
-  baseURL: process.env.baseApiUrl,
-});
+import axios from '~/plugins/axios'
 
 export default {
   namespaced: true,
@@ -24,7 +21,7 @@ export default {
   actions: {
     async getSchool({ commit }, schoolSlug) {
       try {
-        const { data: { data: school } } = await $http.get(`schools/${schoolSlug}`);
+        const { data: { data: school } } = await axios.get(`schools/${schoolSlug}`);
 
         commit('setState', { key: 'school', value: school });
       } catch (error) {
@@ -33,13 +30,13 @@ export default {
     },
 
     async getSchools({ commit }) {
-      const { data: { data: schools } } = await $http.get('schools');
+      const { data: { data: schools } } = await axios.get('schools');
 
       commit('setState', { key: 'schools', value: schools });
     },
 
     async getSchoolsList({ commit }, filters = {}) {
-      const { data: { count, data: schoolsList } } = await $http.get('schools', {
+      const { data: { count, data: schoolsList } } = await axios.get('schools', {
         params: {
           ...filters,
         },
@@ -56,7 +53,7 @@ export default {
     },
 
     async loadMore({ commit, state }, filters = {}) {
-      const { data: { data: schoolsList } } = await $http.get('schools', {
+      const { data: { data: schoolsList } } = await axios.get('schools', {
         params: {
           ...filters,
         },

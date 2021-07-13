@@ -1,9 +1,6 @@
 import qs from 'qs';
 
-import axios from 'axios';
-const $http = axios.create({
-  baseURL: process.env.baseApiUrl,
-});
+import axios from '~/plugins/axios'
 
 export default {
   namespaced: true,
@@ -20,7 +17,7 @@ export default {
   },
   actions: {
     async getCourses({ commit }, filters = {}) {
-      const { data: { count, data: courses } } = await $http.get('courses', {
+      const { data: { count, data: courses } } = await axios.get('courses', {
         params: {
           ...filters,
         },
@@ -37,7 +34,7 @@ export default {
     },
 
     async loadMore({ commit, state }, filters = {}) {
-      const { data: { data: courses } } = await $http.get('courses', {
+      const { data: { data: courses } } = await axios.get('courses', {
         params: {
           ...filters,
         },

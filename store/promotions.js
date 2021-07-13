@@ -1,7 +1,4 @@
-import axios from 'axios';
-const $http = axios.create({
-  baseURL: process.env.baseApiUrl,
-});
+import axios from '~/plugins/axios'
 
 export default {
   state() {
@@ -17,7 +14,7 @@ export default {
   actions: {
     async getPromotions({ commit }) {
       try {
-        const { data: { data: promotions } } = await $http.get(`promotions`);
+        const { data: { data: promotions } } = await axios.get(`promotions`);
 
         commit('setState', { key: 'promotions', value: promotions });
       } catch (error) {

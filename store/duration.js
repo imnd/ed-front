@@ -1,7 +1,4 @@
-import axios from 'axios';
-const $http = axios.create({
-  baseURL: process.env.baseApiUrl,
-});
+import axios from '~/plugins/axios'
 
 export default {
   namespaced: true,
@@ -17,7 +14,7 @@ export default {
   },
   actions: {
     async getDuration({ commit }) {
-      const { data: duration } = await $http.get('duration');
+      const { data: duration } = await axios.get('duration');
 
       commit('setState', { key: 'duration', value: duration });
     },

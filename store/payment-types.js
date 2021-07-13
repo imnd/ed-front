@@ -1,7 +1,4 @@
-import axios from 'axios';
-const $http = axios.create({
-  baseURL: process.env.baseApiUrl,
-});
+import axios from '~/plugins/axios'
 
 export default {
   namespaced: true,
@@ -17,7 +14,7 @@ export default {
   },
   actions: {
     async getPaymentTypes({ commit }) {
-      const { data: paymentTypes } = await $http.get('/payment-types');
+      const { data: paymentTypes } = await axios.get('/payment-types');
 
       commit('setState', { key: 'paymentTypes', value: paymentTypes });
     },

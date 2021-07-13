@@ -1,8 +1,4 @@
-import axios from 'axios';
-
-const $http = axios.create({
-  baseURL: process.env.baseApiUrl,
-});
+import axios from '~/plugins/axios'
 
 export default {
   namespaced: true,
@@ -18,7 +14,7 @@ export default {
   },
   actions: {
     async getCategories({commit}) {
-      const { data: { data: categories } } = await $http.get('courses-categories');
+      const { data: { data: categories } } = await axios.get('courses-categories');
       commit('setState', {
         key: 'categories',
         value: categories

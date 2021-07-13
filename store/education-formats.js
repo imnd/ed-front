@@ -1,7 +1,4 @@
-import axios from "axios";
-const $http = axios.create({
-  baseURL: process.env.baseApiUrl,
-});
+import axios from '~/plugins/axios'
 
 export default {
   namespaced: true,
@@ -17,7 +14,7 @@ export default {
   },
   actions: {
     async getEducationFormats({ commit }) {
-      const { data: educationFormats } = await $http.get('/education-formats');
+      const { data: educationFormats } = await axios.get('education-formats');
 
       commit('setState', { key: 'educationFormats', value: educationFormats });
     },
