@@ -1,23 +1,23 @@
 <template>
-  <div class="edvlisting listing-page">
-    <div class="container">
-      <h2>Онлайн-школы, преподающие Онлайн-курсы</h2>
-      <div class="toptext">Список онлайн-школ, преподающих Онлайн-курсы с рейтингом, отзывами и детальным описанием курса 2021 года. Подробные описания, цены, удобное сравнение характеристик курса.</div>
+  <div class="container edvlisting listing-page middle-container">
+    <h2>Онлайн-школы, преподающие Онлайн-курсы</h2>
+    <div class="toptext">Список онлайн-школ, преподающих Онлайн-курсы с рейтингом, отзывами и детальным описанием курса
+      2021 года. Подробные описания, цены, удобное сравнение характеристик курса.
+    </div>
 
-      <div class="edvlisting-row" v-if="!isLoading">
-        <SchoolsSidebar @update:filters="updateFiltersHandler($event, true)" />
-        <SchoolsPage
-          :currentPage="filters.page"
-          @update:filters="updateFiltersHandler"
-          @show-more="showMoreHandler"
-        />
-      </div>
+    <div class="edvlisting-row" v-if="!isLoading">
+      <SchoolsSidebar @update:filters="updateFilters($event, true)"/>
+      <SchoolsPage
+        :currentPage="filters.page"
+        @update:filters="updateFilters"
+        @show-more="showMoreHandler"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import {mapActions} from 'vuex';
 
 export default {
   data() {
@@ -44,18 +44,18 @@ export default {
     ...mapActions('payment-types', ['getPaymentTypes']),
     ...mapActions('schools', ['getSchoolsList', 'loadMore']),
 
-    async updateFiltersHandler(payload, needToRefreshPage = false) {
+    async updateFilters(payload, needToRefreshPage = false) {
       if (needToRefreshPage) {
         this.filters.page = 1;
       }
-      this.filters = { ...this.filters, ...payload };
+      this.filters = {...this.filters, ...payload};
 
-      await this.getSchoolsList({ ...this.filters });
+      await this.getSchoolsList({...this.filters});
     },
     async showMoreHandler(payload) {
-      this.filters = { ...this.filters, ...payload };
+      this.filters = {...this.filters, ...payload};
 
-      await this.loadMore({ ...this.filters });
+      await this.loadMore({...this.filters});
     },
   },
   async created() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="edv-object">
+  <div class="edv-object middle-container">
     <div class="content-edv-object">
       <h1 class="object-title">{{ school.title }}</h1>
       <h1 class="object-title">{{ school.post_title }}</h1>

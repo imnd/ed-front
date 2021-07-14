@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="middle-container">
     <div class="edv-shares" v-if="promotions.length > 0">
       <div
         v-for="promotion in promotions"
