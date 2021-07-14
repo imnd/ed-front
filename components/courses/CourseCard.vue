@@ -1,10 +1,9 @@
 <template>
   <div class="course-card">
-    <!--  Название, рейтинг, отзывы  -->
+  <!--  Название, рейтинг, отзывы  -->
     <div class="course-card__title-rating-reviews-block">
       <div class="course-card__title">{{ course.post_title }}</div>
     </div>
-
 
     <div class="course-card__school-block">
       <img
@@ -28,21 +27,20 @@
       </div>
     </div>
 
-
     <div class="course-card__prices-block">
       <div
         v-if="priceWithoutDiscount()"
         class="course-card__price-without-discount"
-        :class="{ 'course-card__price-without-discount_crossed-out' : priceWithDiscount() !== null }"
+        :class="{ 'course-card__price-without-discount_crossed-out' : course.priceWithDiscount !== null }"
       >
         {{ priceWithoutDiscount() }} ₽
       </div>
 
       <div
-        v-if="priceWithDiscount()"
+        v-if="course.priceWithDiscount"
         class="course-card__price-with-discount"
       >
-        {{ priceWithDiscount() }} ₽
+        {{ course.priceWithDiscount }} ₽
       </div>
 
       <div
@@ -53,9 +51,8 @@
       </div>
     </div>
 
-
     <div class="course-card__buttons-block">
-      <a :href="`/goto?sg=2&obj=${course.ID}`" target="_blank">
+      <a :href="`/goto?sg=2&obj=${course.id}`" target="_blank">
         <button class="course-card__button-course-site">
           На сайт курса
 
@@ -67,7 +64,6 @@
         </button>
       </a>
     </div>
-
 
     <div v-if="isDetailsShowed" class="course-card__duration">
       <ul class="course-card__duration-list">
@@ -81,7 +77,6 @@
       </ul>
     </div>
 
-
     <ul v-if="isDetailsShowed" class="course-card__format-list">
       <li
         v-for="(courseEducationFormat, index) in (course.education_formats || [])"
@@ -91,7 +86,6 @@
         {{ courseEducationFormat.name }}
       </li>
     </ul>
-
 
     <div class="course-card__button-details-block">
       <button
@@ -111,6 +105,7 @@
 
 <script>
 export default {
+  name: 'CourseCard',
   props: {
     course: {
       type: Object,
@@ -128,29 +123,14 @@ export default {
   },
   methods: {
     priceWithoutDiscount() {
-      const value = this.course.price;
+      const price = this.course.price;
 
-      return value ? this.formatPrice(value) : null;
-    },
-    priceWithDiscount() {
-      const discount = this.course.price_course_corrected;
-      const priceWithoutDiscount = this.course.price;
-
-      if (!discount || !priceWithoutDiscount) {
-        return null;
-      }
-
-      const priceWithDiscount = priceWithoutDiscount * (100 - discount) / 100;
-
-      return priceWithDiscount ? this.formatPrice(priceWithDiscount) : null;
+      return price ? this.formatPrice(price) : null;
     },
     creditPriceWithoutDiscount() {
       const value = this.course.price_month;
 
       return value ? this.formatPrice(value) : null;
-    },
-    fullPriceWithDiscount() {
-      return Math.floor(this.course.price * (100 - this.course.price_course_corrected) / 100);
     },
     formatPrice(price) {
       const intPrice = parseInt(price);
@@ -158,7 +138,7 @@ export default {
         return;
       }
 
-      return parseInt(price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      return intPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
     },
   },
   created() {
