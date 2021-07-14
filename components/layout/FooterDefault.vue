@@ -25,7 +25,7 @@ footer {
   margin-top: 80px;
   padding: 23px 0;
   background-color: #333333;
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
