@@ -8,7 +8,7 @@
           :text="item[itemTextPropName]"
           class="checkbox-items__checkbox"
           v-model="model"
-          @update:modelValue="$emit('update:modelValue', $event)"
+          @@input="$emit('@input', $event)"
       />
 
       <template v-if="isHiddenItemsShowed">
@@ -19,7 +19,7 @@
             :text="item[itemTextPropName]"
             class="checkbox-items__checkbox"
             v-model="model"
-            @update:modelValue="$emit('update:modelValue', $event)"
+            @@input="$emit('@input', $event)"
         />
       </template>
     </div>
@@ -41,7 +41,7 @@ export default {
   name: 'EdvisorCheckboxList',
   components: { EdvisorCheckbox },
   props: {
-    modelValue: {
+    value: {
       type: Array,
     },
     items: {
@@ -75,7 +75,7 @@ export default {
     },
   },
   created() {
-    this.model = [...this.modelValue];
+    this.model = [...this.value];
   },
 };
 </script>

@@ -27,7 +27,7 @@
         :items="availableSortingTypes"
         select-title="Сортировка"
         class="courses-filters__sort"
-        @update:model-value="filterChangedHandler"
+        @input="filterChangedHandler"
       />
 
       <div class="courses-filters__table-section">
@@ -42,6 +42,7 @@
           children-prop-name="subCategories"
           child-value-prop-name="id"
           child-text-prop-name="title"
+          @input="selectedCategories = $event"
         />
 
         <edvisor-multiple-select
@@ -51,6 +52,7 @@
           item-value-prop-name="id"
           item-title-prop-name="title"
           class="courses-filters__school"
+          @input="selectedSchools = $event"
         />
 
         <edvisor-multiple-select
@@ -60,6 +62,7 @@
           item-value-prop-name="id"
           item-title-prop-name="title"
           class="courses-filters__duration"
+          @input="selectedDuration = $event"
         />
 
         <edvisor-multiple-select
@@ -69,6 +72,7 @@
           item-value-prop-name="id"
           item-title-prop-name="title"
           class="courses-filters__payment-type"
+          @input="selectedPaymentTypes = $event"
         />
 
         <edvisor-multiple-select
@@ -78,6 +82,7 @@
           item-value-prop-name="id"
           item-title-prop-name="title"
           class="courses-filters__education-format"
+          @input="selectedEducationFormats = $event"
         />
       </div>
 

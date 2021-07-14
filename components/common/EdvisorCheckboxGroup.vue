@@ -3,10 +3,10 @@
     <div class="edvisor-checkbox-group__parent">
       <edvisor-checkbox
         v-model="model"
-        :value="value"
+        :value="id"
         :text="text"
         class="edvisor-checkbox-group__parent-input"
-        @update:modelValue="parentChangeStateHandler"
+        @@input="parentChangeStateHandler"
       />
 
       <svg width="12" height="8" viewBox="0 0 12 8" class="edvisor-checkbox-group__parent-icon" :class="{ 'edvisor-checkbox-group__parent-icon_active': isToggled }" @click="isToggled = !isToggled">
@@ -37,10 +37,10 @@ export default {
   name: 'EdvisorCheckboxGroup',
   components: { EdvisorCheckbox },
   props: {
-    modelValue: {
+    value: {
       type: Array,
     },
-    value: {
+    id: {
       type: [Number, String, Boolean],
       required: true,
     },
@@ -69,34 +69,34 @@ export default {
   computed: {
     model: {
       get() {
-        return this.modelValue;
+        return this.value;
       },
       set(value) {
-        return this.$emit('update:modelValue', value);
+        return this.$emit('input', value);
       },
     },
     isParentChecked() {
-      return this.modelValue.includes(this.value);
+      return this.value.includes(this.id);
     },
   },
   methods: {
     parentChangeStateHandler(newModelValue) {
-      const isChecked = newModelValue.includes(this.value);
+      const isChecked = newModelValue.includes(this.id);
 
       this.isToggled = isChecked;
 
-      const allValues = [...this.items.map(item => item[this.itemValuePropName]), this.value];
-      const modelWithoutAllValues = this.modelValue.filter(item => !allValues.includes(item));
+      const allValues = [...this.items.map(item => item[this.itemValuePropName]), this.id];
+      const modelWithoutAllValues = this.value.filter(item => !allValues.includes(item));
 
       if (isChecked) {
-        this.$emit('update:modelValue', [...modelWithoutAllValues, ...allValues]);
+        this.$emit('@input', [...modelWithoutAllValues, ...allValues]);
       } else {
-        this.$emit('update:modelValue', modelWithoutAllValues);
+        this.$emit('@input', modelWithoutAllValues);
       }
     },
   },
   created() {
-    if (this.modelValue.includes(this.value)) {
+    if (this.value.includes(this.id)) {
       this.isToggled = true;
     }
   }

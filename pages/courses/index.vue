@@ -3,7 +3,9 @@
     <div class="courses-page__header">
       <h1 class="courses-page__title">Онлайн-курсы</h1>
 
-      <p class="courses-page__description">Список всех онлайн-курсов с рейтингом, отзывами и детальным описанием курса 2021 года. Для удобства поиска курса используйте фильтры, сортировку, сравнение и поиск. Мы обновляем информацию о всех курсах каждую неделю.</p>
+      <p class="courses-page__description">Список всех онлайн-курсов с рейтингом, отзывами и детальным описанием курса
+        2021 года. Для удобства поиска курса используйте фильтры, сортировку, сравнение и поиск. Мы обновляем информацию
+        о всех курсах каждую неделю.</p>
     </div>
 
     <div class="courses-page__content">
@@ -14,7 +16,7 @@
       />
 
       <div class="courses-page__loader" v-if="isLoading">
-        <edvisor-loader />
+        <edvisor-loader/>
       </div>
 
       <template v-else>
@@ -38,12 +40,11 @@
 
     <div class="courses-page__footer" v-if="courses.length > 0">
       <template v-if="isLoadingMore">
-        <edvisor-loader />
+        <edvisor-loader/>
       </template>
 
       <template v-else>
         <div class="courses-page__courses-count-info">Показано {{ courses.length }} курсов из {{ coursesCount }}</div>
-
         <button
           v-if="courses.length < coursesCount"
           class="courses-page__button-show-more"
@@ -57,11 +58,12 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
-import CoursesFilters from '@/components/courses/CoursesFilters';
-import CourseCard from '@/components/courses/CourseCard';
-import EdvisorLoader from '@/components/common/EdvisorLoader';
-import { debounce } from 'throttle-debounce';
+import { mapActions, mapGetters, mapState } from 'vuex'
+import CoursesFilters from '@/components/courses/CoursesFilters'
+import CourseCard from '@/components/courses/CourseCard'
+import EdvisorLoader from '@/components/common/EdvisorLoader'
+import { debounce } from 'throttle-debounce'
+
 export default {
   name: 'CoursesPage',
   components: { CourseCard, CoursesFilters, EdvisorLoader },
@@ -71,7 +73,7 @@ export default {
       default: true,
     },
   },
-  data() {
+  data () {
     return {
       isLoading: true,
       isLoadingMore: false,
@@ -88,7 +90,7 @@ export default {
         searchString: null,
         limit: 20,
       },
-    };
+    }
   },
   computed: {
     ...mapState('courses', ['courses', 'coursesCount']),
@@ -98,8 +100,8 @@ export default {
     ...mapState('education-formats', ['educationFormats']),
     ...mapState('schools', ['schools']),
     ...mapGetters('schools', ['getSchoolById']),
-    courseSchool() {
-      return this.getSchoolById(this.course.school);
+    courseSchool () {
+      return this.getSchoolById(this.course.school)
     },
   },
   methods: {
@@ -110,236 +112,242 @@ export default {
     ...mapActions('schools', ['getSchools']),
     ...mapActions('courses', ['getCourses', 'loadMore']),
 
-    setCategoriesFromUrl(parentCategorySlug, subCategorySlug) {
-      const parentCategory = this.categories.find(c => c.slug === parentCategorySlug);
+    setCategoriesFromUrl (parentCategorySlug, subCategorySlug) {
+      const parentCategory = this.categories.find(c => c.slug === parentCategorySlug)
       if (!parentCategory) {
-        return;
+        return
       }
 
       if (subCategorySlug) {
-        const subCategory = parentCategory.subCategories.find(sc => sc.slug === subCategorySlug);
+        const subCategory = parentCategory.subCategories.find(sc => sc.slug === subCategorySlug)
         if (!subCategory) {
-          return;
+          return
         }
-        this.filters.selectedCategories.push(subCategory.id);
+        this.filters.selectedCategories.push(subCategory.id)
       }
 
-      this.filters.selectedCategories.push(parentCategory.id, ...parentCategory.subCategories.map(sc => sc.id));
+      this.filters.selectedCategories.push(parentCategory.id, ...parentCategory.subCategories.map(sc => sc.id))
     },
 
-    updateUrl() {
-      let path = '/courses';
-      const query = {};
+    updateUrl () {
+      let path = '/courses'
+      const query = {}
 
       if (this.filters.selectedCategories.length > 0) {
-        const categoriesString = this.categories.map(c => [c.id, ...c.subCategories.map(sc => sc.id)].sort().toString());
+        const categoriesString = this.categories.map(c => [c.id, ...c.subCategories.map(sc => sc.id)].sort().toString())
 
         if (this.filters.selectedCategories.length === 1) {
-          const selectedCategoryId = this.filters.selectedCategories[0];
-          let isParentCategory = true;
+          const selectedCategoryId = this.filters.selectedCategories[0]
+          let isParentCategory = true
 
-          let parentCategory = this.categories.find(c => c.id === selectedCategoryId);
+          let parentCategory = this.categories.find(c => c.id === selectedCategoryId)
           if (!parentCategory) {
-            parentCategory = this.categories.find(c => c.subCategories.find(sc => sc.id === selectedCategoryId) !== undefined);
-            isParentCategory = false;
+            parentCategory = this.categories.find(c => c.subCategories.find(sc => sc.id === selectedCategoryId) !== undefined)
+            isParentCategory = false
           }
 
-          const childCategory = isParentCategory ? null : parentCategory.subCategories.find(sc => sc.id === selectedCategoryId);
+          const childCategory = isParentCategory ? null : parentCategory.subCategories.find(sc => sc.id === selectedCategoryId)
 
-          path = `${path}/${parentCategory.slug}/${childCategory ? `${childCategory.slug}/` : ''}`;
+          path = `${path}/${parentCategory.slug}/${childCategory ? `${childCategory.slug}/` : ''}`
         } else if (categoriesString.includes([...this.filters.selectedCategories.sort()].toString())) {
-          const parentCategory = this.categories.find(c => this.filters.selectedCategories.includes(c.id));
-          path = `${path}/${parentCategory.slug}/`;
+          const parentCategory = this.categories.find(c => this.filters.selectedCategories.includes(c.id))
+          path = `${path}/${parentCategory.slug}/`
         } else {
-          query.category = this.categories.reduce(
-            (result, parentCategory) => {
-              if (this.filters.selectedCategories.includes(parentCategory.id)) {
-                result.push(parentCategory.slug);
-              }
+          query.category = this.categories
+            .reduce(
+              (result, parentCategory) => {
+                if (this.filters.selectedCategories.includes(parentCategory.id)) {
+                  result.push(parentCategory.slug)
+                }
 
-              result.push(
-                ...parentCategory.subCategories.filter(sc => this.filters.selectedCategories.includes(sc.id))
-                  .map(sc => sc.slug)
-              );
+                result.push(
+                  ...parentCategory.subCategories.filter(sc => this.filters.selectedCategories.includes(sc.id))
+                    .map(sc => sc.slug)
+                )
 
-              return result;
-            },
-            []
-          ).join(',');
+                return result
+              },
+              []
+            )
+            .join(',')
         }
-      }
-
-      if (this.filters.selectedDuration.length > 0) {
-        query.duration = this.duration.reduce((result, duration) => {
-          if (this.filters.selectedDuration.includes(duration.id)) {
-            result.push(duration.slug);
-          }
-
-          return result;
-        }, [])
-          .join(',');
-      }
-
-      if (this.filters.selectedPaymentTypes.length > 0) {
-        query.paymenttype = this.paymentTypes.reduce((result, paymentType) => {
-          if (this.filters.selectedPaymentTypes.includes(paymentType.id)) {
-            result.push(paymentType.slug);
-          }
-
-          return result;
-        }, [])
-          .join(',');
-      }
-
-      if (this.filters.selectedEducationFormats.length > 0) {
-        query.educationformat = this.educationFormats.reduce((result, educationFormat) => {
-          if (this.filters.selectedEducationFormats.includes(educationFormat.id)) {
-            result.push(educationFormat.slug);
-          }
-
-          return result;
-        }, [])
-          .join(',');
       }
 
       if (this.filters.selectedSchools.length > 0) {
-        query.school = this.schools.reduce((result, school) => {
-          if (this.filters.selectedSchools.includes(school.id)) {
-            result.push(school.post_name);
-          }
+        query.school = this.schools
+          .reduce((result, school) => {
+            if (this.filters.selectedSchools.includes(school.id)) {
+              result.push(school.title)
+            }
 
-          return result;
-        }, [])
-          .join(',');
+            return result
+          }, [])
+          .join(',')
       }
 
-      this.$router.push({ path, query });
+      if (this.filters.selectedDuration.length > 0) {
+        query.duration = this.duration
+          .reduce((result, duration) => {
+            if (this.filters.selectedDuration.includes(duration.id)) {
+              result.push(duration.slug)
+            }
 
-      const metaCanonical = document.querySelector('[rel="canonical"]');
+            return result
+          }, [])
+          .join(',')
+      }
+
+      if (this.filters.selectedPaymentTypes.length > 0) {
+        query.paymenttype = this.paymentTypes
+          .reduce((result, paymentType) => {
+            if (this.filters.selectedPaymentTypes.includes(paymentType.id)) {
+              result.push(paymentType.slug)
+            }
+
+            return result
+          }, [])
+          .join(',')
+      }
+
+      if (this.filters.selectedEducationFormats.length > 0) {
+        query.educationformat = this.educationFormats
+          .reduce((result, educationFormat) => {
+            if (this.filters.selectedEducationFormats.includes(educationFormat.id)) {
+              result.push(educationFormat.slug)
+            }
+
+            return result
+          }, [])
+          .join(',')
+      }
+
+      this.$router.push({ path, query })
+
+      const metaCanonical = document.querySelector('[rel="canonical"]')
       if (metaCanonical) {
-        const value = `${window.location.origin}${path}${new URLSearchParams(query).toString()}`;
+        const value = `${window.location.origin}${path}${new URLSearchParams(query).toString()}`
 
-        metaCanonical.setAttribute('href', value);
+        metaCanonical.setAttribute('href', value)
       }
     },
 
-    checkQueryParams() {
-      const query = this.$route.query;
+    checkQueryParams () {
+      const query = this.$route.query
 
-      const categoriesSlugsString = query.category;
+      const categoriesSlugsString = query.category
       if (categoriesSlugsString) {
-        const categoriesSlugs = categoriesSlugsString.split(',');
+        const categoriesSlugs = categoriesSlugsString.split(',')
 
         this.filters.selectedCategories = this.categories.reduce(
           (result, category) => {
             if (categoriesSlugs.includes(category.slug)) {
-              result.push(category.id);
+              result.push(category.id)
             }
 
-            result.push(...category.subCategories.filter(sc => categoriesSlugs.includes(sc.slug)).map(sc => sc.id));
+            result.push(...category.subCategories.filter(sc => categoriesSlugs.includes(sc.slug)).map(sc => sc.id))
 
-            return result;
+            return result
           },
           []
-        );
+        )
       }
 
-      const schoolsSlugsString = query.school;
+      const schoolsSlugsString = query.school
       if (schoolsSlugsString) {
-        const schoolsSlugs = schoolsSlugsString.split(',');
+        const schoolsSlugs = schoolsSlugsString.split(',')
 
         this.filters.selectedSchools = this.schools.reduce((result, school) => {
-          if (schoolsSlugs.includes(school.post_name)) {
-            result.push(school.id);
+          if (schoolsSlugs.includes(school.slug)) {
+            result.push(school.id)
           }
 
-          return result;
-        }, []);
+          return result
+        }, [])
       }
 
-      const durationSlugsString = query.duration;
+      const durationSlugsString = query.duration
       if (durationSlugsString) {
-        const durationSlugs = durationSlugsString.split(',');
+        const durationSlugs = durationSlugsString.split(',')
 
         this.filters.selectedDuration = this.duration.reduce((result, duration) => {
           if (durationSlugs.includes(duration.slug)) {
-            result.push(duration.id);
+            result.push(duration.id)
           }
 
-          return result;
-        }, []);
+          return result
+        }, [])
       }
 
-      const paymentTypesSlugsString = query.paymenttype;
+      const paymentTypesSlugsString = query.paymenttype
       if (paymentTypesSlugsString) {
-        const paymentTypesSlugs = paymentTypesSlugsString.split(',');
+        const paymentTypesSlugs = paymentTypesSlugsString.split(',')
 
         this.filters.selectedPaymentTypes = this.paymentTypes.reduce((result, paymentType) => {
           if (paymentTypesSlugs.includes(paymentType.slug)) {
-            result.push(paymentType.id);
+            result.push(paymentType.id)
           }
 
-          return result;
-        }, []);
+          return result
+        }, [])
       }
 
-      const educationFormatsSlugsString = query.educationformat;
+      const educationFormatsSlugsString = query.educationformat
       if (educationFormatsSlugsString) {
-        const educationFormatsSlugs = educationFormatsSlugsString.split(',');
+        const educationFormatsSlugs = educationFormatsSlugsString.split(',')
 
         this.filters.selectedEducationFormats = this.educationFormats.reduce((result, educationFormat) => {
           if (educationFormatsSlugs.includes(educationFormat.slug)) {
-            result.push(educationFormat.id);
+            result.push(educationFormat.id)
           }
 
-          return result;
-        }, []);
+          return result
+        }, [])
       }
     },
 
-    debounceGetCourses: debounce(500,async function () {
-      this.isLoading = true;
-      await this.getCourses(this.filters);
-      this.isLoading = false;
+    debounceGetCourses: debounce(500, async function () {
+      this.isLoading = true
+      await this.getCourses(this.filters)
+      this.isLoading = false
     }),
 
-    async loadCourses(updatedFilters) {
-      this.filters = { ...this.filters, ...updatedFilters };
+    async loadCourses (updatedFilters) {
+      this.filters = { ...this.filters, ...updatedFilters }
 
-      this.updateUrl();
+      this.updateUrl()
 
-      await this.debounceGetCourses();
+      await this.debounceGetCourses()
     },
 
-    async loadMoreCourses() {
-      this.filters.page++;
+    async loadMoreCourses () {
+      this.filters.page++
 
-      this.isLoadingMore = true;
-      await this.loadMore(this.filters);
-      this.isLoadingMore = false;
+      this.isLoadingMore = true
+      await this.loadMore(this.filters)
+      this.isLoadingMore = false
     },
   },
-  async created() {
-    const parentCategorySlug = this.$route.params.categorySlug;
-    const subCategorySlug = this.$route.params.subCategorySlug;
+  async created () {
+    const parentCategorySlug = this.$route.params.categorySlug
+    const subCategorySlug = this.$route.params.subCategorySlug
 
-    await this.getCategories();
+    await this.getCategories()
     if (parentCategorySlug || subCategorySlug) {
-      this.setCategoriesFromUrl(parentCategorySlug, subCategorySlug);
+      this.setCategoriesFromUrl(parentCategorySlug, subCategorySlug)
     }
 
-    await this.getSchools();
-    await this.getDuration();
-    await this.getPaymentTypes();
-    await this.getEducationFormats();
+    await this.getSchools()
+    await this.getDuration()
+    await this.getPaymentTypes()
+    await this.getEducationFormats()
 
-    this.checkQueryParams();
+    this.checkQueryParams()
 
-    await this.getCourses(this.filters);
+    await this.getCourses(this.filters)
 
-    this.isLoading = false;
+    this.isLoading = false
   },
-};
+}
 </script>
 
 <style scoped lang="scss">

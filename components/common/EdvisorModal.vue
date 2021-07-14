@@ -21,7 +21,7 @@
 export default {
   name: 'EdvisorModal',
   props: {
-    modelValue: {
+    value: {
       type: Boolean,
       default: false,
     },
@@ -46,10 +46,10 @@ export default {
   computed: {
     model: {
       get() {
-        return this.modelValue;
+        return this.value;
       },
       set(value) {
-        this.$emit('update:modelValue', value);
+        this.$emit('@input', value);
       },
     },
   },

@@ -1,6 +1,6 @@
 <template>
   <div class="course-card">
-  <!--  Название, рейтинг, отзывы  -->
+    <!--  Название, рейтинг, отзывы  -->
     <div class="course-card__title-rating-reviews-block">
       <div class="course-card__title">{{ course.post_title }}</div>
     </div>
@@ -18,12 +18,17 @@
             d="M8.0002 12.6666L3.10186 15.6583L4.43353 10.0749L0.0751953 6.34159L5.79603 5.88325L8.0002 0.583252L10.2044 5.88325L15.926 6.34159L11.5669 10.0749L12.8985 15.6583L8.0002 12.6666Z"
             fill="#FEE440"/>
         </svg>
-        <span class="course-card__school-rating-value">{{ courseSchool ? courseSchool.reviews_average_rating : null }}</span>
-        <span class="course-card__school-rating-reviews-count">{{ courseSchool ? `(${courseSchool.reviews_count})` : null }}</span>
+        <span class="course-card__school-rating-value">{{
+            courseSchool ? courseSchool.reviews_average_rating : null
+          }}</span>
+        <span class="course-card__school-rating-reviews-count">{{
+            courseSchool ? `(${courseSchool.reviews_count})` : null
+          }}</span>
       </div>
 
       <div class="course-card__reviews">
-        <a :href="courseSchool ? `/schools/${courseSchool.post_name}/` : '#'">Отзывы о школе {{ courseSchool ? `(${courseSchool.reviews_count})` : null }}</a>
+        <a :href="courseSchool ? `/schools/${courseSchool.title}/` : '#'">Отзывы о школе
+          {{ courseSchool ? `(${courseSchool.reviews_count})` : null }}</a>
       </div>
     </div>
 
@@ -71,7 +76,6 @@
           v-for="(courseDuration, index) in (course.duration || [])"
           :key="index"
         >
-
           {{ courseDuration.name }}
         </li>
       </ul>
@@ -93,7 +97,8 @@
         @click="isDetailsShowed = !isDetailsShowed"
       >
         {{ isDetailsShowed ? 'Скрыть подробности' : 'Подробнее' }}
-        <svg width="12" height="8" viewBox="0 0 12 8" class="course-card__button-show-details-icon" :class="{ 'course-card__button-show-details-icon_showed': isDetailsShowed }">
+        <svg width="12" height="8" viewBox="0 0 12 8" class="course-card__button-show-details-icon"
+             :class="{ 'course-card__button-show-details-icon_showed': isDetailsShowed }">
           <path
             d="M5.99962 4.97656L10.1246 0.851562L11.303 2.0299L5.99962 7.33323L0.696289 2.0299L1.87462 0.851562L5.99962 4.97656Z"
             fill="#00BBF9"/>
@@ -247,7 +252,7 @@ export default {
   }
 
   &__button-course-site {
-    background-color: #9B5DE5 ;
+    background-color: #9B5DE5;
     border-radius: 100px;
     outline: none;
     border: none;

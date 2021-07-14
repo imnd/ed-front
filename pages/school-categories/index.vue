@@ -1,15 +1,13 @@
 <template>
   <div class="container edvlisting listing-page middle-container">
-    <h2>Онлайн-школы, преподающие Онлайн-курсы</h2>
-    <div class="toptext">Список онлайн-школ, преподающих Онлайн-курсы с рейтингом, отзывами и детальным описанием курса
-      2021 года. Подробные описания, цены, удобное сравнение характеристик курса.
-    </div>
+    <h2>Категории онлайн-школ, преподающих Онлайн-курсы</h2>
+    <div class="toptext">Список категорий онлайн-школ, преподающих Онлайн-курсы 2021 года.</div>
 
     <div class="edvlisting-row" v-if="!isLoading">
-      <SchoolsSidebar @update:filters="updateFiltersHandler($event, true)"/>
+      <SchoolsSidebar @update:filters="updateFilters($event, true)"/>
       <SchoolsPage
         :currentPage="filters.page"
-        @update:filters="updateFiltersHandler"
+        @update:filters="updateFilters"
         @show-more="showMoreHandler"
       />
     </div>
@@ -24,10 +22,6 @@ export default {
     return {
       filters: {
         selectedCategories: null,
-        selectedSchools: null,
-        selectedDuration: null,
-        selectedPaymentTypes: null,
-        selectedEducationFormats: null,
 
         page: 1,
         sortingType: null,
@@ -38,13 +32,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions('courses-categories', ['getCategories']),
-    ...mapActions('duration', ['getDuration']),
-    ...mapActions('education-formats', ['getEducationFormats']),
-    ...mapActions('payment-types', ['getPaymentTypes']),
-    ...mapActions('schools', ['getSchoolsList', 'loadMore']),
+    ...mapActions('schools-categories', ['getCategories']),
 
-    async updateFiltersHandler(payload, needToRefreshPage = false) {
+    async updateFilters(payload, needToRefreshPage = false) {
       if (needToRefreshPage) {
         this.filters.page = 1;
       }
@@ -60,10 +50,6 @@ export default {
   },
   async created() {
     await this.getCategories();
-    await this.getDuration();
-    await this.getPaymentTypes();
-    await this.getEducationFormats();
-    await this.getSchoolsList(this.filters);
 
     this.isLoading = false;
   },

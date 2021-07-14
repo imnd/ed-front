@@ -1,6 +1,11 @@
 <template>
   <label class="edvisor-checkbox">
-    <input type="checkbox" class="edvisor-checkbox__input" :value="value" v-model="checkBoxValue">
+    <input
+      type="checkbox"
+      class="edvisor-checkbox__input"
+      :value="id"
+      v-model="model"
+    />
     <span class="edvisor-checkbox__element" :class="{ 'edvisor-checkbox__element_active': isActive }"/>
     <span class="edvisor-checkbox__text">{{ text }}</span>
   </label>
@@ -10,10 +15,10 @@
 export default {
   name: 'EdvisorCheckbox',
   props: {
-    modelValue: {
+    value: {
       type: Array,
     },
-    value: {
+    id: {
       type: [Number, String, Boolean],
       default: true,
     },
@@ -24,14 +29,14 @@ export default {
   },
   computed: {
     isActive() {
-      return this.modelValue.includes(this.value);
+      return this.value.includes(this.id);
     },
-    checkBoxValue: {
+    model: {
       get() {
-        return this.modelValue;
+        return this.value;
       },
       set(value) {
-        this.$emit('update:modelValue', value);
+        return this.$emit('input', value);
       },
     },
   },

@@ -7,14 +7,14 @@
     <div
       class="edvisor-select__field"
       :class="{
-        'edvisor-select__field_with-selected-items': !isActive && modelValue.length > 0,
+        'edvisor-select__field_with-selected-items': !isActive && value.length > 0,
         'edvisor-select__field_active': isActive,
       }"
       @click="isActive = !isActive"
     >
       <span class="edvisor-select__field-title">{{ selectTitle }}</span>
-      <div class="edvisor-select__field-counter" v-if="!isActive && modelValue.length > 0">Выбрано: {{
-          modelValue.length
+      <div class="edvisor-select__field-counter" v-if="!isActive && value.length > 0">Выбрано: {{
+          value.length
         }}
       </div>
 
@@ -29,7 +29,7 @@
       class="edvisor-select__list-wrapper"
     >
       <div class="edvisor-select__list-item edvisor-select__list-item_counter-block">
-        <span class="edvisor-select__counter">Выбрано: {{ modelValue.length }}</span>
+        <span class="edvisor-select__counter">Выбрано: {{ value.length }}</span>
         <button
           class="edvisor-select__select-all-btn"
           @click="selectAllOrClear"
@@ -54,12 +54,13 @@
         >
           <component
             :is="listComponent"
-            :value="item[itemValuePropName]"
-            :text="item[itemTitlePropName]"
             v-model="model"
+            :id="item[itemValuePropName]"
+            :text="item[itemTitlePropName]"
             :items="withChildren ? item[childrenPropName] : null"
             :item-value-prop-name="childValuePropName"
             :item-text-prop-name="childTextPropName"
+            @input="model = $event"
           />
         </li>
       </ul>
@@ -73,15 +74,11 @@ import EdvisorCheckboxGroup from '@/components/common/EdvisorCheckboxGroup';
 
 export default {
   name: 'EdvisorMultipleSelect',
-  components: { EdvisorCheckboxGroup, EdvisorCheckbox },
+  components: {EdvisorCheckboxGroup, EdvisorCheckbox},
   props: {
-    modelValue: {
+    value: {
       type: Array,
       default: () => [],
-    },
-    selectTitle: {
-      type: String,
-      required: true,
     },
     items: {
       type: Array,
@@ -111,6 +108,10 @@ export default {
       type: String,
       default: 'items',
     },
+    selectTitle: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
@@ -131,10 +132,10 @@ export default {
     },
     model: {
       get() {
-        return this.modelValue;
+        return this.value;
       },
       set(value) {
-        return this.$emit('update:modelValue', value);
+        return this.$emit('input', value);
       },
     },
   },
@@ -144,7 +145,7 @@ export default {
         this.model = this.model.filter(item => !this.allValues.includes(item));
       } else {
         this.model = [
-          ...this.modelValue,
+          ...this.value,
           ...this.allValues.filter(value => !this.model.includes(value))
         ];
       }

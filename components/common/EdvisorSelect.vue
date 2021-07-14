@@ -10,7 +10,7 @@
       @click="isActive = !isActive"
     >
       <span class="edvisor-select__field-title" :class="{ 'edvisor-select__field-title_not-empty': !!model }">
-        {{ model ? (items.find(i => i[itemValuePropName] === model)[itemTitlePropName]) : selectTitle }}
+        {{ title }}
       </span>
       <svg width="10" height="6" viewBox="0 0 10 6" class="edvisor-select__field-icon" :class="{ 'edvisor-select__field-icon_active': isActive }">
         <path d="M5 5.33325L0 0.333252H10L5 5.33325Z" />
@@ -37,7 +37,7 @@
 export default {
   name: 'EdvisorSelect',
   props: {
-    modelValue: {
+    value: {
       type: [Number, String, Object],
     },
     selectTitle: {
@@ -65,12 +65,21 @@ export default {
   computed: {
     model: {
       get() {
-        return this.modelValue;
+        return this.value;
       },
       set(value) {
-        return this.$emit('update:modelValue', value);
+        return this.$emit('input', value);
       },
     },
+    title() {
+      if (this.model) {
+        let selected = this.items.find(item => item[this.itemValuePropName] === this.model);
+        if (selected !== undefined) {
+          return selected[this.itemTitlePropName];
+        }
+      }
+      return this.selectTitle;
+    }
   },
 };
 </script>

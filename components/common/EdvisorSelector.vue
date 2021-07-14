@@ -37,7 +37,7 @@ export default {
   name: 'EdvisorSelector',
   components: { EdvisorModal, EdvisorCheckbox, EdvisorCheckboxGroup },
   props: {
-    modelValue: {
+    value: {
       type: Array,
     },
     title: {
@@ -82,10 +82,10 @@ export default {
   computed: {
     model: {
       get() {
-        return this.modelValue;
+        return this.value;
       },
       set(value) {
-        this.$emit('update:modelValue', value);
+        this.$emit('@input', value);
       },
     },
     modalComponent() {

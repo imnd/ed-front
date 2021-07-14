@@ -80,10 +80,10 @@ export default {
     };
   },
   computed: {
-    ...mapState('categories', ['categories']),
+    ...mapState('schools-categories', ['categories']),
     ...mapState('duration', ['duration']),
-    ...mapState('education_formats', ['educationFormats']),
-    ...mapState('payment_types', ['paymentTypes']),
+    ...mapState('education-formats', ['educationFormats']),
+    ...mapState('payment-types', ['paymentTypes']),
     ...mapState('schools', ['schoolsListElementsCount']),
   },
   methods: {
