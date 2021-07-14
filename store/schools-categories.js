@@ -14,7 +14,7 @@ export default {
   },
   actions: {
     async getCategories({commit}) {
-      const { data: { data: categories } } = await axios.get('courses-categories');
+      const { data: { data: categories } } = await axios.get('schools-categories');
       commit('setState', {
         key: 'categories',
         value: categories

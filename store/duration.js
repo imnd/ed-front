@@ -14,7 +14,7 @@ export default {
   },
   actions: {
     async getDuration({ commit }) {
-      const { data: duration } = await axios.get('duration');
+      const { data: { data: duration } } = await axios.get('duration');
 
       commit('setState', { key: 'duration', value: duration });
     },

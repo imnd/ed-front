@@ -16,7 +16,7 @@ export default {
     },
   },
   getters: {
-    getSchoolById: state => schoolId => state.schools.find(s => parseInt(s.ID) === parseInt(schoolId)) || null,
+    getSchoolById: state => schoolId => state.schools.find(s => parseInt(s.id) === parseInt(schoolId)) || null,
   },
   actions: {
     async getSchool({ commit }, schoolSlug) {

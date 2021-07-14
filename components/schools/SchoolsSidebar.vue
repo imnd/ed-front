@@ -17,12 +17,12 @@
         <div class="hide-phone">
           <edvisor-checkbox-group
             v-for="category in categories"
-            :key="category.term_id"
-            :value="category.term_id"
-            :text="category.name"
-            :items="category.sub_categories"
-            item-value-prop-name="term_id"
-            item-text-prop-name="name"
+            :key="category.id"
+            :value="category.id"
+            :text="category.title"
+            :items="category.subCategories"
+            item-value-prop-name="id"
+            item-text-prop-name="title"
             class="schools__categories-list"
             id="qwe"
             v-model="selectedCategories"
@@ -36,8 +36,8 @@
         <div class="hide-phone">
           <edvisor-checkbox-list
             :items="paymentTypes"
-            item-value-prop-name="term_id"
-            item-text-prop-name="name"
+            item-value-prop-name="id"
+            item-text-prop-name="title"
             v-model="selectedPaymentTypes"
             @update:modelValue="handleFilterChanging"
           />
@@ -49,8 +49,8 @@
         <div class="hide-phone">
           <edvisor-checkbox-list
             :items="educationFormats"
-            item-value-prop-name="term_id"
-            item-text-prop-name="name"
+            item-value-prop-name="id"
+            item-text-prop-name="title"
             v-model="selectedEducationFormats"
             @update:modelValue="handleFilterChanging"
           />

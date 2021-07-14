@@ -14,7 +14,7 @@ export default {
   },
   actions: {
     async getPaymentTypes({ commit }) {
-      const { data: paymentTypes } = await axios.get('/payment-types');
+      const { data: { data: paymentTypes } } = await axios.get('/payment-types');
 
       commit('setState', { key: 'paymentTypes', value: paymentTypes });
     },

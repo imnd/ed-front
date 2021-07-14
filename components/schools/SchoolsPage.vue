@@ -43,7 +43,7 @@
 
     <school-card
       v-for="school in schoolsList"
-      :key="school.ID"
+      :key="school.id"
       :school="school"
     />
 

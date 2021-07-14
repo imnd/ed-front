@@ -14,7 +14,7 @@ export default {
   },
   actions: {
     async getEducationFormats({ commit }) {
-      const { data: educationFormats } = await axios.get('education-formats');
+      const { data: { data: educationFormats } } = await axios.get('education-formats');
 
       commit('setState', { key: 'educationFormats', value: educationFormats });
     },
