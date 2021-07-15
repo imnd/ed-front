@@ -1,5 +1,5 @@
 <template>
-  <div class="edvlisting-items" v-if="schoolsList.length > 0">
+  <div class="main-column">
     <div class="search-sorting">
       <button class="filter-button">
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,42 +41,44 @@
 
     <h3 class="edvlisting-items_title">{{ schoolsListElementsCount }} школ(а/ы)</h3>
 
-    <SchoolCard
-      v-for="school in schoolsList"
-      :key="school.id"
-      :school="school"
-    />
-
-    <div class="text-center">
-      <div class="shows-cource">Показано {{ schoolsList.length }} школ из {{ schoolsListElementsCount }}</div>
-      <a
-        v-if="pagesCount > 0 && page < pagesCount"
-        href="#"
-        class="btn-outline shows-cource-btn"
-        @click.prevent="showMore"
-      >
-        Показать еще
-      </a>
-    </div>
-
-    <div class="pagination-showsitem">
-      <edvisor-pagination
-        :pages-count="pagesCount"
-        v-model="page"
-        @input="loadData('page')"
+    <div v-if="schoolsList.length > 0">
+      <SchoolCard
+        v-for="school in schoolsList"
+        :key="school.id"
+        :school="school"
       />
 
-      <div class="showsitem">
-        <select class="showsitem_select" v-model="limit" @change="loadData">
-          <option
-            v-for="(availableLimit, index) in availableLimits"
-            :key="index"
-            :value="availableLimit"
-            :selected="availableLimit === limit"
-          >
-            Показывать по {{ availableLimit }}
-          </option>
-        </select>
+      <div class="text-center">
+        <div class="shows-cource">Показано {{ schoolsList.length }} школ из {{ schoolsListElementsCount }}</div>
+        <a
+          v-if="pagesCount > 0 && page < pagesCount"
+          href="#"
+          class="btn-outline shows-cource-btn"
+          @click.prevent="showMore"
+        >
+          Показать еще
+        </a>
+      </div>
+
+      <div class="pagination-showsitem">
+        <edvisor-pagination
+          :pages-count="pagesCount"
+          v-model="page"
+          @input="loadData('page')"
+        />
+
+        <div class="showsitem">
+          <select class="showsitem_select" v-model="limit" @change="loadData">
+            <option
+              v-for="(availableLimit, index) in availableLimits"
+              :key="index"
+              :value="availableLimit"
+              :selected="availableLimit === limit"
+            >
+              Показывать по {{ availableLimit }}
+            </option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
