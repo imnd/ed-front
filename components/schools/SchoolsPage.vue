@@ -41,7 +41,7 @@
 
     <h3 class="edvlisting-items_title">{{ schoolsListElementsCount }} школ(а/ы)</h3>
 
-    <school-card
+    <SchoolCard
       v-for="school in schoolsList"
       :key="school.id"
       :school="school"
@@ -63,7 +63,7 @@
       <edvisor-pagination
         :pages-count="pagesCount"
         v-model="page"
-        @update:modelValue="loadData('page')"
+        @input="loadData('page')"
       />
 
       <div class="showsitem">
@@ -83,10 +83,10 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
-import {debounce} from 'throttle-debounce';
-import SchoolCard from '@/components/schools/SchoolCard';
-import EdvisorPagination from '@/components/common/EdvisorPagination';
+import { mapState } from 'vuex'
+import { debounce } from 'throttle-debounce'
+import SchoolCard from '@/components/schools/SchoolCard'
+import EdvisorPagination from '@/components/common/EdvisorPagination'
 
 export default {
   name: 'SchoolsPage',
@@ -96,7 +96,7 @@ export default {
       type: Number,
     },
   },
-  data() {
+  data () {
     return {
       page: 1,
       sortingType: 'HIGH_RATING_FIRST',
@@ -104,50 +104,50 @@ export default {
       limit: 20,
       availableLimits: [20, 50, 100],
       availableSortingTypes: [
-        {value: 'HIGH_RATING_FIRST', title: 'Сначала высокий рейтинг'},
-        {value: 'BY_REVIEWS_COUNT_DESC', title: 'По количеству отзывов'},
-        {value: 'BY_SCHOOL_NAME_ASC', title: 'По названию A-Z'},
-        {value: 'BY_SCHOOL_NAME_DESC', title: 'По названию Z-A'},
+        { value: 'HIGH_RATING_FIRST', title: 'Сначала высокий рейтинг' },
+        { value: 'BY_REVIEWS_COUNT_DESC', title: 'По количеству отзывов' },
+        { value: 'BY_SCHOOL_NAME_ASC', title: 'По названию A-Z' },
+        { value: 'BY_SCHOOL_NAME_DESC', title: 'По названию Z-A' },
       ],
-    };
+    }
   },
   computed: {
     ...mapState('courses', ['courses', 'coursesCount']),
     ...mapState('schools', ['schoolsList', 'schoolsListElementsCount']),
-    pagesCount() {
-      return Math.ceil(this.schoolsListElementsCount / this.limit);
+    pagesCount () {
+      return Math.ceil(this.schoolsListElementsCount / this.limit)
     },
   },
   watch: {
-    currentPage(value) {
-      this.page = value;
+    currentPage (value) {
+      this.page = value
     },
   },
   methods: {
-    showMore() {
-      this.page++;
+    showMore () {
+      this.page++
 
       this.$emit('showMore', {
         page: this.page,
-      });
+      })
     },
-    loadData(changedPropName) {
+    loadData (changedPropName) {
       if (changedPropName !== 'page') {
-        this.page = 1;
+        this.page = 1
       }
 
-      this.$emit('update:filters', {
+      this.$emit('update-filters', {
         page: this.page,
         sortingType: this.sortingType,
         searchString: this.searchString,
         limit: this.limit,
-      });
+      })
     },
     debounceLoadData: debounce(800, function (changedPropName) {
-      this.loadData(changedPropName);
+      this.loadData(changedPropName)
     }),
   },
-};
+}
 </script>
 
 <style lang="scss">

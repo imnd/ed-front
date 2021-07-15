@@ -1,25 +1,25 @@
 <template>
   <div>
     <div class="checkbox-items">
-      <edvisor-checkbox
+      <EdvisorCheckbox
         v-for="item in visibleItems"
         :key="item[itemValuePropName]"
-        :value="item[itemValuePropName]"
+        :id="item[itemValuePropName]"
         :text="item[itemTextPropName]"
         class="checkbox-items__checkbox"
         v-model="model"
-        @@input="$emit('input', $event)"
+        @input="model = $event"
       />
 
       <template v-if="isHiddenItemsShowed">
-        <edvisor-checkbox
+        <EdvisorCheckbox
           v-for="item in hiddenItems"
           :key="item[itemValuePropName]"
-          :value="item[itemValuePropName]"
+          :id="item[itemValuePropName]"
           :text="item[itemTextPropName]"
           class="checkbox-items__checkbox"
           v-model="model"
-          @@input="$emit('input', $event)"
+          @input="model = $event"
         />
       </template>
     </div>
@@ -62,20 +62,24 @@ export default {
   },
   data () {
     return {
-      model: [],
       isHiddenItemsShowed: false,
     }
   },
   computed: {
+    model: {
+      get () {
+        return this.value
+      },
+      set (value) {
+        return this.$emit('input', value)
+      },
+    },
     visibleItems () {
       return this.items.slice(0, this.visibleItemsSize)
     },
     hiddenItems () {
       return this.items.slice(this.visibleItemsSize)
     },
-  },
-  created () {
-    this.model = [...this.value]
   },
 }
 </script>

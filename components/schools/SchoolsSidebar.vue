@@ -15,7 +15,8 @@
       <aside v-if="categories && categories.length > 0">
         <div class="title-sidebar">Категория курса</div>
         <div class="hide-phone">
-          <edvisor-checkbox-group
+          <EdvisorCheckboxGroup
+            v-model="selectedCategories"
             v-for="category in categories"
             :key="category.id"
             :value="category.id"
@@ -25,8 +26,7 @@
             item-text-prop-name="title"
             class="schools__categories-list"
             id="qwe"
-            v-model="selectedCategories"
-            @update:modelValue="handleFilterChanging"
+            @input="handleFilterChanging"
           />
         </div>
       </aside>
@@ -34,12 +34,12 @@
       <aside v-if="paymentTypes && paymentTypes.length > 0">
         <div class="title-sidebar">Тип оплаты</div>
         <div class="hide-phone">
-          <edvisor-checkbox-list
+          <EdvisorCheckboxList
+            v-model="selectedPaymentTypes"
             :items="paymentTypes"
             item-value-prop-name="id"
             item-text-prop-name="title"
-            v-model="selectedPaymentTypes"
-            @update:modelValue="handleFilterChanging"
+            @input="handleFilterChanging"
           />
         </div>
       </aside>
@@ -47,12 +47,12 @@
       <aside v-if="educationFormats && educationFormats.length > 0">
         <div class="title-sidebar">Формат обучения</div>
         <div class="hide-phone">
-          <edvisor-checkbox-list
+          <EdvisorCheckboxList
+            v-model="selectedEducationFormats"
             :items="educationFormats"
             item-value-prop-name="id"
             item-text-prop-name="title"
-            v-model="selectedEducationFormats"
-            @update:modelValue="handleFilterChanging"
+            @input="handleFilterChanging"
           />
         </div>
       </aside>
@@ -64,20 +64,20 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
-import EdvisorCheckboxGroup from '@/components/common/EdvisorCheckboxGroup';
-import EdvisorCheckboxList from '@/components/common/EdvisorCheckboxList';
+import { mapState } from 'vuex'
+import EdvisorCheckboxGroup from '@/components/common/EdvisorCheckboxGroup'
+import EdvisorCheckboxList from '@/components/common/EdvisorCheckboxList'
 
 export default {
   name: 'SchoolsSidebar',
-  components: {EdvisorCheckboxGroup, EdvisorCheckboxList},
-  data() {
+  components: { EdvisorCheckboxGroup, EdvisorCheckboxList },
+  data () {
     return {
       selectedCategories: [],
       selectedDuration: [],
       selectedPaymentTypes: [],
       selectedEducationFormats: [],
-    };
+    }
   },
   computed: {
     ...mapState('schools-categories', ['categories']),
@@ -85,18 +85,26 @@ export default {
     ...mapState('education-formats', ['educationFormats']),
     ...mapState('payment-types', ['paymentTypes']),
     ...mapState('schools', ['schoolsListElementsCount']),
+    model: {
+      get () {
+        return this.value
+      },
+      set (value) {
+        return this.$emit('input', value)
+      },
+    },
   },
   methods: {
-    handleFilterChanging() {
-      this.$emit('update:filters', {
+    handleFilterChanging () {
+      this.$emit('update-filters', {
         selectedCategories: this.selectedCategories,
         selectedDuration: this.selectedDuration,
         selectedPaymentTypes: this.selectedPaymentTypes,
         selectedEducationFormats: this.selectedEducationFormats,
-      });
+      })
     },
   },
-};
+}
 </script>
 
 <style scoped lang="scss">

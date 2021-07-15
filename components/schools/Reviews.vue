@@ -130,7 +130,7 @@
         <edvisor-pagination
           :pages-count="pagesCount"
           v-model="currentPage"
-          @update:modelValue="rebuildCurrentReviews"
+          @input="rebuildCurrentReviews"
         />
 
         <div class="showsitem">
@@ -155,70 +155,70 @@
 </template>
 
 <script>
-import moment from 'moment';
-import EdvisorPagination from '@/components/common/EdvisorPagination';
-import EdvisorContentLimiter from '@/components/common/EdvisorContentLimiter';
+import moment from 'moment'
+import EdvisorPagination from '@/components/common/EdvisorPagination'
+import EdvisorContentLimiter from '@/components/common/EdvisorContentLimiter'
 
 export default {
   name: 'Reviews',
-  components: {EdvisorContentLimiter, EdvisorPagination},
+  components: { EdvisorContentLimiter, EdvisorPagination },
   props: {
     school: {
       type: Object,
     },
   },
-  data() {
+  data () {
     return {
       pageLimits: [6, 12, 24, 48],
       currentPageLimit: 12,
       currentPage: 1,
       currentReviews: [],
       maxContentLength: 500,
-    };
+    }
   },
   computed: {
-    pagesCount() {
-      return Math.ceil(this.school.reviews.length / this.currentPageLimit);
+    pagesCount () {
+      return Math.ceil(this.school.reviews.length / this.currentPageLimit)
     },
-    averageRating() {
-      return (this.school.reviews.reduce((sum, review) => sum + parseInt(review.comment_rating || 0), 0) / this.school.reviews.length).toFixed(1);
+    averageRating () {
+      return (this.school.reviews.reduce((sum, review) => sum + parseInt(review.comment_rating || 0), 0) / this.school.reviews.length).toFixed(1)
     },
   },
   watch: {
-    currentPageLimit() {
-      this.currentPage = 1;
-      this.rebuildCurrentReviews();
+    currentPageLimit () {
+      this.currentPage = 1
+      this.rebuildCurrentReviews()
     },
   },
   methods: {
-    formatDate(date) {
-      return moment(date).format('DD.MM.YYYY');
+    formatDate (date) {
+      return moment(date).format('DD.MM.YYYY')
     },
-    rebuildCurrentReviews() {
+    rebuildCurrentReviews () {
       this.currentReviews = this.school.reviews.slice(
         (this.currentPage - 1) * this.currentPageLimit,
         (this.currentPage - 1) * this.currentPageLimit + this.currentPageLimit,
-      );
+      )
     },
-    loadMore() {
-      this.currentPage++;
+    loadMore () {
+      this.currentPage++
 
-      const showedReviews = [...this.currentReviews];
-      this.rebuildCurrentReviews();
-      this.currentReviews = [...showedReviews, ...this.currentReviews];
+      const showedReviews = [...this.currentReviews]
+      this.rebuildCurrentReviews()
+      this.currentReviews = [...showedReviews, ...this.currentReviews]
     },
-    calcRatingPercent(ratingValue) {
-      const reviewsWithRatingValue = this.school.reviews.filter(review => parseInt(review.comment_rating) === ratingValue);
+    calcRatingPercent (ratingValue) {
+      const reviewsWithRatingValue = this.school.reviews.filter(review => parseInt(review.comment_rating) === ratingValue)
 
-      return Math.floor((reviewsWithRatingValue.length / this.school.reviews.length) * 100);
+      return Math.floor((reviewsWithRatingValue.length / this.school.reviews.length) * 100)
     },
   },
-  created() {
+  created () {
     if (this.school.reviews.length > 0) {
-      this.currentReviews = this.school.reviews.slice(0, this.currentPageLimit);
+      this.currentReviews = this.school.reviews.slice(0, this.currentPageLimit)
     }
   },
-};
+}
 </script>
 
 <style scoped lang="scss">
