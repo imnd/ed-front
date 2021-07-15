@@ -31,7 +31,7 @@ footer {
   width: 100%;
   color: #ffffff;
   line-height: 150%;
-  z-index: 99999;
+  z-index: 10000;
 
   .container {
     display: flex;
