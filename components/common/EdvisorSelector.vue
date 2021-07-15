@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import EdvisorModal from '@/components/common/EdvisorModal';
-import EdvisorCheckbox from '@/components/common/EdvisorCheckbox';
-import EdvisorCheckboxGroup from '@/components/common/EdvisorCheckboxGroup';
+import EdvisorModal from '@/components/common/EdvisorModal'
+import EdvisorCheckbox from '@/components/common/EdvisorCheckbox'
+import EdvisorCheckboxGroup from '@/components/common/EdvisorCheckboxGroup'
 
 export default {
   name: 'EdvisorSelector',
@@ -73,37 +73,37 @@ export default {
       default: 'text',
     },
   },
-  data() {
+  data () {
     return {
       isItemsShowed: false,
       parentHeight: 0,
-    };
+    }
   },
   computed: {
     model: {
-      get() {
-        return this.value;
+      get () {
+        return this.value
       },
-      set(value) {
-        this.$emit('@input', value);
+      set (value) {
+        this.$emit('input', value)
       },
     },
-    modalComponent() {
-      return this.withChildren ? 'EdvisorCheckboxGroup' : 'EdvisorCheckbox';
+    modalComponent () {
+      return this.withChildren ? 'EdvisorCheckboxGroup' : 'EdvisorCheckbox'
     },
-    allValues() {
+    allValues () {
       return this.withChildren
         ? this.items.reduce((result, i) => [...result, i[this.itemValuePropName], ...i[this.childrenPropName].map(c => c[this.childValuePropName])], [])
         : this.items.map(i => i[this.itemValuePropName])
     },
-    selectedItemsCount() {
-      return this.model.filter(value => this.allValues.includes(value)).length;
+    selectedItemsCount () {
+      return this.model.filter(value => this.allValues.includes(value)).length
     },
   },
-  mounted() {
-    this.parentHeight = this.$el.parentElement.offsetHeight;
+  mounted () {
+    this.parentHeight = this.$el.parentElement.offsetHeight
   },
-};
+}
 </script>
 
 <style scoped lang="scss">

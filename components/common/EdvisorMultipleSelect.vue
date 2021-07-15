@@ -69,12 +69,12 @@
 </template>
 
 <script>
-import EdvisorCheckbox from '@/components/common/EdvisorCheckbox';
-import EdvisorCheckboxGroup from '@/components/common/EdvisorCheckboxGroup';
+import EdvisorCheckbox from '@/components/common/EdvisorCheckbox'
+import EdvisorCheckboxGroup from '@/components/common/EdvisorCheckboxGroup'
 
 export default {
   name: 'EdvisorMultipleSelect',
-  components: {EdvisorCheckboxGroup, EdvisorCheckbox},
+  components: { EdvisorCheckboxGroup, EdvisorCheckbox },
   props: {
     value: {
       type: Array,
@@ -113,45 +113,45 @@ export default {
       required: true,
     },
   },
-  data() {
+  data () {
     return {
       isActive: false,
-    };
+    }
   },
   computed: {
-    listComponent() {
-      return this.withChildren ? 'EdvisorCheckboxGroup' : 'EdvisorCheckbox';
+    listComponent () {
+      return this.withChildren ? 'EdvisorCheckboxGroup' : 'EdvisorCheckbox'
     },
-    doesModelIncludeValues() {
-      return this.model.find(item => this.allValues.includes(item)) !== undefined;
+    doesModelIncludeValues () {
+      return this.model.find(item => this.allValues.includes(item)) !== undefined
     },
-    allValues() {
+    allValues () {
       return this.withChildren
         ? this.items.reduce((result, i) => [...result, i[this.itemValuePropName], ...i[this.childrenPropName].map(c => c[this.childValuePropName])], [])
-        : [...this.items.map(i => i[this.itemValuePropName])];
+        : [...this.items.map(i => i[this.itemValuePropName])]
     },
     model: {
-      get() {
-        return this.value;
+      get () {
+        return this.value
       },
-      set(value) {
-        return this.$emit('input', value);
+      set (value) {
+        return this.$emit('input', value)
       },
     },
   },
   methods: {
-    selectAllOrClear() {
+    selectAllOrClear () {
       if (this.doesModelIncludeValues) {
-        this.model = this.model.filter(item => !this.allValues.includes(item));
+        this.model = this.model.filter(item => !this.allValues.includes(item))
       } else {
         this.model = [
           ...this.value,
           ...this.allValues.filter(value => !this.model.includes(value))
-        ];
+        ]
       }
     },
   },
-};
+}
 </script>
 
 <style scoped lang="scss">

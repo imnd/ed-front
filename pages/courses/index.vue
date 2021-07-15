@@ -130,28 +130,15 @@ export default {
     },
 
     updateUrl () {
-      let path = '/courses'
       const query = {}
 
       if (this.filters.selectedCategories.length > 0) {
-        const categoriesString = this.categories.map(c => [c.id, ...c.subCategories.map(sc => sc.id)].sort().toString())
+        const categoriesIds = this.categories.map(
+          c => [c.id, ...c.subCategories.map(sc => sc.id)].sort().toString()
+        )
 
         if (this.filters.selectedCategories.length === 1) {
-          const selectedCategoryId = this.filters.selectedCategories[0]
-          let isParentCategory = true
-
-          let parentCategory = this.categories.find(c => c.id === selectedCategoryId)
-          if (!parentCategory) {
-            parentCategory = this.categories.find(c => c.subCategories.find(sc => sc.id === selectedCategoryId) !== undefined)
-            isParentCategory = false
-          }
-
-          const childCategory = isParentCategory ? null : parentCategory.subCategories.find(sc => sc.id === selectedCategoryId)
-
-          path = `${path}/${parentCategory.slug}/${childCategory ? `${childCategory.slug}/` : ''}`
-        } else if (categoriesString.includes([...this.filters.selectedCategories.sort()].toString())) {
-          const parentCategory = this.categories.find(c => this.filters.selectedCategories.includes(c.id))
-          path = `${path}/${parentCategory.slug}/`
+          query.category = this.filters.selectedCategories[0]
         } else {
           query.category = this.categories
             .reduce(
@@ -161,8 +148,9 @@ export default {
                 }
 
                 result.push(
-                  ...parentCategory.subCategories.filter(sc => this.filters.selectedCategories.includes(sc.id))
-                    .map(sc => sc.slug)
+                  ...parentCategory.subCategories
+                    .filter(subCat => this.filters.selectedCategories.includes(subCat.id))
+                    .map(subCat => subCat.slug)
                 )
 
                 return result
@@ -220,7 +208,7 @@ export default {
           }, [])
           .join(',')
       }
-
+      const path = '/courses'
       this.$router.push({ path, query })
 
       const metaCanonical = document.querySelector('[rel="canonical"]')

@@ -1,16 +1,24 @@
 <template>
   <div class="edvisor-checkbox-group">
     <div class="edvisor-checkbox-group__parent">
-      <edvisor-checkbox
+      <EdvisorCheckbox
         v-model="model"
-        :value="id"
+        :id="id"
         :text="text"
         class="edvisor-checkbox-group__parent-input"
-        @@input="parentChangeStateHandler"
+        @input="parentChangeState"
       />
 
-      <svg width="12" height="8" viewBox="0 0 12 8" class="edvisor-checkbox-group__parent-icon" :class="{ 'edvisor-checkbox-group__parent-icon_active': isToggled }" @click="isToggled = !isToggled">
-        <path d="M6.00011 4.97656L10.1251 0.851562L11.3034 2.0299L6.00011 7.33323L0.696777 2.0299L1.87511 0.851562L6.00011 4.97656Z" />
+      <svg
+        width="12"
+        height="8"
+        viewBox="0 0 12 8"
+        class="edvisor-checkbox-group__parent-icon"
+        :class="{ 'edvisor-checkbox-group__parent-icon_active': isToggled }"
+        @click="isToggled = !isToggled"
+      >
+        <path
+          d="M6.00011 4.97656L10.1251 0.851562L11.3034 2.0299L6.00011 7.33323L0.696777 2.0299L1.87511 0.851562L6.00011 4.97656Z"/>
       </svg>
     </div>
 
@@ -20,10 +28,11 @@
         :key="itemIndex"
         class="edvisor-checkbox-group__children-list-item"
       >
-        <edvisor-checkbox
-          :value="item[itemValuePropName]"
+        <EdvisorCheckbox
+          :id="item[itemValuePropName]"
           :text="item[itemTextPropName]"
           v-model="model"
+          @input="model = $event"
         />
       </li>
     </ul>
@@ -31,7 +40,7 @@
 </template>
 
 <script>
-import EdvisorCheckbox from '@/components/common/EdvisorCheckbox';
+import EdvisorCheckbox from '@/components/common/EdvisorCheckbox'
 
 export default {
   name: 'EdvisorCheckboxGroup',
@@ -61,46 +70,44 @@ export default {
       default: 'text',
     },
   },
-  data() {
+  data () {
     return {
       isToggled: false,
-    };
+    }
   },
   computed: {
     model: {
-      get() {
-        return this.value;
+      get () {
+        return this.value
       },
-      set(value) {
-        return this.$emit('input', value);
+      set (value) {
+        return this.$emit('input', value)
       },
     },
-    isParentChecked() {
-      return this.value.includes(this.id);
+    isParentChecked () {
+      return this.value.includes(this.id)
     },
   },
   methods: {
-    parentChangeStateHandler(newModelValue) {
-      const isChecked = newModelValue.includes(this.id);
+    parentChangeState (newModelValue) {
+      this.isToggled = newModelValue.includes(this.id)
 
-      this.isToggled = isChecked;
+      const allValues = [...this.items.map(item => item[this.itemValuePropName]), this.id]
+      const modelWithoutAllValues = this.value.filter(item => !allValues.includes(item))
 
-      const allValues = [...this.items.map(item => item[this.itemValuePropName]), this.id];
-      const modelWithoutAllValues = this.value.filter(item => !allValues.includes(item));
-
-      if (isChecked) {
-        this.$emit('@input', [...modelWithoutAllValues, ...allValues]);
+      if (this.isToggled) {
+        this.$emit('input', [...modelWithoutAllValues, ...allValues])
       } else {
-        this.$emit('@input', modelWithoutAllValues);
+        this.$emit('input', modelWithoutAllValues)
       }
     },
   },
-  created() {
+  created () {
     if (this.value.includes(this.id)) {
-      this.isToggled = true;
+      this.isToggled = true
     }
   }
-};
+}
 </script>
 
 <style scoped lang="scss">
