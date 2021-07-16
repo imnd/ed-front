@@ -16,29 +16,29 @@
 <script>
 export default {
   name: 'MenuTop',
-  data() {
+  data () {
     return {
       isOpen: false,
       list: [
         {
           'name': 'Категории',
-          'route': '#'
+          'route': 'school-categories'
         },
         {
           'name': 'Курсы',
-          'route': '#'
+          'route': 'courses'
         },
         {
           'name': 'Школы',
-          'route': '#'
+          'route': 'schools'
         },
         {
           'name': 'Акции школ',
-          'route': '#'
+          'route': 'promotions'
         },
         {
           'name': 'Блог',
-          'route': '#'
+          'route': 'blog'
         }
       ]
     }
