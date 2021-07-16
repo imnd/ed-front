@@ -33,23 +33,23 @@ export default {
       list: [
         {
           name: 'Категории',
-          route: '#'
+          route: '/courses-categories'
         },
         {
           name: 'Курсы',
-          route: '#'
+          route: '/courses'
         },
         {
           name: 'Школы',
-          route: '#'
+          route: '/schools'
         },
         {
           name: 'Акции школ',
-          route: '#'
+          route: '/sales'
         },
         {
           name: 'Блог',
-          route: '#'
+          route: '/posts'
         }
       ]
     };
@@ -71,6 +71,7 @@ $mobile-items-gap: 20px;
     gap: $items-gap;
     list-style: none;
     padding: 0;
+    margin: 0;
 
     @media (max-width: 768px) {
       max-height: 0;
