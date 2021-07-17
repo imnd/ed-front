@@ -1,0 +1,16 @@
+name: deploy_prod
+
+env:
+  REGISTRY: 'registry.digitalocean.com/edvisor'
+  IMAGE_NAME: edvisor-frontend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/build

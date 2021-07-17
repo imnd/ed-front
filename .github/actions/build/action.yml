@@ -1,0 +1,16 @@
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v2
+    - name: Build image
+      run: docker build -t $REGISTRY/$IMAGE_NAME:${{github.sha}} .
+
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+    - name: Push image to DigitalOcean
+      run: |
+        doctl registry login
+        docker push $REGISTRY/$IMAGE_NAME:${{github.sha}}
