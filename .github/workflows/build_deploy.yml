@@ -1,4 +1,4 @@
-name: build
+name: build_deploy
 
 env:
   REGISTRY: 'registry.digitalocean.com/edvisor'
@@ -9,7 +9,6 @@ on: workflow_dispatch
 jobs:
   docker:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
       - name: Build image
