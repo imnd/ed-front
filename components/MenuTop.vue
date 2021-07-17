@@ -1,12 +1,23 @@
 <template>
   <div class="menu">
-    <div :class="'menu__burger d-flex d-md-none' + (isOpen ? ' menu__burger_open' : '')" @click="isOpen = !isOpen">
+    <div
+      :class="
+        'menu__burger d-flex d-md-none' + (isOpen ? ' menu__burger_open' : '')
+      "
+      @click="isOpen = !isOpen"
+    >
       <span></span>
       <span></span>
       <span></span>
     </div>
     <ul :class="'menu__list' + (isOpen ? ' menu__list_open' : '')">
-      <li v-for="item in list" :class="isOpen ? 'menu__list-item menu__list_open-item' : 'menu__list-item'">
+      <li
+        v-for="item in list"
+        :key="item.name"
+        :class="
+          isOpen ? 'menu__list-item menu__list_open-item' : 'menu__list-item'
+        "
+      >
         <NuxtLink :to="item.route">{{ item.name }}</NuxtLink>
       </li>
     </ul>
@@ -21,29 +32,29 @@ export default {
       isOpen: false,
       list: [
         {
-          'name': 'Категории',
-          'route': '#'
+          name: 'Категории',
+          route: '#'
         },
         {
-          'name': 'Курсы',
-          'route': '#'
+          name: 'Курсы',
+          route: '#'
         },
         {
-          'name': 'Школы',
-          'route': '#'
+          name: 'Школы',
+          route: '#'
         },
         {
-          'name': 'Акции школ',
-          'route': '#'
+          name: 'Акции школ',
+          route: '#'
         },
         {
-          'name': 'Блог',
-          'route': '#'
+          name: 'Блог',
+          route: '#'
         }
       ]
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -92,7 +103,6 @@ $mobile-items-gap: 20px;
     }
 
     &-item {
-
       a {
         font-weight: 500;
         font-size: $item-font-size;
