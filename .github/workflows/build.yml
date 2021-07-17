@@ -4,7 +4,13 @@ env:
   REGISTRY: 'registry.digitalocean.com/edvisor'
   IMAGE_NAME: edvisorru/edvisor-frontend
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Build and deploy'
+        required: true
+        default: 'Mona the Octocat'
 
 jobs:
   docker:
