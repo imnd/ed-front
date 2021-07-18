@@ -11,7 +11,7 @@ RUN npm run generate
 FROM nginx:alpine
 COPY --from=builder /app/dist/ /var/www
 RUN rm /etc/nginx/conf.d/default.conf
-COPY .env.ci /.env
+COPY .env /.env
 COPY ./.docker/nginx.conf /etc/nginx/conf.d/default.conf
 COPY entrypoint.sh /entrypoint.sh
 
