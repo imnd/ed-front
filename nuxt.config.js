@@ -2,7 +2,7 @@ export default {
   target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   env: {
-    apiUrl: process.env.API_URL || 'http://localhost:3000'
+    apiUrl: process.env.APP_API_URL || 'http://localhost:3000'
   },
   head: {
     title: 'edvisor',

@@ -1,9 +1,9 @@
-name: cicd
+name: test
 
 on: push
 
 jobs:
-  tests:
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -11,7 +11,7 @@ jobs:
         node: [14]
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       - name: Setup node env
         uses: actions/setup-node@v2.1.5
@@ -32,25 +32,3 @@ jobs:
 
       - name: Run tests
         run: npm run test
-
-  docker:
-    if: github.ref == 'refs/heads/main'
-    needs: tests
-    env:
-      REGISTRY: 'registry.digitalocean.com/edvisor'
-      IMAGE_NAME: edvisor-frontend
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Build image
-        run: docker build -t $REGISTRY/$IMAGE_NAME:${{github.sha}} .
-
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-
-      - name: Push image to DigitalOcean
-        run: |
-          doctl registry login
-          docker push $REGISTRY/$IMAGE_NAME:${{github.sha}}
