@@ -3,7 +3,7 @@
 set -e
 
 PREFIX='REPLACE_'
-SUBSTITUTES=$(cat .env | grep "%$PREFIX" | sed -E "s/APP_([a-zA-Z_]+)=%$PREFIX([a-zA-Z_]+)%/s|%$PREFIX\1%|$\{\1\}|g; /")
+SUBSTITUTES=$(cat .env | grep "%$PREFIX" | sed -E "s/EDVISOR_([a-zA-Z_]+)=%$PREFIX([a-zA-Z_]+)%/s|%$PREFIX\1%|$\{\1\}|g; /")
 
 echo "Substituting %$PREFIX*% with env variables..."
 
