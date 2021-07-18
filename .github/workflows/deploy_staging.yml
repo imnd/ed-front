@@ -63,7 +63,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [tests, docker]
+    needs: [test, docker]
     steps:
       - name: send deploy webhook
         run: |
