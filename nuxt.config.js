@@ -1,7 +1,12 @@
 export default {
   mode: 'universal',
-
+  target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
+  env: {
+    baseApiUrl: process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000',
+    baseAppUrl: process.env.VUE_APP_BASE_URL || 'http://localhost',
+    redirectUrl: (process.env.VUE_APP_BASE_URL || 'http://localhost/') + 'redirect?link=',
+  },
   head: {
     title: 'edvisor',
     htmlAttrs: {
@@ -23,10 +28,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '~/assets/bootstrap/bootstrap-grid.min.css',
-    '~/assets/scss/main.scss'
-  ],
+  css: ['~/assets/bootstrap/bootstrap-grid.min.css', '~/assets/scss/main.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -44,6 +46,7 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/http',
     '@nuxtjs/style-resources',
     '@nuxtjs/google-fonts'
   ],
@@ -52,26 +55,22 @@ export default {
     // proxy: true
   },
 
+  http: {
+    // proxyHeaders: false
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
-  env: {
-    baseApiUrl: process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000',
-    baseAppUrl: process.env.VUE_APP_BASE_URL || 'http://localhost',
-    redirectUrl: (process.env.VUE_APP_BASE_URL || 'http://localhost/') + 'redirect?link=',
-  },
-
   styleResources: {
-    scss: [
-      '~/assets/scss/variables.scss',
-    ]
+    scss: ['~/assets/scss/variables.scss']
   },
 
   googleFonts: {
     families: {
       Raleway: {
-        wght: [400, 500, 600, 700, 800],
-      },
+        wght: [400, 500, 600, 700, 800]
+      }
     },
     display: 'swap',
     download: true

@@ -17,7 +17,7 @@
 <script>
 export default {
   name: 'FooterDefault'
-}
+};
 </script>
 
 <style scoped lang="scss">

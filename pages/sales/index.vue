@@ -1,37 +1,37 @@
 <template>
-  <div class="container middle-container promotions-page">
-    <div class="promotions-page__header">
-      <h1 class="promotions-page__title">Акции</h1>
+  <div class="container middle-container sales-page">
+    <div class="sales-page__header">
+      <h1 class="sales-page__title">Акции</h1>
 
-      <p class="promotions-page__description">На этой странице мы предоставляем все текущие промо-акции и скидки
+      <p class="sales-page__description">На этой странице мы предоставляем все текущие промо-акции и скидки
         онлайн-школ! Надеемся, они будут вам полезны!</p>
     </div>
 
-    <div class="edv-shares" v-if="promotions.length > 0">
+    <div class="edv-shares" v-if="sales.length > 0">
       <div
-        v-for="promotion in promotions"
-        :key="promotion.id"
+        v-for="sale in sales"
+        :key="sale.id"
         class="item"
       >
         <div class="img">
-          <img v-if="promotion.school.logo" :src="promotion.school.logo" class="img img-fluid">
+          <img v-if="sale.school.logo" :src="sale.school.logo" class="img img-fluid">
         </div>
         <div class="reviews">
-          <div class="title">{{ promotion.school.title }}</div>
+          <div class="title">{{ sale.school.title }}</div>
           <div class="edv-rating">
             <div class="star"></div>
-            <div class="value">{{ promotion.averageRating }}</div>
+            <div class="value">{{ sale.averageRating }}</div>
           </div>
         </div>
 
-        <div class="date">Срок проведения: c {{ formatDate(promotion.dateStart) }} до
-          {{ formatDate(promotion.dateEnd) }}
+        <div class="date">Срок проведения: c {{ formatDate(sale.dateStart) }} до
+          {{ formatDate(sale.dateEnd) }}
         </div>
-        <div class="title-shares">{{ promotion.title }}</div>
+        <div class="title-shares">{{ sale.title }}</div>
         <div class="text">
-          {{ promotion.promo_description }}
+          {{ sale.promo_description }}
         </div>
-        <a :href="promotion.saleUrl" target="_blank" class="btn-feo btn-feo-arrow">Акция на сайте школы</a>
+        <a :href="sale.saleUrl" target="_blank" class="btn-feo btn-feo-arrow">Акция на сайте школы</a>
       </div>
     </div>
 
@@ -47,10 +47,10 @@ import moment from 'moment'
 
 export default {
   computed: {
-    ...mapState('promotions', ['promotions']),
+    ...mapState('sales', ['sales']),
   },
   methods: {
-    ...mapActions('promotions', ['getPromotions']),
+    ...mapActions('sales', ['getPromotions']),
     formatDate (value) {
       return moment(value).format('DD.MM.YYYY')
     },
@@ -62,7 +62,7 @@ export default {
 </script>
 
 <style lang="scss">
-.promotions-page {
+.sales-page {
   font-family: Raleway, sans-serif;
   font-size: 16px;
   font-weight: 500;
@@ -94,7 +94,7 @@ export default {
     margin-bottom: 32px;
   }
 
-  &__promotions-list {
+  &__sales-list {
     margin: 0;
     padding: 0;
     list-style-type: none;
@@ -109,7 +109,7 @@ export default {
     text-align: center;
   }
 
-  &__promotions-count-info {
+  &__sales-count-info {
     color: #757575;
     margin-bottom: 20px;
   }
@@ -137,7 +137,7 @@ export default {
 }
 
 @media (min-width: 768px) {
-  .promotions-page {
+  .sales-page {
     &__button-show-more {
       width: auto;
     }
@@ -145,8 +145,8 @@ export default {
 }
 
 @media (min-width: 1440px) {
-  .promotions-page {
-    &__promotions-list {
+  .sales-page {
+    &__sales-list {
       margin-top: 0;
     }
   }

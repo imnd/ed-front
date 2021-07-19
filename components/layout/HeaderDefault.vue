@@ -1,19 +1,19 @@
 <template>
   <div class="header">
     <div class="container">
-      <Logo/>
-      <MenuTop/>
+      <Logo />
+      <MenuTop />
     </div>
   </div>
 </template>
 
 <script>
-import MenuTop from '../MenuTop'
+import MenuTop from '../MenuTop';
 
 export default {
   name: 'Default-header',
   components: { MenuTop }
-}
+};
 </script>
 
 <style scoped lang="scss">
@@ -42,5 +42,4 @@ $header-shadow: 0px 2px 20px rgb(0 0 0 / 10%);
     padding: $header-padding-tb $header-mobile-padding-lr;
   }
 }
-
 </style>

@@ -1,12 +1,23 @@
 <template>
   <div class="menu">
-    <div :class="'menu__burger d-flex d-md-none' + (isOpen ? ' menu__burger_open' : '')" @click="isOpen = !isOpen">
+    <div
+      :class="
+        'menu__burger d-flex d-md-none' + (isOpen ? ' menu__burger_open' : '')
+      "
+      @click="isOpen = !isOpen"
+    >
       <span></span>
       <span></span>
       <span></span>
     </div>
     <ul :class="'menu__list' + (isOpen ? ' menu__list_open' : '')">
-      <li v-for="item in list" :class="isOpen ? 'menu__list-item menu__list_open-item' : 'menu__list-item'">
+      <li
+        v-for="item in list"
+        :key="item.name"
+        :class="
+          isOpen ? 'menu__list-item menu__list_open-item' : 'menu__list-item'
+        "
+      >
         <NuxtLink :to="item.route">{{ item.name }}</NuxtLink>
       </li>
     </ul>
@@ -34,7 +45,7 @@ export default {
         },
         {
           'name': 'Акции школ',
-          'route': '/promotions'
+          'route': '/sales'
         },
         {
           'name': 'Блог',
@@ -60,6 +71,7 @@ $mobile-items-gap: 20px;
     gap: $items-gap;
     list-style: none;
     padding: 0;
+    margin: 0;
 
     @media (max-width: 768px) {
       max-height: 0;
@@ -92,7 +104,6 @@ $mobile-items-gap: 20px;
     }
 
     &-item {
-
       a {
         font-weight: 500;
         font-size: $item-font-size;
