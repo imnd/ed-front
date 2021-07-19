@@ -3,9 +3,10 @@ export default {
   target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   env: {
-    baseApiUrl: process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000',
+    baseApiUrl: process.env.EDVISOR_API_URL || 'http://localhost:3000',
     baseAppUrl: process.env.VUE_APP_BASE_URL || 'http://localhost',
-    redirectUrl: (process.env.VUE_APP_BASE_URL || 'http://localhost/') + 'redirect?link=',
+    redirectUrl:
+      (process.env.VUE_APP_BASE_URL || 'http://localhost/') + 'redirect?link='
   },
   head: {
     title: 'edvisor',
@@ -22,7 +23,8 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap'
+        href:
+          'https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap'
       }
     ]
   },
@@ -48,11 +50,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    '@nuxtjs/axios',
-    '@nuxtjs/style-resources',
-    '@nuxtjs/google-fonts'
-  ],
+  modules: ['@nuxtjs/axios', '@nuxtjs/style-resources', '@nuxtjs/google-fonts'],
 
   axios: {
     // proxy: true
@@ -85,4 +83,4 @@ export default {
     display: 'swap',
     download: true
   }
-}
+};
