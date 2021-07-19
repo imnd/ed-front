@@ -6,19 +6,19 @@
     <div class="edvlisting-row" v-if="!isLoading">
       <SchoolsSidebar @update:filters="updateFilters($event, true)"/>
       <SchoolsPage
-        :currentPage="filters.page"
-        @update:filters="updateFilters"
-        @show-more="showMoreHandler"
+          :currentPage="filters.page"
+          @update:filters="updateFilters"
+          @show-more="showMoreHandler"
       />
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import { mapActions } from 'vuex'
 
 export default {
-  data() {
+  data () {
     return {
       filters: {
         selectedCategories: null,
@@ -29,31 +29,31 @@ export default {
         limit: 20,
       },
       isLoading: true,
-    };
+    }
   },
   methods: {
     ...mapActions('schools-categories', ['getCategories']),
 
-    async updateFilters(payload, needToRefreshPage = false) {
+    async updateFilters (payload, needToRefreshPage = false) {
       if (needToRefreshPage) {
-        this.filters.page = 1;
+        this.filters.page = 1
       }
-      this.filters = {...this.filters, ...payload};
+      this.filters = { ...this.filters, ...payload }
 
-      await this.getSchoolsList({...this.filters});
+      await this.getSchoolsList({ ...this.filters })
     },
-    async showMoreHandler(payload) {
-      this.filters = {...this.filters, ...payload};
+    async showMoreHandler (payload) {
+      this.filters = { ...this.filters, ...payload }
 
-      await this.loadMore({...this.filters});
+      await this.loadMore({ ...this.filters })
     },
   },
-  async created() {
-    await this.getCategories();
+  async created () {
+    await this.getCategories()
 
-    this.isLoading = false;
+    this.isLoading = false
   },
-};
+}
 </script>
 
 <style lang="css">
@@ -12833,7 +12833,7 @@ body .select2-results {
   margin-bottom: 72px;
 }
 
-.shows-cource {
+.shows-course {
   line-height: 150%;
   font-size: 16px;
   font-weight: 500;
@@ -13208,7 +13208,7 @@ footer .links a {
   font-size: 18px;
 }
 
-.shows-cource-btn {
+.shows-course-btn {
   width: 100%;
 }
 

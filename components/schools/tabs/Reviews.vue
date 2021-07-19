@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="rating-tab" v-if="school.reviews.length > 0">
+    <div class="rating-tab" v-if="reviews.length > 0">
       <div class="header-rating">
         <div class="left">
           <svg class="progress-rating" width="132" height="132" viewBox="0 0 120 120">
@@ -66,7 +66,7 @@
 
       <div class="body-rating">
         <div class="title-sorting">
-          <div class="title">Количество отзывов: {{ school.reviews.length }}</div>
+          <div class="title">Количество отзывов: {{ reviews.length }}</div>
         </div>
 
         <div class="items">
@@ -77,37 +77,37 @@
           >
             <div class="left">
               <div class="avatar">
-                <img v-if="review.user_avatar" :src="review.user_avatar">
+                <img v-if="review.user.avatar" :src="review.user.avatar"/>
               </div>
-              <div class="name">{{ review.comment_author }}</div>
-              <div class="date">{{ formatDate(review.comment_date) }}</div>
+              <div class="name">{{ review.comments[0].user.firstName }} {{ review.comments[0].user.lastName }}</div>
+              <div class="date">{{ formatDate(review.comments[0].createdAt) }}</div>
               <div class="edv-stars">
-                <i v-for="n in parseInt(review.comment_rating || 0)" :key="n"></i>
-                <i v-for="n in (5 - parseInt(review.comment_rating || 0))" :key="n" class="star-gray"></i>
+                <i v-for="n in parseInt(review.comments[0].rating || 0)" :key="n"></i>
+                <i v-for="n in (5 - parseInt(review.comments[0].rating || 0))" :key="n" class="star-gray"></i>
               </div>
             </div>
             <div class="right">
-              <edvisor-content-limiter
-                v-if="review.comment_content"
-                :text="review.comment_content"
+              <EdvisorContentLimiter
+                v-if="review.comments[0].text"
+                :text="review.comments[0].text"
                 class="review-content"
               />
 
-              <edvisor-content-limiter
-                v-if="review.comment_advantages"
-                :text="review.comment_advantages"
+              <EdvisorContentLimiter
+                v-if="review.comments[0].advantages"
+                :text="review.comments[0].advantages"
                 class="plus"
               />
 
-              <edvisor-content-limiter
-                v-if="review.comment_disadvantages"
-                :text="review.comment_disadvantages"
+              <EdvisorContentLimiter
+                v-if="review.comments[0].disadvantages"
+                :text="review.comments[0].disadvantages"
                 class="minus"
               />
 
               <div class="likes">
-                <button class="like">{{ review.likes_count }}</button>
-                <button class="dislike">{{ review.dislikes_count }}</button>
+                <button class="like">{{ review.likes }}</button>
+                <button class="dislike">{{ review.dislikes }}</button>
               </div>
             </div>
           </div>
@@ -115,11 +115,11 @@
       </div>
 
       <div class="text-center">
-        <div class="shows-cource">Показано отзывов: {{ currentReviews.length }} из {{ school.reviews.length }}</div>
+        <div class="shows-course">Показано отзывов: {{ currentReviews.length }} из {{ reviews.length }}</div>
         <a
           v-if="currentPage < pagesCount"
           href="#"
-          class="btn-outline shows-cource-btn"
+          class="btn-outline shows-course-btn"
           @click.prevent="loadMore"
         >
           Показать еще
@@ -127,7 +127,7 @@
       </div>
 
       <div class="pagination-showsitem">
-        <edvisor-pagination
+        <EdvisorPagination
           :pages-count="pagesCount"
           v-model="currentPage"
           @input="rebuildCurrentReviews"
@@ -159,6 +159,8 @@ import moment from 'moment'
 import EdvisorPagination from '@/components/common/EdvisorPagination'
 import EdvisorContentLimiter from '@/components/common/EdvisorContentLimiter'
 
+const initPageLimit = 12
+
 export default {
   name: 'Reviews',
   components: { EdvisorContentLimiter, EdvisorPagination },
@@ -170,19 +172,29 @@ export default {
   data () {
     return {
       pageLimits: [6, 12, 24, 48],
-      currentPageLimit: 12,
+      currentPageLimit: initPageLimit,
       currentPage: 1,
-      currentReviews: [],
+      currentReviewsStart: 0,
+      currentReviewsEnd: initPageLimit,
       maxContentLength: 500,
     }
   },
   computed: {
     pagesCount () {
-      return Math.ceil(this.school.reviews.length / this.currentPageLimit)
+      return Math.ceil(this.reviews.length / this.currentPageLimit)
     },
     averageRating () {
-      return (this.school.reviews.reduce((sum, review) => sum + parseInt(review.comment_rating || 0), 0) / this.school.reviews.length).toFixed(1)
+      return (this.reviews.reduce((sum, review) => sum + parseInt(review.comments[0].rating || 0), 0) / this.reviews.length).toFixed(1)
     },
+    reviews () {
+      if (this.school.reviews) {
+        return this.school.reviews.data
+      }
+      return {}
+    },
+    currentReviews () {
+      return this.reviews.slice(this.currentReviewsStart, this.currentReviewsEnd)
+    }
   },
   watch: {
     currentPageLimit () {
@@ -195,10 +207,8 @@ export default {
       return moment(date).format('DD.MM.YYYY')
     },
     rebuildCurrentReviews () {
-      this.currentReviews = this.school.reviews.slice(
-        (this.currentPage - 1) * this.currentPageLimit,
-        (this.currentPage - 1) * this.currentPageLimit + this.currentPageLimit,
-      )
+      this.currentReviewsStart = (this.currentPage - 1) * this.currentPageLimit
+      this.currentReviewsEnd = (this.currentPage - 1) * this.currentPageLimit + this.currentPageLimit
     },
     loadMore () {
       this.currentPage++
@@ -208,15 +218,10 @@ export default {
       this.currentReviews = [...showedReviews, ...this.currentReviews]
     },
     calcRatingPercent (ratingValue) {
-      const reviewsWithRatingValue = this.school.reviews.filter(review => parseInt(review.comment_rating) === ratingValue)
+      const reviewsWithRatingValue = this.reviews.filter(review => parseInt(review.comments[0].rating) === ratingValue)
 
-      return Math.floor((reviewsWithRatingValue.length / this.school.reviews.length) * 100)
+      return Math.floor((reviewsWithRatingValue.length / this.reviews.length) * 100)
     },
-  },
-  created () {
-    if (this.school.reviews.length > 0) {
-      this.currentReviews = this.school.reviews.slice(0, this.currentPageLimit)
-    }
   },
 }
 </script>
@@ -224,7 +229,7 @@ export default {
 <style scoped lang="scss">
 .review-content {
   padding-left: 36px;
-  background: url('../../assets/images/comment.svg') left top no-repeat;
+  background: url('../../../assets/images/comment.svg') left top no-repeat;
   margin-bottom: 16px;
 }
 </style>

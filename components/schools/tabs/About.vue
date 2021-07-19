@@ -1,14 +1,14 @@
 <template>
-  <div v-html="school.school_meta.videos || ''"/>
+  <div v-html="school.description"/>
 </template>
 
 <script>
 export default {
-  name: 'PhotoAndVideo',
+  name: 'About',
   props: {
     school: {
       type: Object,
     },
   },
-};
+}
 </script>

@@ -2,64 +2,66 @@ import axios from '~/plugins/axios'
 
 export default {
   namespaced: true,
-  state() {
+  state () {
     return {
       school: {},
+      reviews: [],
       schools: [],
       schoolsList: [],
       schoolsListElementsCount: 0,
-    };
+    }
   },
   mutations: {
-    setState(state, { key, value }) {
-      state[key] = value;
+    setState (state, { key, value }) {
+      state[key] = value
     },
   },
   getters: {
     getSchoolById: state => schoolId => state.schools.find(s => parseInt(s.id) === parseInt(schoolId)) || null,
   },
   actions: {
-    async getSchool({ commit }, schoolSlug) {
+    async getSchool ({ commit }, schoolSlug) {
       try {
-        const { data: { data: school } } = await axios.get(`schools/${schoolSlug}`);
+        const { data: { data: school } } = await axios.get(`schools/${schoolSlug}`)
 
-        commit('setState', { key: 'school', value: school });
+        commit('setState', { key: 'school', value: school })
+        commit('setState', { key: 'reviews', value: school.reviews })
       } catch (error) {
-        console.error(error);
+        console.error(error)
       }
     },
 
-    async getSchools({ commit }) {
-      const { data: { data: schools } } = await axios.get('schools');
+    async getSchools ({ commit }) {
+      const { data: { data: schools } } = await axios.get('schools')
 
-      commit('setState', { key: 'schools', value: schools });
+      commit('setState', { key: 'schools', value: schools })
     },
 
-    async getSchoolsList({ commit }, filters = {}) {
+    async getSchoolsList ({ commit }, filters = {}) {
       const { data: { count, data: schoolsList } } = await axios.get('schools', {
         params: {
           ...filters,
         },
-      });
+      })
 
       commit('setState', {
         key: 'schoolsList',
         value: schoolsList
-      });
+      })
       commit('setState', {
         key: 'schoolsListElementsCount',
         value: count
-      });
+      })
     },
 
-    async loadMore({ commit, state }, filters = {}) {
+    async loadMore ({ commit, state }, filters = {}) {
       const { data: { data: schoolsList } } = await axios.get('schools', {
         params: {
           ...filters,
         },
-      });
+      })
 
-      commit('setState', { key: 'schoolsList', value: [...state.schoolsList, ...schoolsList] });
+      commit('setState', { key: 'schoolsList', value: [...state.schoolsList, ...schoolsList] })
     },
   }
-};
+}

@@ -49,11 +49,11 @@
       />
 
       <div class="text-center">
-        <div class="shows-cource">Показано {{ schoolsList.length }} школ из {{ schoolsListElementsCount }}</div>
+        <div class="shows-course">Показано {{ schoolsList.length }} школ из {{ schoolsListElementsCount }}</div>
         <a
           v-if="pagesCount > 0 && page < pagesCount"
           href="#"
-          class="btn-outline shows-cource-btn"
+          class="btn-outline shows-course-btn"
           @click.prevent="showMore"
         >
           Показать еще
