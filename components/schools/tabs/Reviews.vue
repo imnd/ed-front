@@ -155,15 +155,16 @@
 </template>
 
 <script>
-import moment from 'moment'
 import EdvisorPagination from '@/components/common/EdvisorPagination'
 import EdvisorContentLimiter from '@/components/common/EdvisorContentLimiter'
+import DateTime from '@/mixins/DateTime'
 
 const initPageLimit = 12
 
 export default {
   name: 'Reviews',
   components: { EdvisorContentLimiter, EdvisorPagination },
+  mixins: [DateTime],
   props: {
     school: {
       type: Object,
@@ -203,9 +204,6 @@ export default {
     },
   },
   methods: {
-    formatDate (date) {
-      return moment(date).format('DD.MM.YYYY')
-    },
     rebuildCurrentReviews () {
       this.currentReviewsStart = (this.currentPage - 1) * this.currentPageLimit
       this.currentReviewsEnd = (this.currentPage - 1) * this.currentPageLimit + this.currentPageLimit

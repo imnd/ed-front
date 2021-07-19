@@ -3,7 +3,7 @@ import axios from '~/plugins/axios'
 export default {
   state () {
     return {
-      sales: [],
+      posts: [],
     }
   },
   mutations: {
@@ -12,11 +12,11 @@ export default {
     },
   },
   actions: {
-    async getSales ({ commit }) {
+    async getPosts ({ commit }) {
       try {
-        const { data: { data: sales } } = await axios.get(`promotions`)
+        const { data: { data: posts } } = await axios.get(`posts`)
 
-        commit('setState', { key: 'sales', value: sales })
+        commit('setState', { key: 'posts', value: posts })
       } catch (error) {
         console.error(error)
       }

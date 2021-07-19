@@ -9,7 +9,7 @@
     </div>
 
     <div class="courses-page__content">
-      <courses-filters
+      <CoursesFilters
         @filters-changed="loadCourses"
         :is-loading="isLoading"
         :filters="filters"
@@ -25,7 +25,7 @@
             v-for="course in courses"
             :key="course.id"
           >
-            <course-card
+            <CourseCard
               :course="course"
               :course-school="getSchoolById(course.school.id)"
             />
@@ -67,12 +67,6 @@ import { debounce } from 'throttle-debounce'
 export default {
   name: 'CoursesPage',
   components: { CourseCard, CoursesFilters, EdvisorLoader },
-  props: {
-    withHeader: {
-      type: Boolean,
-      default: true,
-    },
-  },
   data () {
     return {
       isLoading: true,

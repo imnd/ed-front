@@ -43,20 +43,18 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import moment from 'moment'
+import DateTime from '@/mixins/DateTime'
 
 export default {
+  mixins: [DateTime],
   computed: {
     ...mapState('sales', ['sales']),
   },
   methods: {
-    ...mapActions('sales', ['getPromotions']),
-    formatDate (value) {
-      return moment(value).format('DD.MM.YYYY')
-    },
+    ...mapActions('sales', ['getSales']),
   },
   async created () {
-    await this.getPromotions()
+    await this.getSales()
   },
 }
 </script>
