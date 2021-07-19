@@ -22,23 +22,23 @@ export default {
       list: [
         {
           'name': 'Категории',
-          'route': 'school-categories'
+          'route': '/courses-categories'
         },
         {
           'name': 'Курсы',
-          'route': 'courses'
+          'route': '/courses'
         },
         {
           'name': 'Школы',
-          'route': 'schools'
+          'route': '/schools'
         },
         {
           'name': 'Акции школ',
-          'route': 'promotions'
+          'route': '/promotions'
         },
         {
           'name': 'Блог',
-          'route': 'blog'
+          'route': '/blog'
         }
       ]
     }
