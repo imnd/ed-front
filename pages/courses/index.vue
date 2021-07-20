@@ -10,24 +10,24 @@
 
     <div class="courses-page__content">
       <CoursesFilters
-        @filters-changed="loadCourses"
-        :is-loading="isLoading"
-        :filters="filters"
+          @filters-changed="loadCourses"
+          :is-loading="isLoading"
+          :filters="filters"
       />
 
       <div class="courses-page__loader" v-if="isLoading">
-        <edvisor-loader/>
+        <EdvisorLoader/>
       </div>
 
       <template v-else>
         <ul class="courses-page__courses-list" v-if="courses.length > 0">
           <li
-            v-for="course in courses"
-            :key="course.id"
+              v-for="course in courses"
+              :key="course.id"
           >
             <CourseCard
-              :course="course"
-              :course-school="getSchoolById(course.school.id)"
+                :course="course"
+                :course-school="getSchoolById(course.school.id)"
             />
           </li>
         </ul>
@@ -40,15 +40,15 @@
 
     <div class="courses-page__footer" v-if="courses.length > 0">
       <template v-if="isLoadingMore">
-        <edvisor-loader/>
+        <EdvisorLoader/>
       </template>
 
       <template v-else>
         <div class="courses-page__courses-count-info">Показано {{ courses.length }} курсов из {{ coursesCount }}</div>
         <button
-          v-if="courses.length < coursesCount"
-          class="courses-page__button-show-more"
-          @click="loadMoreCourses"
+            v-if="courses.length < coursesCount"
+            class="courses-page__button-show-more"
+            @click="loadMoreCourses"
         >
           Показать еще
         </button>
@@ -128,79 +128,79 @@ export default {
 
       if (this.filters.selectedCategories.length > 0) {
         const categoriesIds = this.categories.map(
-          c => [c.id, ...c.subCategories.map(sc => sc.id)].sort().toString()
+            c => [c.id, ...c.subCategories.map(sc => sc.id)].sort().toString()
         )
 
         if (this.filters.selectedCategories.length === 1) {
           query.category = this.filters.selectedCategories[0]
         } else {
           query.category = this.categories
-            .reduce(
-              (result, parentCategory) => {
-                if (this.filters.selectedCategories.includes(parentCategory.id)) {
-                  result.push(parentCategory.slug)
-                }
+              .reduce(
+                  (result, parentCategory) => {
+                    if (this.filters.selectedCategories.includes(parentCategory.id)) {
+                      result.push(parentCategory.slug)
+                    }
 
-                result.push(
-                  ...parentCategory.subCategories
-                    .filter(subCat => this.filters.selectedCategories.includes(subCat.id))
-                    .map(subCat => subCat.slug)
-                )
+                    result.push(
+                        ...parentCategory.subCategories
+                            .filter(subCat => this.filters.selectedCategories.includes(subCat.id))
+                            .map(subCat => subCat.slug)
+                    )
 
-                return result
-              },
-              []
-            )
-            .join(',')
+                    return result
+                  },
+                  []
+              )
+              .join(',')
         }
       }
 
       if (this.filters.selectedSchools.length > 0) {
         query.school = this.schools
-          .reduce((result, school) => {
-            if (this.filters.selectedSchools.includes(school.id)) {
-              result.push(school.title)
-            }
+            .reduce((result, school) => {
+              if (this.filters.selectedSchools.includes(school.id)) {
+                result.push(school.title)
+              }
 
-            return result
-          }, [])
-          .join(',')
+              return result
+            }, [])
+            .join(',')
       }
 
       if (this.filters.selectedDuration.length > 0) {
         query.duration = this.duration
-          .reduce((result, duration) => {
-            if (this.filters.selectedDuration.includes(duration.id)) {
-              result.push(duration.slug)
-            }
+            .reduce((result, duration) => {
+              if (this.filters.selectedDuration.includes(duration.id)) {
+                result.push(duration.slug)
+              }
 
-            return result
-          }, [])
-          .join(',')
+              return result
+            }, [])
+            .join(',')
       }
 
       if (this.filters.selectedPaymentTypes.length > 0) {
         query.paymenttype = this.paymentTypes
-          .reduce((result, paymentType) => {
-            if (this.filters.selectedPaymentTypes.includes(paymentType.id)) {
-              result.push(paymentType.slug)
-            }
+            .reduce((result, paymentType) => {
+              if (this.filters.selectedPaymentTypes.includes(paymentType.id)) {
+                result.push(paymentType.slug)
+              }
 
-            return result
-          }, [])
-          .join(',')
+              return result
+            }, [])
+            .join(',')
       }
 
       if (this.filters.selectedEducationFormats.length > 0) {
         query.educationformat = this.educationFormats
-          .reduce((result, educationFormat) => {
-            if (this.filters.selectedEducationFormats.includes(educationFormat.id)) {
-              result.push(educationFormat.slug)
-            }
+            .reduce((result, educationFormat) => {
+              if (this.filters.selectedEducationFormats.includes(educationFormat.id)) {
+                result.push(educationFormat.slug)
+              }
 
-            return result
-          }, [])
-          .join(',')
+              return result
+            }, [])
+            .join(',')
       }
       const path = '/courses'
       this.$router.push({ path, query })
@@ -221,16 +221,16 @@ export default {
         const categoriesSlugs = categoriesSlugsString.split(',')
 
         this.filters.selectedCategories = this.categories.reduce(
-          (result, category) => {
-            if (categoriesSlugs.includes(category.slug)) {
-              result.push(category.id)
-            }
+            (result, category) => {
+              if (categoriesSlugs.includes(category.slug)) {
+                result.push(category.id)
+              }
 
-            result.push(...category.subCategories.filter(sc => categoriesSlugs.includes(sc.slug)).map(sc => sc.id))
+              result.push(...category.subCategories.filter(sc => categoriesSlugs.includes(sc.slug)).map(sc => sc.id))
 
-            return result
-          },
-          []
+              return result
+            },
+            []
         )
       }
 

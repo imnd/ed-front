@@ -2,7 +2,7 @@
   <div class="container middle-container posts-page">
     <h1 class="posts-page__title">Блог</h1>
     <div class="posts-page__loader" v-if="isLoading">
-      <edvisor-loader/>
+      <EdvisorLoader/>
     </div>
 
     <template v-else>
@@ -17,7 +17,10 @@
             :href="`/posts/${post.slug}/`"
           >
             <div class="blog-page__list-item">
-              <div class="blog-page__list-item-cover" :style="{ backgroundImage: 'url(' + post.cover + ')' }"></div>
+              <div
+                class="blog-page__list-item-cover"
+                :style="{ backgroundImage: 'url(' + post.cover + ')' }"
+              ></div>
 
               <div class="blog-page__list-item-date-views-block">
                 <div class="blog-page__list-item-date">{{ formatDate(post.createdAt) }}</div>

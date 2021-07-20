@@ -3,7 +3,7 @@ export default {
   target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   env: {
-    baseApiUrl: process.env.EDVISOR_API_URL || 'http://localhost:3000',
+    baseApiUrl: process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000',
     baseAppUrl: process.env.VUE_APP_BASE_URL || 'http://localhost',
     redirectUrl:
       (process.env.VUE_APP_BASE_URL || 'http://localhost/') + 'redirect?link='
@@ -83,4 +83,4 @@ export default {
     display: 'swap',
     download: true
   }
-};
+}
