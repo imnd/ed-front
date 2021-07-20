@@ -94,12 +94,12 @@ export default {
     }
   },
   computed: {
+    ...mapState('schools', ['school', 'reviews']),
     currentTabComponent () {
       const currentTab = this.tabs.find(tab => tab.title === this.activeTab)
 
       return currentTab ? currentTab.component : this.tabs[0].component
     },
-    ...mapState('schools', ['school', 'reviews']),
     redirectUrl () {
       return process.env.redirectUrl + this.school.id
     },

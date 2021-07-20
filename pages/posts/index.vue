@@ -54,7 +54,6 @@ export default {
   data () {
     return {
       isLoading: true,
-      isLoadingMore: false,
     }
   },
   computed: {
@@ -64,7 +63,7 @@ export default {
     ...mapActions('posts', ['getPosts']),
   },
   async created () {
-    await this.getPosts(this.filters)
+    await this.getPosts()
 
     this.isLoading = false
   },
