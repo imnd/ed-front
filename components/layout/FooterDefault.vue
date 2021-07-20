@@ -17,21 +17,15 @@
 <script>
 export default {
   name: 'FooterDefault'
-};
+}
 </script>
 
 <style scoped lang="scss">
 footer {
-  margin-top: 80px;
   padding: 23px 0;
-  background-color: #333333;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
   color: #ffffff;
-  line-height: 150%;
-  z-index: 10000;
+  background: #333333;
+  margin-top: 80px;
 
   .container {
     display: flex;
