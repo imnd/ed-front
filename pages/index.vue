@@ -26,98 +26,21 @@
           <div class="courses-page">
             <div class="courses-page__header"><h1 class="courses-page__title">
               Онлайн-курсы</h1>
-              <p class="courses-page__description">Список всех онлайн-курсов с рейтингом, отзывами и
-                детальным описанием курса 2021 года. Для удобства поиска курса используйте фильтры, сортировку,
-                сравнение и поиск. Мы обновляем информацию о всех курсах каждую неделю.</p></div>
+              <p class="courses-page__description">
+                Список всех онлайн-курсов с рейтингом, отзывами и
+                детальным описанием курса 2021 года. Для удобства поиска курса используйте
+                фильтры, сортировку, сравнение и поиск. Мы обновляем информацию о всех курсах каждую неделю.</p>
+            </div>
             <div class="courses-page__content">
-              <div class="courses-filters"><input type="text" placeholder="Поиск..."
-                                                  class="courses-filters__search-field">
-                <button class="courses-filters__button-show-filters" title="Показать фильтры">
-                  <svg width="16" height="16" viewBox="0 0 16 16" class="courses-filters__button-show-filters-icon">
-                    <path
-                      d="M4.11301 12.0001C4.25074 11.6097 4.50617 11.2717 4.84407 11.0326C5.18198 10.7935 5.58573 10.6651 5.99967 10.6651C6.41362 10.6651 6.81737 10.7935 7.15528 11.0326C7.49318 11.2717 7.74861 11.6097 7.88634 12.0001H14.6663V13.3334H7.88634C7.74861 13.7238 7.49318 14.0618 7.15528 14.3009C6.81737 14.54 6.41362 14.6684 5.99967 14.6684C5.58573 14.6684 5.18198 14.54 4.84407 14.3009C4.50617 14.0618 4.25074 13.7238 4.11301 13.3334H1.33301V12.0001H4.11301ZM8.11301 7.33342C8.25074 6.94307 8.50617 6.60504 8.84408 6.36595C9.18198 6.12685 9.58573 5.99845 9.99968 5.99845C10.4136 5.99845 10.8174 6.12685 11.1553 6.36595C11.4932 6.60504 11.7486 6.94307 11.8863 7.33342H14.6663V8.66675H11.8863C11.7486 9.05711 11.4932 9.39513 11.1553 9.63423C10.8174 9.87332 10.4136 10.0017 9.99968 10.0017C9.58573 10.0017 9.18198 9.87332 8.84408 9.63423C8.50617 9.39513 8.25074 9.05711 8.11301 8.66675H1.33301V7.33342H8.11301ZM4.11301 2.66675C4.25074 2.2764 4.50617 1.93838 4.84407 1.69928C5.18198 1.46018 5.58573 1.33179 5.99967 1.33179C6.41362 1.33179 6.81737 1.46018 7.15528 1.69928C7.49318 1.93838 7.74861 2.2764 7.88634 2.66675H14.6663V4.00009H7.88634C7.74861 4.39044 7.49318 4.72846 7.15528 4.96756C6.81737 5.20666 6.41362 5.33505 5.99967 5.33505C5.58573 5.33505 5.18198 5.20666 4.84407 4.96756C4.50617 4.72846 4.25074 4.39044 4.11301 4.00009H1.33301V2.66675H4.11301ZM5.99967 4.00009C6.17649 4.00009 6.34606 3.92985 6.47108 3.80483C6.5961 3.6798 6.66634 3.51023 6.66634 3.33342C6.66634 3.15661 6.5961 2.98704 6.47108 2.86202C6.34606 2.73699 6.17649 2.66675 5.99967 2.66675C5.82286 2.66675 5.6533 2.73699 5.52827 2.86202C5.40325 2.98704 5.33301 3.15661 5.33301 3.33342C5.33301 3.51023 5.40325 3.6798 5.52827 3.80483C5.6533 3.92985 5.82286 4.00009 5.99967 4.00009ZM9.99968 8.66675C10.1765 8.66675 10.3461 8.59652 10.4711 8.47149C10.5961 8.34647 10.6663 8.1769 10.6663 8.00009C10.6663 7.82328 10.5961 7.65371 10.4711 7.52868C10.3461 7.40366 10.1765 7.33342 9.99968 7.33342C9.82286 7.33342 9.6533 7.40366 9.52827 7.52868C9.40325 7.65371 9.33301 7.82328 9.33301 8.00009C9.33301 8.1769 9.40325 8.34647 9.52827 8.47149C9.6533 8.59652 9.82286 8.66675 9.99968 8.66675ZM5.99967 13.3334C6.17649 13.3334 6.34606 13.2632 6.47108 13.1382C6.5961 13.0131 6.66634 12.8436 6.66634 12.6668C6.66634 12.4899 6.5961 12.3204 6.47108 12.1953C6.34606 12.0703 6.17649 12.0001 5.99967 12.0001C5.82286 12.0001 5.6533 12.0703 5.52827 12.1953C5.40325 12.3204 5.33301 12.4899 5.33301 12.6668C5.33301 12.8436 5.40325 13.0131 5.52827 13.1382C5.6533 13.2632 5.82286 13.3334 5.99967 13.3334Z"
-                      fill="#9B5DE5"></path>
-                  </svg>
-                  <span class="courses-filters__button-show-filters-title">Фильтры</span></button>
-                <button class="courses-filters__button-search">
-                  <svg width="16" height="16" viewBox="0 0 16 16">
-                    <path
-                      d="M12.0203 11.0779L14.8757 13.9326L13.9323 14.8759L11.0777 12.0206C10.0155 12.8721 8.69434 13.3352 7.33301 13.3333C4.02101 13.3333 1.33301 10.6453 1.33301 7.33325C1.33301 4.02125 4.02101 1.33325 7.33301 1.33325C10.645 1.33325 13.333 4.02125 13.333 7.33325C13.3349 8.69459 12.8718 10.0157 12.0203 11.0779ZM10.683 10.5833C11.5291 9.71318 12.0016 8.54687 11.9997 7.33325C11.9997 4.75459 9.91101 2.66659 7.33301 2.66659C4.75434 2.66659 2.66634 4.75459 2.66634 7.33325C2.66634 9.91125 4.75434 11.9999 7.33301 11.9999C8.54663 12.0018 9.71293 11.5293 10.583 10.6833L10.683 10.5833Z"
-                      fill="#B8B8B8"></path>
-                  </svg>
-                </button>
-                <div class="edvisor-select courses-filters__sort">
-                  <div class="edvisor-select__field"><span class="edvisor-select__field-title"
-                  >Сортировка</span>
-                    <svg width="10" height="6" viewBox="0 0 10 6" class="edvisor-select__field-icon">
-                      <path d="M5 5.33325L0 0.333252H10L5 5.33325Z"></path>
-                    </svg>
-                  </div>
-                </div>
-                <!--                <div class="courses-filters__table-section" >
-                                  <div class="edvisor-select courses-filters__category" data-v-3baf969b="" >
-                                    <div class="edvisor-select__field" data-v-3baf969b=""><span class="edvisor-select__field-title"
-                                                                                                data-v-3baf969b="">Категория</span>
-
-                                      <svg width="10" height="6" viewBox="0 0 10 6" class="edvisor-select__field-icon"
-                                           data-v-3baf969b="">
-                                        <path d="M5 5.33325L0 0.333252H10L5 5.33325Z" data-v-3baf969b=""></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                  <div class="edvisor-select courses-filters__school" data-v-3baf969b="" >
-                                    <div class="edvisor-select__field" data-v-3baf969b=""><span class="edvisor-select__field-title"
-                                                                                                data-v-3baf969b="">Школа</span>
-                                      <svg width="10" height="6" viewBox="0 0 10 6" class="edvisor-select__field-icon"
-                                           data-v-3baf969b="">
-                                        <path d="M5 5.33325L0 0.333252H10L5 5.33325Z" data-v-3baf969b=""></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                  <div class="edvisor-select courses-filters__duration" data-v-3baf969b="" >
-                                    <div class="edvisor-select__field" data-v-3baf969b=""><span class="edvisor-select__field-title"
-                                                                                                data-v-3baf969b="">Продолжительность</span>
-
-                                      <svg width="10" height="6" viewBox="0 0 10 6" class="edvisor-select__field-icon"
-                                           data-v-3baf969b="">
-                                        <path d="M5 5.33325L0 0.333252H10L5 5.33325Z" data-v-3baf969b=""></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                  <div class="edvisor-select courses-filters__payment-type" data-v-3baf969b="" >
-                                    <div class="edvisor-select__field" data-v-3baf969b=""><span class="edvisor-select__field-title"
-                                                                                                data-v-3baf969b="">Тип оплаты</span>
-
-                                      <svg width="10" height="6" viewBox="0 0 10 6" class="edvisor-select__field-icon"
-                                           data-v-3baf969b="">
-                                        <path d="M5 5.33325L0 0.333252H10L5 5.33325Z" data-v-3baf969b=""></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                  <div class="edvisor-select courses-filters__education-format" data-v-3baf969b="" >
-                                    <div class="edvisor-select__field" data-v-3baf969b=""><span class="edvisor-select__field-title"
-                                                                                                data-v-3baf969b="">Формат обучения</span>
-
-                                      <svg width="10" height="6" viewBox="0 0 10 6" class="edvisor-select__field-icon"
-                                           data-v-3baf969b="">
-                                        <path d="M5 5.33325L0 0.333252H10L5 5.33325Z" data-v-3baf969b=""></path>
-                                      </svg>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="courses-filters__table-header" >
-                                  <div class="courses-filters__table-header-title" > Курс</div>
-                                  <div class="courses-filters__table-header-title" >Школа</div>
-                                  <div class="courses-filters__table-header-title" >Цена</div>
-                                  <div class="courses-filters__table-header-title" >Длительность</div>
-                                  <div class="courses-filters__table-header-title courses-filters__table-header-title_no-sort"
-                                       >Особенности
-                                  </div>
-                                  <div class="courses-filters__table-header-title courses-filters__table-header-title_no-sort"
-                                       >Подробнее
-                                  </div>
-                                </div>-->
+              <CoursesFilters
+                @filters-changed="loadCourses"
+                :is-loading="isLoading"
+                :filters="filters"
+              />
+              <div class="courses-page__loader" v-if="isLoading">
+                <EdvisorLoader/>
               </div>
+
               <ul class="courses-page__courses-list">
                 <li v-for="course in courses">
                   <div class="course-card">
@@ -175,12 +98,11 @@
               </ul>
             </div>
             <div class="courses-page__footer">
-              <div class="courses-page__courses-count-info">Показано 20 курсов из 947</div>
+              <div class="courses-page__courses-count-info">Показано 20 курсов из {{ coursesCount }}</div>
               <button class="courses-page__button-show-more"> Показать еще</button>
             </div>
           </div>
         </div>
-        <script type="text/javascript" src="/courses_page.js"></script>
       </div>
     </div>
     <div class="stock">
@@ -2598,7 +2520,8 @@
                         </div>
                       </div>
                       <img :src="`${review.school.logo}`"
-                           class="reviews-slider-item__schoolLogo"></section>
+                           class="reviews-slider-item__schoolLogo"/>
+                    </section>
                     <section class="reviews-slider-item__body">
                       {{ review.text }}
                     </section>
@@ -2626,7 +2549,6 @@
             </div>
           </div>
         </div>
-        <script type="text/javascript" src="~/assets/js/reviews_component.js"></script>
       </div>
     </div>
     <div class="block-seo">
@@ -2647,18 +2569,24 @@
 
 <script>
 import Vue from 'vue'
+
 import { mapActions, mapState } from 'vuex'
 import DateTime from '@/mixins/DateTime'
+import CoursesFilters from '@/components/courses/CoursesFilters'
+import EdvisorLoader from '@/components/common/EdvisorLoader'
+import { debounce } from 'throttle-debounce'
 
 export default Vue.extend({
   head: {
     title: 'Edvisor — Все онлайн курсы по Digital и IT профессиям'
   },
+  components: { CoursesFilters, EdvisorLoader },
   mixins: [DateTime],
   data () {
     return {
       isLoading: true,
-      /*filters: {
+      // todo: перенести фильтры в стэйт
+      filters: {
         selectedCategories: [],
         selectedSchools: [],
         selectedDuration: [],
@@ -2668,12 +2596,12 @@ export default Vue.extend({
         sorting: null,
         searchString: null,
         limit: 20,
-      },*/
+      },
     }
   },
   computed: {
     ...mapState('courses-categories', ['categories']),
-    ...mapState('courses', ['courses']),
+    ...mapState('courses', ['courses', 'coursesCount']),
     ...mapState('sales', ['sales']),
     ...mapState('school-reviews', ['lastReviews']),
   },
@@ -2682,11 +2610,113 @@ export default Vue.extend({
     ...mapActions('courses', ['getCourses']),
     ...mapActions('sales', ['getSales']),
     ...mapActions('school-reviews', ['getLastReviews']),
+    updateUrl () {
+      const query = {}
+
+      if (this.filters.selectedCategories.length > 0) {
+        const categoriesIds = this.categories.map(
+          c => [c.id, ...c.subCategories.map(sc => sc.id)].sort().toString()
+        )
+
+        if (this.filters.selectedCategories.length === 1) {
+          query.category = this.filters.selectedCategories[0]
+        } else {
+          query.category = this.categories
+            .reduce(
+              (result, parentCategory) => {
+                if (this.filters.selectedCategories.includes(parentCategory.id)) {
+                  result.push(parentCategory.slug)
+                }
+
+                result.push(
+                  ...parentCategory.subCategories
+                    .filter(subCat => this.filters.selectedCategories.includes(subCat.id))
+                    .map(subCat => subCat.slug)
+                )
+
+                return result
+              },
+              []
+            )
+            .join(',')
+        }
+      }
+
+      if (this.filters.selectedSchools.length > 0) {
+        query.school = this.schools
+          .reduce((result, school) => {
+            if (this.filters.selectedSchools.includes(school.id)) {
+              result.push(school.title)
+            }
+
+            return result
+          }, [])
+          .join(',')
+      }
+
+      if (this.filters.selectedDuration.length > 0) {
+        query.duration = this.duration
+          .reduce((result, duration) => {
+            if (this.filters.selectedDuration.includes(duration.id)) {
+              result.push(duration.slug)
+            }
+
+            return result
+          }, [])
+          .join(',')
+      }
+
+      if (this.filters.selectedPaymentTypes.length > 0) {
+        query.paymenttype = this.paymentTypes
+          .reduce((result, paymentType) => {
+            if (this.filters.selectedPaymentTypes.includes(paymentType.id)) {
+              result.push(paymentType.slug)
+            }
+
+            return result
+          }, [])
+          .join(',')
+      }
+
+      if (this.filters.selectedEducationFormats.length > 0) {
+        query.educationformat = this.educationFormats
+          .reduce((result, educationFormat) => {
+            if (this.filters.selectedEducationFormats.includes(educationFormat.id)) {
+              result.push(educationFormat.slug)
+            }
+
+            return result
+          }, [])
+          .join(',')
+      }
+      const path = '/courses'
+      this.$router.push({ path, query })
+
+      const metaCanonical = document.querySelector('[rel="canonical"]')
+      if (metaCanonical) {
+        const value = `${window.location.origin}${path}${new URLSearchParams(query).toString()}`
+
+        metaCanonical.setAttribute('href', value)
+      }
+    },
+    debounceGetCourses: debounce(500, async function () {
+      this.isLoading = true
+      await this.getCourses(this.filters)
+      this.isLoading = false
+    }),
+
+    async loadCourses (updatedFilters) {
+      this.filters = { ...this.filters, ...updatedFilters }
+
+      this.updateUrl()
+
+      await this.debounceGetCourses()
+    },
   },
   async created () {
     await this.getTopCategories()
     await this.getSales()
-    await this.getCourses(/*this.filters*/)
+    await this.getCourses(this.filters)
     await this.getLastReviews()
 
     this.isLoading = false

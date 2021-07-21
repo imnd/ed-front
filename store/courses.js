@@ -8,6 +8,7 @@ export default {
     return {
       courses: [],
       coursesCount: 0,
+
     }
   },
   mutations: {

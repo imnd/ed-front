@@ -5,7 +5,7 @@
       <span class="edvisor-selector__counter">Выбрано: {{ selectedItemsCount }}</span>
     </div>
 
-    <edvisor-modal
+    <EdvisorModal
       v-model="isItemsShowed"
       :z-index="10001"
       :with-back-icon="true"
@@ -15,7 +15,7 @@
         <li v-for="item in items" :key="item[itemValuePropName]" class="edvisor-selector__item">
           <component
             :is="modalComponent"
-            :value="item[itemValuePropName]"
+            :id="item[itemValuePropName]"
             :text="item[itemTextPropName]"
             v-model="model"
             :items="withChildren ? item[childrenPropName] : null"
@@ -24,7 +24,7 @@
           />
         </li>
       </ul>
-    </edvisor-modal>
+    </EdvisorModal>
   </div>
 </template>
 

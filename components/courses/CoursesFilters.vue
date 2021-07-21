@@ -130,14 +130,14 @@
         <div class="courses-filters__table-header-title courses-filters__table-header-title_no-sort">Подробнее</div>
       </div>
     </div>
-    <edvisor-modal v-model="isShowModal" title="Фильтры">
+    <EdvisorModal v-model="isShowModal" title="Фильтры">
       <div class="courses-filters__modal">
         <div class="courses-filters__modal-counter-line">
           <span class="courses-filters__modal-counter-line-title">Всего выбрано: {{ selectedFiltersCount }}</span>
           <span class="courses-filters__modal-counter-line-reset" @click="resetFilters">Сбросить</span>
         </div>
 
-        <edvisor-selector
+        <EdvisorSelector
           title="Категория курса"
           :items="categories"
           :with-children="true"
@@ -149,7 +149,7 @@
           v-model="selectedCategories"
         />
 
-        <edvisor-selector
+        <EdvisorSelector
           title="Школа"
           :items="schools"
           item-value-prop-name="id"
@@ -157,7 +157,7 @@
           v-model="selectedSchools"
         />
 
-        <edvisor-selector
+        <EdvisorSelector
           title="Длительность"
           :items="duration"
           item-value-prop-name="id"
@@ -165,7 +165,7 @@
           v-model="selectedDuration"
         />
 
-        <edvisor-selector
+        <EdvisorSelector
           title="Тип оплаты"
           :items="paymentTypes"
           item-value-prop-name="id"
@@ -173,7 +173,7 @@
           v-model="selectedPaymentTypes"
         />
 
-        <edvisor-selector
+        <EdvisorSelector
           title="Формат обучения"
           :items="educationFormats"
           item-value-prop-name="id"
@@ -185,7 +185,7 @@
           Показать курсы
         </button>
       </div>
-    </edvisor-modal>
+    </EdvisorModal>
   </div>
 </template>
 
