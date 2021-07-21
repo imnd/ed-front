@@ -2,7 +2,7 @@
   <div class="course-card">
     <!--  Название, рейтинг, отзывы  -->
     <div class="course-card__title-rating-reviews-block">
-      <div class="course-card__title">{{ course.post_title }}</div>
+      <div class="course-card__title">{{ course.title }}</div>
     </div>
 
     <div class="course-card__school-block">
@@ -19,16 +19,16 @@
             fill="#FEE440"/>
         </svg>
         <span class="course-card__school-rating-value">{{
-            courseSchool ? courseSchool.reviews_average_rating : null
+            courseSchool ? courseSchool.averageRating : null
           }}</span>
         <span class="course-card__school-rating-reviews-count">{{
-            courseSchool ? `(${courseSchool.reviews_count})` : null
+            courseSchool ? `(${courseSchool.reviewsCount})` : null
           }}</span>
       </div>
 
       <div class="course-card__reviews">
         <a :href="courseSchool ? `/schools/${courseSchool.title}/` : '#'">Отзывы о школе
-          {{ courseSchool ? `(${courseSchool.reviews_count})` : null }}</a>
+          {{ courseSchool ? `(${courseSchool.reviewsCount})` : null }}</a>
       </div>
     </div>
 
@@ -73,21 +73,21 @@
     <div v-if="isDetailsShowed" class="course-card__duration">
       <ul class="course-card__duration-list">
         <li
-          v-for="(courseDuration, index) in (course.duration || [])"
+          v-for="(duration, index) in (course.durations || [])"
           :key="index"
         >
-          {{ courseDuration.name }}
+          {{ duration.title }}
         </li>
       </ul>
     </div>
 
     <ul v-if="isDetailsShowed" class="course-card__format-list">
       <li
-        v-for="(courseEducationFormat, index) in (course.education_formats || [])"
+        v-for="(educationFormat, index) in (course.educationFormats || [])"
         :key="index"
         class="course-card__format-list-item"
       >
-        {{ courseEducationFormat.name }}
+        {{ educationFormat.title }}
       </li>
     </ul>
 
@@ -121,38 +121,39 @@ export default {
       required: true,
     },
   },
-  data() {
+  data () {
     return {
       isDetailsShowed: false,
-    };
+    }
   },
   methods: {
-    priceWithoutDiscount() {
-      const price = this.course.price;
+    priceWithoutDiscount () {
+      const price = this.course.price
 
-      return price ? this.formatPrice(price) : null;
+      return price ? this.formatPrice(price) : null
     },
-    creditPriceWithoutDiscount() {
-      const value = this.course.price_month;
+    creditPriceWithoutDiscount () {
+      const value = this.course.price_month
 
-      return value ? this.formatPrice(value) : null;
+      return value ? this.formatPrice(value) : null
     },
-    formatPrice(price) {
-      const intPrice = parseInt(price);
+    formatPrice (price) {
+      const intPrice = parseInt(price)
       if (!intPrice) {
-        return;
+        return
       }
 
-      return intPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      return intPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     },
   },
-  created() {
-    this.isDetailsShowed = window.innerWidth > 1440;
+  created () {
+    this.isDetailsShowed = window.innerWidth > 1440
   },
-};
+}
 </script>
 
 <style scoped lang="scss">
+
 .course-card {
   font-family: Raleway, sans-serif;
   font-size: 16px;
@@ -161,10 +162,11 @@ export default {
   padding: 32px 16px 0 16px;
   box-sizing: border-box;
   line-height: 150%;
-  background-color: #FFFFFF;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   margin-bottom: 16px;
+
+  background-color: #fff;
+  box-shadow: 0 2px 20px rgb(0 0 0 / 10%);
 
   &__school-logo {
     max-height: 40px;

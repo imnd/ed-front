@@ -5,6 +5,7 @@ export default {
   state () {
     return {
       categories: [],
+      topCategories: [],
     }
   },
   mutations: {
@@ -23,7 +24,7 @@ export default {
     async getTopCategories ({ commit }) {
       const { data: { data: categories } } = await axios.get('courses-top-categories')
       commit('setState', {
-        key: 'categories',
+        key: 'topCategories',
         value: categories
       })
     },

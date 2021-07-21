@@ -8,13 +8,22 @@ export default {
     return {
       courses: [],
       coursesCount: 0,
-
     }
   },
   mutations: {
     setState (state, { key, value }) {
       state[key] = value
     },
+  },
+  getters: {
+    getFilters: (state) => {
+      return state.filters
+    }
+  },
+  setters: {
+    setFilters: (state) => {
+      return state.filters
+    }
   },
   actions: {
     async getCourses ({ commit }, filters = {}) {

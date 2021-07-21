@@ -8,7 +8,7 @@
       </div>
       <div class="front-category">
         <div
-          v-for="(category, index) in categories"
+          v-for="(category, index) in topCategories"
           :key="category.id"
           :class="`front-category__item front-category__item-color-${index + 1}`"
         >
@@ -22,87 +22,7 @@
         </div>
       </div>
       <div class="edvlisting">
-        <div id="courses-page">
-          <div class="courses-page">
-            <div class="courses-page__header"><h1 class="courses-page__title">
-              Онлайн-курсы</h1>
-              <p class="courses-page__description">
-                Список всех онлайн-курсов с рейтингом, отзывами и
-                детальным описанием курса 2021 года. Для удобства поиска курса используйте
-                фильтры, сортировку, сравнение и поиск. Мы обновляем информацию о всех курсах каждую неделю.</p>
-            </div>
-            <div class="courses-page__content">
-              <CoursesFilters
-                @filters-changed="loadCourses"
-                :is-loading="isLoading"
-                :filters="filters"
-              />
-              <div class="courses-page__loader" v-if="isLoading">
-                <EdvisorLoader/>
-              </div>
-
-              <ul class="courses-page__courses-list">
-                <li v-for="course in courses">
-                  <div class="course-card">
-                    <div class="course-card__title-rating-reviews-block">
-                      <div class="course-card__title">{{ course.title }}</div>
-                    </div>
-                    <div class="course-card__school-block">
-                      <img
-                        :src="`${course.school.logo}`"
-                        class="course-card__school-logo"
-                      />
-                      <div class="course-card__school-rating">
-                        <svg width="16" height="16" viewBox="0 0 16 16" class="course-card__rating-icon"
-                        >
-                          <path
-                            d="M8.0002 12.6666L3.10186 15.6583L4.43353 10.0749L0.0751953 6.34159L5.79603 5.88325L8.0002 0.583252L10.2044 5.88325L15.926 6.34159L11.5669 10.0749L12.8985 15.6583L8.0002 12.6666Z"
-                            fill="#FEE440"></path>
-                        </svg>
-                        <span class="course-card__school-rating-value">4.3</span><span
-                        class="course-card__school-rating-reviews-count">(46)</span></div>
-                      <div class="course-card__reviews"><a href="/schools/netologiya/"
-                      >Отзывы о школе (46)</a>
-                      </div>
-                    </div>
-                    <div class="course-card__prices-block">
-                      <div class="course-card__price-without-discount course-card__price-without-discount_crossed-out"
-                      >94 900 ₽
-                      </div>
-                      <div class="course-card__price-with-discount">56 940 ₽</div>
-                      <div class="course-card__price-credit">4 745 ₽/месяц</div>
-                    </div>
-                    <div class="course-card__buttons-block"><a href="/goto?sg=2&amp;obj=2596"
-                                                               target="_blank">
-                      <button class="course-card__button-course-site"> На сайт курса
-                        <svg width="7" height="10" viewBox="0 0 7 10" class="course-card__button-course-site-icon"
-                        >
-                          <path
-                            d="M4.28145 4.99999L0.981445 1.69999L1.92411 0.757324L6.16678 4.99999L1.92411 9.24266L0.981445 8.29999L4.28145 4.99999Z"
-                            fill="white"></path>
-                        </svg>
-                      </button>
-                    </a></div>
-                    <div class="course-card__button-details-block">
-                      <button class="course-card__button-show-details">Подробнее
-                        <svg width="12" height="8" viewBox="0 0 12 8" class="course-card__button-show-details-icon"
-                        >
-                          <path
-                            d="M5.99962 4.97656L10.1246 0.851562L11.303 2.0299L5.99962 7.33323L0.696289 2.0299L1.87462 0.851562L5.99962 4.97656Z"
-                            fill="#00BBF9"></path>
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="courses-page__footer">
-              <div class="courses-page__courses-count-info">Показано 20 курсов из {{ coursesCount }}</div>
-              <button class="courses-page__button-show-more"> Показать еще</button>
-            </div>
-          </div>
-        </div>
+        <CoursesList path="/" />
       </div>
     </div>
     <div class="stock">
@@ -2520,7 +2440,7 @@
                         </div>
                       </div>
                       <img :src="`${review.school.logo}`"
-                           class="reviews-slider-item__schoolLogo"/>
+                           class="reviews-slider-item__schoolLogo" />
                     </section>
                     <section class="reviews-slider-item__body">
                       {{ review.text }}
@@ -2570,153 +2490,35 @@
 <script>
 import Vue from 'vue'
 
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import DateTime from '@/mixins/DateTime'
-import CoursesFilters from '@/components/courses/CoursesFilters'
-import EdvisorLoader from '@/components/common/EdvisorLoader'
-import { debounce } from 'throttle-debounce'
+import CoursesList from '@/components/courses/CoursesList'
 
 export default Vue.extend({
   head: {
     title: 'Edvisor — Все онлайн курсы по Digital и IT профессиям'
   },
-  components: { CoursesFilters, EdvisorLoader },
+  components: { CoursesList },
   mixins: [DateTime],
   data () {
     return {
       isLoading: true,
-      // todo: перенести фильтры в стэйт
-      filters: {
-        selectedCategories: [],
-        selectedSchools: [],
-        selectedDuration: [],
-        selectedPaymentTypes: [],
-        selectedEducationFormats: [],
-
-        sorting: null,
-        searchString: null,
-        limit: 20,
-      },
     }
   },
   computed: {
-    ...mapState('courses-categories', ['categories']),
+    ...mapState('courses-categories', ['topCategories']),
     ...mapState('courses', ['courses', 'coursesCount']),
     ...mapState('sales', ['sales']),
     ...mapState('school-reviews', ['lastReviews']),
   },
   methods: {
-    ...mapActions('courses-categories', ['getCategories', 'getTopCategories']),
-    ...mapActions('courses', ['getCourses']),
+    ...mapActions('courses-categories', ['getTopCategories']),
     ...mapActions('sales', ['getSales']),
     ...mapActions('school-reviews', ['getLastReviews']),
-    updateUrl () {
-      const query = {}
-
-      if (this.filters.selectedCategories.length > 0) {
-        const categoriesIds = this.categories.map(
-          c => [c.id, ...c.subCategories.map(sc => sc.id)].sort().toString()
-        )
-
-        if (this.filters.selectedCategories.length === 1) {
-          query.category = this.filters.selectedCategories[0]
-        } else {
-          query.category = this.categories
-            .reduce(
-              (result, parentCategory) => {
-                if (this.filters.selectedCategories.includes(parentCategory.id)) {
-                  result.push(parentCategory.slug)
-                }
-
-                result.push(
-                  ...parentCategory.subCategories
-                    .filter(subCat => this.filters.selectedCategories.includes(subCat.id))
-                    .map(subCat => subCat.slug)
-                )
-
-                return result
-              },
-              []
-            )
-            .join(',')
-        }
-      }
-
-      if (this.filters.selectedSchools.length > 0) {
-        query.school = this.schools
-          .reduce((result, school) => {
-            if (this.filters.selectedSchools.includes(school.id)) {
-              result.push(school.title)
-            }
-
-            return result
-          }, [])
-          .join(',')
-      }
-
-      if (this.filters.selectedDuration.length > 0) {
-        query.duration = this.duration
-          .reduce((result, duration) => {
-            if (this.filters.selectedDuration.includes(duration.id)) {
-              result.push(duration.slug)
-            }
-
-            return result
-          }, [])
-          .join(',')
-      }
-
-      if (this.filters.selectedPaymentTypes.length > 0) {
-        query.paymenttype = this.paymentTypes
-          .reduce((result, paymentType) => {
-            if (this.filters.selectedPaymentTypes.includes(paymentType.id)) {
-              result.push(paymentType.slug)
-            }
-
-            return result
-          }, [])
-          .join(',')
-      }
-
-      if (this.filters.selectedEducationFormats.length > 0) {
-        query.educationformat = this.educationFormats
-          .reduce((result, educationFormat) => {
-            if (this.filters.selectedEducationFormats.includes(educationFormat.id)) {
-              result.push(educationFormat.slug)
-            }
-
-            return result
-          }, [])
-          .join(',')
-      }
-      const path = '/courses'
-      this.$router.push({ path, query })
-
-      const metaCanonical = document.querySelector('[rel="canonical"]')
-      if (metaCanonical) {
-        const value = `${window.location.origin}${path}${new URLSearchParams(query).toString()}`
-
-        metaCanonical.setAttribute('href', value)
-      }
-    },
-    debounceGetCourses: debounce(500, async function () {
-      this.isLoading = true
-      await this.getCourses(this.filters)
-      this.isLoading = false
-    }),
-
-    async loadCourses (updatedFilters) {
-      this.filters = { ...this.filters, ...updatedFilters }
-
-      this.updateUrl()
-
-      await this.debounceGetCourses()
-    },
   },
   async created () {
     await this.getTopCategories()
     await this.getSales()
-    await this.getCourses(this.filters)
     await this.getLastReviews()
 
     this.isLoading = false
@@ -2725,24 +2527,48 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.courses-page__title {
-  font-weight: 800;
-  font-size: 40px;
-  line-height: 120%;
-  margin: 0 0 16px 0;
-}
+.courses-page {
+  &__content {
+    margin-bottom: 32px;
+  }
 
-.courses-page__description {
-  font-size: 18px;
-  max-width: 856px;
-}
+  &__courses-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    margin-top: 32px;
+  }
 
-.courses-page__header {
-  margin-bottom: 32px;
-}
+  &__footer {
+    text-align: center;
+  }
 
-.courses-page__content {
-  margin-bottom: 32px;
+  &__courses-count-info {
+    color: #757575;
+    margin-bottom: 20px;
+  }
+
+  &__button-show-more {
+    background: #fff;
+    border: 1px solid #9b5de5;
+    box-sizing: border-box;
+    border-radius: 100px;
+    padding: 17px 32px;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 120%;
+    color: #9b5de5;
+    width: 100%;
+    cursor: pointer;
+    transition: .25s ease-in-out;
+    outline: none;
+  }
+
+  @media (min-width: 768px) {
+    &__button-show-more {
+      width: auto;
+    }
+  }
 }
 
 .front-category__item .icon {
@@ -2753,366 +2579,6 @@ export default Vue.extend({
   top: 0;
   width: 120px;
   right: 24px;
-}
-
-.courses-filters {
-  display: grid;
-  grid-template-columns: 48px 48px 1fr;
-  font-family: Raleway, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 150%;
-}
-
-@media (min-width: 768px) {
-  .courses-filters {
-    grid-template-columns: repeat(3, 1fr);
-    grid-column-gap: 18px;
-  }
-}
-
-.courses-filters__search-field {
-  grid-column: 1/span 3;
-  grid-row-start: 2;
-  border: 1px solid #e0e0e0;
-  box-sizing: border-box;
-  border-radius: 5px;
-  height: 40px;
-  padding-left: 48px;
-  font-size: 16px;
-  margin-top: 8px;
-  background: url(~/assets/images/search.svg) no-repeat left 20px center;
-  outline: none;
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .courses-filters__search-field {
-    display: block;
-    grid-column: 1/2;
-    grid-row-start: 1;
-    height: 48px;
-    margin-top: 0;
-  }
-}
-
-@media (min-width: 768px) {
-  .courses-filters__button-show-filters {
-    grid-column: 2/span 1;
-    grid-row-start: 1;
-    width: auto;
-    font-weight: 800;
-    font-size: 16px;
-    line-height: 120%;
-    color: #9b5de5;
-    height: 48px;
-  }
-}
-
-.courses-filters__button-show-filters {
-  background: #fff;
-  border: 1px solid #9b5de5;
-  box-sizing: border-box;
-  border-radius: 100px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  width: 40px;
-  justify-content: center;
-  cursor: pointer;
-  outline: none;
-}
-
-@media (min-width: 768px) {
-  .courses-filters__button-show-filters {
-    grid-column: 2/span 1;
-    grid-row-start: 1;
-    width: auto;
-    font-weight: 800;
-    font-size: 16px;
-    line-height: 120%;
-    color: #9b5de5;
-    height: 48px;
-  }
-}
-
-@media (min-width: 768px) {
-  .courses-filters__button-show-filters-icon {
-    margin-right: 8px;
-  }
-}
-
-.courses-filters__button-show-filters-title {
-  display: none;
-}
-
-@media (min-width: 768px) {
-  .courses-filters__button-show-filters-title {
-    display: inline;
-  }
-}
-
-.edvisor-select__field_active {
-  border-color: #9b5de5;
-}
-
-.courses-filters__button-search {
-  width: 40px;
-  height: 40px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background: #fff;
-  border: 1px solid #e0e0e0;
-  border-radius: 100px;
-  outline: none;
-}
-
-.edvisor-select__field-icon {
-  position: absolute;
-  right: 20px;
-  height: 100%;
-  transition: .3s ease-in-out;
-  fill: #b8b8b8;
-}
-
-.edvisor-select__field-icon_active {
-  transform: rotate(
-      180deg
-  );
-  fill: #9b5de5;
-}
-
-@media (min-width: 768px) {
-  .courses-filters__button-search {
-    display: none;
-  }
-}
-
-.edvisor-select {
-  font-family: Raleway, sans-serif;
-  min-width: 0;
-}
-
-.edvisor-select,
-.edvisor-select__field {
-  position: relative;
-  box-sizing: border-box;
-}
-
-.edvisor-select, .edvisor-select__field {
-  position: relative;
-  box-sizing: border-box;
-}
-
-.edvisor-select__field {
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  height: 100%;
-  max-height: 56px;
-  line-height: 24px;
-  cursor: pointer;
-  transition: .3s ease-in-out;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  padding: 0 40px 0 20px;
-  display: flex;
-  align-items: center;
-}
-
-.courses-page__courses-list {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-  margin-top: 32px;
-}
-
-.course-card {
-  font-family: Raleway, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  color: #333;
-  padding: 32px 16px 0 16px;
-  box-sizing: border-box;
-  line-height: 150%;
-  background-color: #fff;
-  box-shadow: 0 2px 20px rgb(0 0 0 / 10%);
-  border-radius: 12px;
-  margin-bottom: 16px;
-}
-
-@media (min-width: 768px) {
-  .course-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr minmax(210px, 1fr);
-    grid-column-gap: 20px;
-    align-items: start;
-    margin-bottom: 32px;
-  }
-}
-
-.course-card__title-rating-reviews-block {
-  margin-bottom: 16px;
-}
-
-@media (min-width: 768px) {
-  .course-card__buttons-block,
-  .course-card__prices-block,
-  .course-card__school-block,
-  .course-card__title-rating-reviews-block {
-    margin-bottom: 24px;
-  }
-}
-
-.course-card__title {
-  font-weight: 800;
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-
-.course-card__school-block {
-  margin-bottom: 16px;
-}
-
-.course-card__school-logo {
-  max-height: 40px;
-  width: auto;
-  max-width: 100px;
-}
-
-.course-card__school-rating {
-  margin-bottom: 4px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.course-card__school-rating-value {
-  margin-right: 4px;
-  font-weight: 800;
-  font-size: 18px;
-}
-
-.course-card__school-rating-reviews-count {
-  color: #b8b8b8;
-}
-
-.course-card__reviews {
-  font-size: 14px;
-  line-height: 140%;
-}
-
-.course-card__reviews a {
-  color: #00bbf9;
-  text-decoration: none;
-}
-
-.course-card__prices-block {
-  margin-bottom: 24px;
-}
-
-.course-card__price-without-discount {
-  font-weight: 800;
-  font-size: 24px;
-  line-height: 130%;
-}
-
-.course-card__price-without-discount_crossed-out {
-  font-size: 16px;
-  line-height: 140%;
-  color: #b8b8b8;
-  text-decoration: line-through;
-  font-weight: 500;
-}
-
-.course-card__price-with-discount {
-  font-weight: 800;
-  font-size: 24px;
-  line-height: 130%;
-  margin-bottom: 8px;
-}
-
-.course-card__price-credit {
-  font-size: 14px;
-  line-height: 140%;
-}
-
-.course-card__button-course-site {
-  background-color: #9b5de5;
-  border-radius: 100px;
-  outline: none;
-  border: none;
-  color: #fff;
-  padding: 11.5px 42.5px;
-  font-weight: 800;
-  font-size: 14px;
-  line-height: 120%;
-  cursor: pointer;
-}
-
-.course-card__button-course-site-icon {
-  margin-left: 13.5px;
-}
-
-.course-card__button-details-block {
-  padding: 16px 0;
-  text-align: right;
-}
-
-@media (min-width: 768px) {
-  .course-card__button-details-block {
-    grid-column: 1/span 4;
-  }
-}
-
-.course-card__button-show-details {
-  color: #00bbf9;
-  border: none;
-  outline: none;
-  background-color: #fff;
-  font-size: 16px;
-  padding: 0;
-  cursor: pointer;
-}
-
-.course-card__button-show-details-icon {
-  margin-left: 8px;
-  transition: .25s ease-in-out;
-}
-
-.courses-page__footer {
-  text-align: center;
-}
-
-.courses-page__courses-count-info {
-  color: #757575;
-  margin-bottom: 20px;
-}
-
-.courses-page__button-show-more {
-  background: #fff;
-  border: 1px solid #9b5de5;
-  box-sizing: border-box;
-  border-radius: 100px;
-  padding: 17px 32px;
-  font-weight: 800;
-  font-size: 18px;
-  line-height: 120%;
-  color: #9b5de5;
-  width: 100%;
-  cursor: pointer;
-  transition: .25s ease-in-out;
-  outline: none;
-}
-
-@media (min-width: 768px) {
-  .courses-page__button-show-more {
-    width: auto;
-  }
 }
 
 .stock {
