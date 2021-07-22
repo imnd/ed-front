@@ -8,7 +8,7 @@
       </div>
       <div class="front-category">
         <div
-          v-for="(category, index) in topCategories"
+          v-for="(category, index) in categories"
           :key="category.id"
           :class="`front-category__item front-category__item-color-${index + 1}`"
         >
@@ -76,7 +76,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    ...mapState('courses-categories', ['topCategories']),
+    ...mapState('courses-categories', ['categories']),
     ...mapState('courses', ['courses', 'coursesCount']),
     ...mapState('school-reviews', ['lastReviews']),
   },

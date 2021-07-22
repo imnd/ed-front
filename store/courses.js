@@ -15,16 +15,6 @@ export default {
       state[key] = value
     },
   },
-  getters: {
-    getFilters: (state) => {
-      return state.filters
-    }
-  },
-  setters: {
-    setFilters: (state) => {
-      return state.filters
-    }
-  },
   actions: {
     async getCourses ({ commit }, filters = {}) {
       const { data: { data: courses, meta: { total } } } = await axios.get('courses', {

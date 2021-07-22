@@ -5,13 +5,15 @@ export default {
   state () {
     return {
       categories: [],
-      topCategories: [],
     }
   },
   mutations: {
     setState (state, { key, value }) {
       state[key] = value
     },
+  },
+  getters: {
+    getCategoryById: state => catId => state.categories.find(s => parseInt(s.id) === parseInt(catId)) || null,
   },
   actions: {
     async getCategories ({ commit }) {
@@ -28,7 +30,7 @@ export default {
       }
       const { data: { data: categories } } = await axios.get(url)
       commit('setState', {
-        key: 'topCategories',
+        key: 'categories',
         value: categories
       })
     },

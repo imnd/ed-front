@@ -3,9 +3,10 @@ export default {
   target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   env: {
-    baseApiUrl: process.env.EDVISOR_API_URL || 'http://localhost' + 'api/v1/',
-    baseAppUrl: process.env.EDVISOR_BASE_URL || 'http://localhost',
-    redirectUrl: (process.env.EDVISOR_API_URL || 'http://localhost/') + 'redirect?link='
+    baseApiUrl: (process.env.EDVISOR_API_URL || 'http://localhost/') + 'api/v1/',
+    baseAppUrl: process.env.EDVISOR_API_URL || 'http://localhost',
+    redirectUrl: (process.env.EDVISOR_API_URL || 'http://localhost/') + 'redirect?link=',
+    cdnUrl: process.env.DIGITALOCEAN_SPACES_CDN || '',
   },
   head: {
     title: 'edvisor',
@@ -81,5 +82,5 @@ export default {
     },
     display: 'swap',
     download: true,
-  },
+  }
 }
