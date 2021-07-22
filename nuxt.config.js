@@ -3,21 +3,20 @@ export default {
   target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   env: {
-    baseApiUrl: process.env.VUE_APP_API_BASE_URL || 'http://localhost:3000',
-    baseAppUrl: process.env.VUE_APP_BASE_URL || 'http://localhost',
-    redirectUrl:
-      (process.env.VUE_APP_BASE_URL || 'http://localhost/') + 'redirect?link='
+    baseApiUrl: process.env.EDVISOR_API_URL || 'http://localhost' + 'api/v1/',
+    baseAppUrl: process.env.EDVISOR_BASE_URL || 'http://localhost',
+    redirectUrl: (process.env.EDVISOR_API_URL || 'http://localhost/') + 'redirect?link='
   },
   head: {
     title: 'edvisor',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -46,7 +45,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -65,9 +64,9 @@ export default {
     hotMiddleware: {
       client: {
         // turn off client overlay when errors are present
-        overlay: false
-      }
-    }
+        overlay: false,
+      },
+    },
   },
 
   styleResources: {
@@ -77,10 +76,10 @@ export default {
   googleFonts: {
     families: {
       Raleway: {
-        wght: [400, 500, 600, 700, 800]
-      }
+        wght: [400, 500, 600, 700, 800],
+      },
     },
     display: 'swap',
-    download: true
-  }
+    download: true,
+  },
 }
