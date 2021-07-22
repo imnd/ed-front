@@ -21,8 +21,12 @@ export default {
         value: categories
       })
     },
-    async getTopCategories ({ commit }) {
-      const { data: { data: categories } } = await axios.get('courses-top-categories')
+    async getTopCategories ({ commit }, limit) {
+      let url = 'courses-top-categories'
+      if (undefined !== limit) {
+        url += '/' + limit
+      }
+      const { data: { data: categories } } = await axios.get(url)
       commit('setState', {
         key: 'topCategories',
         value: categories

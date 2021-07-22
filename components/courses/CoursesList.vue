@@ -103,12 +103,12 @@ export default {
     },
   },
   methods: {
+    ...mapActions('courses', ['getCourses', 'loadMore']),
     ...mapActions('courses-categories', ['getCategories']),
     ...mapActions('duration', ['getDuration']),
     ...mapActions('education-formats', ['getEducationFormats']),
     ...mapActions('payment-types', ['getPaymentTypes']),
     ...mapActions('schools', ['getSchools']),
-    ...mapActions('courses', ['getCourses', 'loadMore']),
 
     setCategoriesFromUrl (parentCategorySlug, subCategorySlug) {
       const parentCategory = this.categories.find(c => c.slug === parentCategorySlug)
@@ -314,12 +314,16 @@ export default {
     },
   },
   async created () {
-    const parentCategorySlug = this.$route.params.categorySlug
-    const subCategorySlug = this.$route.params.subCategorySlug
 
     await this.getCategories()
+    const parentCategorySlug = this.$route.params.categorySlug
+    const subCategorySlug = this.$route.params.subCategorySlug
     if (parentCategorySlug || subCategorySlug) {
       this.setCategoriesFromUrl(parentCategorySlug, subCategorySlug)
+    }
+    const categorySlug = this.$route.params.slug
+    if (categorySlug) {
+      this.setCategoriesFromUrl(categorySlug)
     }
 
     await this.getSchools()
