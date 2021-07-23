@@ -1,10 +1,12 @@
 export default {
+  mode: 'universal',
   target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   env: {
-    baseApiUrl: process.env.EDVISOR_API_URL || 'http://localhost',
-    redirectUrl:
-      (process.env.VUE_APP_BASE_URL || 'http://localhost/') + 'redirect?link=',
+    baseApiUrl: (process.env.EDVISOR_API_URL || 'http://localhost/') + 'api/v1/',
+    baseAppUrl: process.env.EDVISOR_API_URL || 'http://localhost',
+    redirectUrl: (process.env.EDVISOR_API_URL || 'http://localhost/') + 'redirect?link=',
+    cdnUrl: process.env.DIGITALOCEAN_SPACES_CDN || '',
   },
   head: {
     title: 'edvisor',
@@ -22,13 +24,17 @@ export default {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap',
-      },
-    ],
+          'https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap'
+      }
+    ]
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['~/assets/bootstrap/bootstrap-grid.min.css', '~/assets/scss/main.scss'],
+  css: [
+    '~/assets/bootstrap/bootstrap.min.css',
+    '~/assets/bootstrap/bootstrap-grid.min.css',
+    '~/assets/scss/main.scss',
+  ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -44,7 +50,11 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/style-resources', '@nuxtjs/google-fonts', '@nuxt/http'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/style-resources', '@nuxtjs/google-fonts'],
+
+  axios: {
+    // proxy: true
+  },
 
   http: {
     // proxyHeaders: false
@@ -72,5 +82,5 @@ export default {
     },
     display: 'swap',
     download: true,
-  },
+  }
 }

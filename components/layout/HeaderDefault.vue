@@ -28,7 +28,7 @@ $header-shadow: 0px 2px 20px rgb(0 0 0 / 10%);
   position: sticky;
   top: 0;
   background-color: $header-bg-color;
-  z-index: 1;
+  z-index: 10000;
 
   .container {
     display: flex;

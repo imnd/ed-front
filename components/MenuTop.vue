@@ -27,34 +27,34 @@
 <script>
 export default {
   name: 'MenuTop',
-  data() {
+  data () {
     return {
       isOpen: false,
       list: [
         {
-          name: 'Категории',
-          route: '/courses-categories'
+          'name': 'Категории',
+          'route': '/courses-categories'
         },
         {
-          name: 'Курсы',
-          route: '/courses'
+          'name': 'Курсы',
+          'route': '/courses'
         },
         {
-          name: 'Школы',
-          route: '/schools'
+          'name': 'Школы',
+          'route': '/schools'
         },
         {
-          name: 'Акции школ',
-          route: '/sales'
+          'name': 'Акции школ',
+          'route': '/sales'
         },
         {
-          name: 'Блог',
-          route: '/posts'
+          'name': 'Блог',
+          'route': '/posts'
         }
       ]
-    };
+    }
   }
-};
+}
 </script>
 
 <style scoped lang="scss">
