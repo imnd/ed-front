@@ -20,11 +20,11 @@
 
           <svg
             v-for="positiveMark of reviewRating"
-            :key="positiveMark"
+            :key="review.id + positiveMark"
             class="reviews-slider-item__rating-icon"
           >
             <path
-              d="M8.0002 12.1666L3.10186 15.1583L4.43353 9.57498L0.0751953 5.84165L5.79603 5.38331L8.0002 0.083313L10.2044 5.38331L15.926 5.84165L11.5669 9.57498L12.8985 15.1583L8.0002 12.1666Z"/>
+              d="M8.0002 12.1666L3.10186 15.1583L4.43353 9.57498L0.0751953 5.84165L5.79603 5.38331L8.0002 0.083313L10.2044 5.38331L15.926 5.84165L11.5669 9.57498L12.8985 15.1583L8.0002 12.1666Z" />
           </svg>
 
           <svg
@@ -33,7 +33,7 @@
             class="reviews-slider-item__rating-icon reviews-slider-item__rating-icon_negative"
           >
             <path
-              d="M8.0002 12.1666L3.10186 15.1583L4.43353 9.57498L0.0751953 5.84165L5.79603 5.38331L8.0002 0.083313L10.2044 5.38331L15.926 5.84165L11.5669 9.57498L12.8985 15.1583L8.0002 12.1666Z"/>
+              d="M8.0002 12.1666L3.10186 15.1583L4.43353 9.57498L0.0751953 5.84165L5.79603 5.38331L8.0002 0.083313L10.2044 5.38331L15.926 5.84165L11.5669 9.57498L12.8985 15.1583L8.0002 12.1666Z" />
           </svg>
         </div>
       </div>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from 'moment'
 
 export default {
   name: 'SliderItem',
@@ -78,31 +78,31 @@ export default {
       required: true,
     },
   },
-  data() {
+  data () {
     return {
       maxBodyLength: 162,
       delimiter: '...',
       isFullTextShown: false,
-    };
+    }
   },
   computed: {
-    isMaxBodyLengthExceeded() {
-      return this.review.text.length > this.maxBodyLength;
+    isMaxBodyLengthExceeded () {
+      return this.review.text.length > this.maxBodyLength
     },
-    croppedBody() {
-      return this.review.text.slice(0, this.maxBodyLength).trimRight() + '...';
+    croppedBody () {
+      return this.review.text.slice(0, this.maxBodyLength).trimRight() + '...'
     },
-    userFullName() {
-      return `${this.review.user.firstName} ${this.review.user.lastName}`.trim();
+    userFullName () {
+      return `${this.review.user.firstName} ${this.review.user.lastName}`.trim()
     },
-    reviewDate() {
-      return moment(this.review.createdAt).format('DD.MM.YYYY');
+    reviewDate () {
+      return moment(this.review.createdAt).format('DD.MM.YYYY')
     },
-    reviewRating() {
-      return parseInt(this.review.rating || 0);
+    reviewRating () {
+      return parseInt(this.review.rating || 0)
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
