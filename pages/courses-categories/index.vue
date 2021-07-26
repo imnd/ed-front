@@ -1,8 +1,7 @@
 <template>
-  <div class="container edvlisting listing-page middle-container">
+  <div class="container edvlisting listing-page">
     <h1>Все категории онлайн-курсов IT и Digital</h1>
-
-    <div class="container" v-if="!isLoading">
+    <div class="container">
       <div class="content-withe">
         <div class="groups-crosslinks-wrapper">
           <div
@@ -12,16 +11,19 @@
           >
             <p class="group-title">
               <a :href="`/courses/${category.slug}/`">
-                <img :src="`${cdnUrl}/${category.icon}`">
+                <img :src="category.icon" />
                 <span>{{ category.title }}</span>
               </a>
             </p>
 
-            <ul>
+            <ul
+              class="categories-list"
+              :class="isCategoryFolded(category) && 'categories-list_folded'"
+            >
               <li
-                v-for="(subCategory, index) in category.subCategories"
+                v-for="subCategory in category.subCategories"
                 :key="subCategory.id"
-                :class="subCategory.hidden ? 'hidden' : ''"
+                class="categories-list__item"
               >
                 <a
                   :title="`${subCategory.title}`"
@@ -34,11 +36,11 @@
 
             <p
               class="toggle"
-              v-on:click="showMore"
+              v-on:click="foldUnfoldCategory(category)"
               :data-category="`${category.id}`"
               data-prev-text="Свернуть"
             >
-              Показать еще...
+              {{ isCategoryFolded(category) ? 'Показать еще...' : 'Свернуть' }}
             </p>
           </div>
         </div>
@@ -51,10 +53,12 @@
 import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
-  data () {
+  head: {
+    title: 'Все категории онлайн-курсов it и Digital тематик',
+  },
+  data() {
     return {
-      isLoading: true,
-      cdnUrl: '',
+      unfoldedCategories: [],
     }
   },
   computed: {
@@ -63,27 +67,21 @@ export default {
   },
   methods: {
     ...mapActions('courses-categories', ['getTopCategories']),
-    showMore (event) {
-      const catId = event.target.getAttribute('data-category')
-      let category = this.getCategoryById(catId)
-      for (let j in category.subCategories) {
-        category.subCategories[j].hidden = false
+    foldUnfoldCategory(category) {
+      if (this.isCategoryFolded(category)) {
+        this.unfoldedCategories.push(category.id)
+      } else {
+        this.unfoldedCategories = this.unfoldedCategories.filter(
+          id => id !== category.id
+        )
       }
-      console.log(this.categories)
+    },
+    isCategoryFolded(category) {
+      return !this.unfoldedCategories.includes(category.id)
     },
   },
-  async created () {
-    this.cdnUrl = process.env.cdnUrl
-    await this.getTopCategories()
-    for (let i in this.categories) {
-      let category = this.categories[i]
-      for (let j in category.subCategories) {
-        let subCategory = category.subCategories[j]
-        subCategory.hidden = j > 5
-      }
-    }
-    this.isLoading = false
-    console.log(this.categories)
+  serverPrefetch() {
+    return this.$store.dispatch('courses-categories/getTopCategories')
   },
 }
 </script>
@@ -105,4 +103,7 @@ export default {
   color: #333333;
 }
 
+.categories-list_folded .categories-list__item:nth-child(n + 6) {
+  display: none;
+}
 </style>
