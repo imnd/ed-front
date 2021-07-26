@@ -345,18 +345,10 @@ export default {
   font-family: Raleway, sans-serif;
   font-size: 16px;
   font-weight: 500;
-  line-height: 150%;
   max-width: 1440px;
 
   &__header {
     margin-bottom: 32px;
-  }
-
-  &__title {
-    font-weight: 800;
-    font-size: 40px;
-    line-height: 120%;
-    margin: 0 0 16px 0;
   }
 
   &__description {

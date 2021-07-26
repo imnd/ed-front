@@ -1,86 +1,88 @@
 <template>
-  <div class="posts-page__loader" v-if="isLoading">
-    <EdvisorLoader/>
-  </div>
-  <div v-else class="container edvisor-blog-post">
-    <div class="row">
-      <div class="col-12">
-        <div
-          class="edvisor-blog-post__cover"
-          :style="{ backgroundImage: 'url(' + post.cover + ')' }">
-        </div>
-      </div>
+  <div class="container">
+    <div class="posts-page__loader" v-if="isLoading">
+      <EdvisorLoader />
     </div>
-
-    <div class="row">
-      <div class="col-12">
-        <div class="edvisor-blog-post__date-views-block">
-          <div class="edvisor-blog-post__date-views-block-date">{{ formatDate(post.createdAt) }}</div>
-          <div class="edvisor-blog-post__date-views-block-views">{{ post.viewsCount }}</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-xl-8">
-        <h1 class="edvisor-blog-post__title">{{ post.title }}</h1>
-
-        <p class="edvisor-blog-post__lead-paragraph">{{ post.shortText }}</p>
-
-        <div class="edvisor-blog-post__content">{{ post.text }}</div>
-
-        <div class="edvisor-blog-post__banner">
-          <div class="edvisor-blog-post__banner-title">И что с этим делать?</div>
-
-          <div class="edvisor-blog-post__banner-text">
-            Мы знаем, как сложно определиться с обучением и найти свой путь.
-            Поэтому создали Edvisor — агрегатор онлайн-образования с удобным фильтром,
-            отзывами выпускников и механизмами сравнения.
-            Мы поможем вам выбрать курс, один и самый подходящий.
+    <div v-else class="edvisor-blog-post">
+      <div class="row">
+        <div class="col-12">
+          <div
+            class="edvisor-blog-post__cover"
+            :style="{ backgroundImage: 'url(' + post.cover + ')' }">
           </div>
-
-          <a
-            :href="`/posts/${post.slug}/`"
-            target="_blank"
-            class="edvisor-blog-post__banner-button"
-          >Да, помогите мне</a>
         </div>
       </div>
 
-      <div class="col-xl-4">
-        <div class="edvisor-blog-post__share-block">
-          <div class="edvisor-blog-post__share-block-title">Поделиться статьей:</div>
-          <ul class="edvisor-blog-post__share-block-list">
-            <li>
-              <a
-                :href="`https://vk.com/share.php?url=${link}`"
-                target="_blank">
-                <img src="~/assets/images/vk.svg">
-              </a>
-            </li>
-            <li>
-              <a
-                :href="`https://www.facebook.com/sharer/sharer.php?u=${link}`"
-                target="_blank">
-                <img src="~/assets/images/fb.svg">
-              </a>
-            </li>
-            <li>
-              <a
-                :href="`http://twitter.com/share?text=Чем отличается реклама от маркетинга?&amp;url=${link}`"
-                target="_blank">
-                <img src="~/assets/images/twitter.svg">
-              </a>
-            </li>
+      <div class="row">
+        <div class="col-12">
+          <div class="edvisor-blog-post__date-views-block">
+            <div class="edvisor-blog-post__date-views-block-date">{{ formatDate(post.createdAt) }}</div>
+            <div class="edvisor-blog-post__date-views-block-views">{{ post.viewsCount }}</div>
+          </div>
+        </div>
+      </div>
 
-            <!--li v-for="socNet in socNets">
-              <a
-                :href="`${socNet.url}`"
-                target="_blank">
-                <img :src="`~/assets/images/${socNet.logo}`"/>
-              </a>
-            </li>-->
-          </ul>
+      <div class="row">
+        <div class="col-xl-8">
+          <h1 class="edvisor-blog-post__title">{{ post.title }}</h1>
+
+          <p class="edvisor-blog-post__lead-paragraph">{{ post.shortText }}</p>
+
+          <div class="edvisor-blog-post__content">{{ post.text }}</div>
+
+          <div class="edvisor-blog-post__banner">
+            <div class="edvisor-blog-post__banner-title">И что с этим делать?</div>
+
+            <div class="edvisor-blog-post__banner-text">
+              Мы знаем, как сложно определиться с обучением и найти свой путь.
+              Поэтому создали Edvisor — агрегатор онлайн-образования с удобным фильтром,
+              отзывами выпускников и механизмами сравнения.
+              Мы поможем вам выбрать курс, один и самый подходящий.
+            </div>
+
+            <a
+              :href="`/posts/${post.slug}/`"
+              target="_blank"
+              class="edvisor-blog-post__banner-button"
+            >Да, помогите мне</a>
+          </div>
+        </div>
+
+        <div class="col-xl-4">
+          <div class="edvisor-blog-post__share-block">
+            <div class="edvisor-blog-post__share-block-title">Поделиться статьей:</div>
+            <ul class="edvisor-blog-post__share-block-list">
+              <li>
+                <a
+                  :href="`https://vk.com/share.php?url=${link}`"
+                  target="_blank">
+                  <img src="~/assets/images/vk.svg">
+                </a>
+              </li>
+              <li>
+                <a
+                  :href="`https://www.facebook.com/sharer/sharer.php?u=${link}`"
+                  target="_blank">
+                  <img src="~/assets/images/fb.svg">
+                </a>
+              </li>
+              <li>
+                <a
+                  :href="`http://twitter.com/share?text=Чем отличается реклама от маркетинга?&amp;url=${link}`"
+                  target="_blank">
+                  <img src="~/assets/images/twitter.svg">
+                </a>
+              </li>
+
+              <!--li v-for="socNet in socNets">
+                <a
+                  :href="`${socNet.url}`"
+                  target="_blank">
+                  <img :src="`~/assets/images/${socNet.logo}`"/>
+                </a>
+              </li>-->
+            </ul>
+          </div>
         </div>
       </div>
     </div>

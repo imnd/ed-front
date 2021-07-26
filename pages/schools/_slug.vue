@@ -1,5 +1,5 @@
 <template>
-  <div class="edv-object middle-container">
+  <div class="container edv-object">
     <div class="content-edv-object">
       <h1 class="object-title">{{ school.title }}</h1>
       <h1 class="object-title">{{ school.post_title }}</h1>
@@ -38,11 +38,11 @@
       </div>
 
       <div class="tab-content">
-        <component :is="currentTabComponent" :school="school"/>
+        <component :is="currentTabComponent" :school="school" />
       </div>
     </div>
     <div class="objectlogo">
-      <img v-if="school.logo" :src="school.logo"/>
+      <img v-if="school.logo" :src="school.logo" />
     </div>
   </div>
 </template>

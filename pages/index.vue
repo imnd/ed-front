@@ -1,6 +1,6 @@
 <template>
-  <div class="front-page">
-    <div class="container">
+  <div class="container front-page">
+    <div>
       <div class="front-header">
         <h1>Мы анализируем весь рынок онлайн-образования, чтобы подсказать самое <span>лучшее</span></h1>
         <h3>Мы собрали все онлайн-курсы по digital и IT профессиям. Читайте отзывы о школах, сравнивайте и

@@ -1,5 +1,5 @@
 <template>
-  <div class="reviews-slider">
+  <div class="container reviews-slider">
     <div class="reviews-slider__control reviews-slider__control_left">
       <button class="reviews-slider__control-button reviews-slider__control-button_left" @click="handleControl('left')">
         <svg>

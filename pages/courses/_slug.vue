@@ -1,5 +1,5 @@
 <template>
-  <div class="container middle-container">
+  <div class="container">
     <CoursesList path="/courses" />
   </div>
 </template>
