@@ -1,7 +1,7 @@
 <template>
   <div class="edvlisting-item">
     <div class="logo-item" v-if="school.logo">
-      <a :href="`/schools/${school.slug}/`"><img :src="school.logo"/></a>
+      <a :href="`/schools/${school.slug}/`"><img :src="school.logo" /></a>
     </div>
     <div class="reviews">
       <div class="title">
@@ -55,3 +55,22 @@ export default {
   },
 }
 </script>
+<style scoped lang="scss">
+.edvlisting-item {
+  box-shadow: 0 2px 20px rgb(0 0 0 / 10%);
+  border-radius: 5px;
+  background: #fff;
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.edvlisting-item .logo-item {
+  max-width: 221px;
+  width: 100%;
+  padding-right: 20px;
+  margin-bottom: 12px;
+  font-size: 24px;
+  font-weight: 800;
+}
+</style>

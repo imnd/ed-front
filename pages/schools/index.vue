@@ -1,12 +1,15 @@
 <template>
-  <div class="container edvlisting listing-page middle-container">
-    <h2>Онлайн-школы, преподающие Онлайн-курсы</h2>
+  <div class="container listing-page">
+    <div class="top_h1_text">
+      <h1 class="top-h1">Онлайн-школы, преподающие Онлайн-курсы</h1>
+    </div>
+
     <div class="toptext">Список онлайн-школ, преподающих Онлайн-курсы с рейтингом, отзывами и детальным описанием курса
       2021 года. Подробные описания, цены, удобное сравнение характеристик курса.
     </div>
 
     <div class="edvlisting-row" v-if="!isLoading">
-      <SchoolsSidebar @update-filters="updateFilters($event, true)"/>
+      <SchoolsSidebar @update-filters="updateFilters($event, true)" />
       <SchoolsPage
         :currentPage="filters.page"
         @update-filters="updateFilters"
@@ -69,3 +72,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.edvlisting-row {
+  display: flex;
+  align-items: flex-start;
+}
+</style>
