@@ -53,7 +53,7 @@ export default {
   methods: {
     ...mapActions('sales', ['getSales']),
   },
-  async created () {
+  async fetch () {
     await this.getSales()
   },
 }

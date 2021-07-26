@@ -77,7 +77,7 @@ export default {
       this.$refs.list.style['transform'] = `translateX(calc(-${this.currentIndex / multiplier * 100}%))`
     },
   },
-  async created () {
+  async fetch () {
     await this.getLastReviews()
   },
 }

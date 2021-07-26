@@ -54,35 +54,10 @@ import About from '@/components/schools/tabs/About'
 import PhotoAndVideo from '@/components/schools/tabs/PhotoAndVideo'
 import SchoolCard from '@/components/schools/SchoolCard'
 
-/*import axios from 'axios';*/
+import axios from 'axios'
 
 export default {
   components: { Reviews, About, PhotoAndVideo, SchoolCard },
-  /*async fetch() {
-    // await this.getSchool(this.$route.params.slug);
-
-    try {
-      const slug = this.$route.params.slug
-      const { data: school } = await axios.get(`/schools/${slug}`);
-      this.school = school;
-      commit('setState', {
-        key:  'school',
-        value: school
-      });
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  },*/
-  /*async asyncData({route, params}) {
-    try {
-      const { data: school } = await axios.get(`/schools/${params.slug}`);
-      return { school };
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  },*/
   data () {
     return {
       tabs: [
@@ -93,8 +68,11 @@ export default {
       activeTab: 'Отзывы',
     }
   },
+  async fetch () {
+    await this.getSchool(this.$route.params.slug)
+  },
   computed: {
-    ...mapState('schools', ['school', 'reviews']),
+    ...mapState('schools', ['school']),
     currentTabComponent () {
       const currentTab = this.tabs.find(tab => tab.title === this.activeTab)
 
@@ -106,9 +84,6 @@ export default {
   },
   methods: {
     ...mapActions('schools', ['getSchool']),
-  },
-  async created () {
-    await this.getSchool(this.$route.params.slug)
   },
 }
 </script>

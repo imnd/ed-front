@@ -5,7 +5,6 @@ export default {
   state () {
     return {
       school: {},
-      reviews: [],
       schools: [],
       schoolsList: [],
       schoolsListElementsCount: 0,
@@ -25,7 +24,6 @@ export default {
         const { data: { data: school } } = await axios.get(`schools/${schoolSlug}`)
 
         commit('setState', { key: 'school', value: school })
-        commit('setState', { key: 'reviews', value: school.reviews })
       } catch (error) {
         console.error(error)
       }

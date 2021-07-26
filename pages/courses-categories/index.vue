@@ -7,7 +7,7 @@
     <div class="content-withe">
       <div class="groups-crosslinks-wrapper">
         <div
-          v-for="category in categories"
+          v-for="category in topCategories"
           :key="category.id"
           class="group-holder"
         >
@@ -60,10 +60,11 @@ export default {
   data () {
     return {
       unfoldedCategories: [],
+      cdnUrl: process.env.cdnUrl
     }
   },
   computed: {
-    ...mapState('courses-categories', ['categories']),
+    ...mapState('courses-categories', ['topCategories']),
     ...mapGetters('courses-categories', ['getCategoryById']),
   },
   methods: {
@@ -81,8 +82,16 @@ export default {
       return !this.unfoldedCategories.includes(category.id)
     },
   },
-  serverPrefetch () {
-    return this.$store.dispatch('courses-categories/getTopCategories')
+  async fetch () {
+    await this.getTopCategories()
+    for (let i in this.categories) {
+      let category = this.categories[i]
+      for (let j in category.subCategories) {
+        let subCategory = category.subCategories[j]
+        subCategory.hidden = j > 5
+      }
+    }
+    this.isLoading = false
   },
 }
 </script>

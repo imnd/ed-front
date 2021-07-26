@@ -5,6 +5,7 @@ export default {
   state () {
     return {
       categories: [],
+      topCategories: [],
     }
   },
   mutations: {
@@ -30,7 +31,7 @@ export default {
       }
       const { data: { data: categories } } = await axios.get(url)
       commit('setState', {
-        key: 'categories',
+        key: 'topCategories',
         value: categories
       })
     },

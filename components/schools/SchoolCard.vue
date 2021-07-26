@@ -29,7 +29,6 @@
       </div>
 
       <div class="buttons">
-        <a :href="`${redirectUrl}${school.id}`" class="btn-feo btn-feo-arrow" target="_blank">На сайт школы</a>
         <a :href="`${school.link}`" class="btn-feo btn-feo-arrow" target="_blank">На сайт школы</a>
         <!--<a :href="`${redirectUrl}${school.id}`" target="_blank" class="btn-feo-arrow btn-feo">На сайт школы</a>-->
         <!--<a :href="`http://edvisor/goto?sg=3&obj=${school.id}`" class="btn-feo btn-feo-arrow" target="_blank">

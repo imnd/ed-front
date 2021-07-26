@@ -40,6 +40,15 @@ export default {
       isLoading: true,
     }
   },
+  async fetch () {
+    await this.getCategories()
+    await this.getDuration()
+    await this.getPaymentTypes()
+    await this.getEducationFormats()
+    await this.getSchoolsList(this.filters)
+
+    this.isLoading = false
+  },
   methods: {
     ...mapActions('courses-categories', ['getCategories']),
     ...mapActions('duration', ['getDuration']),
@@ -60,15 +69,6 @@ export default {
 
       await this.loadMore({ ...this.filters })
     },
-  },
-  async created () {
-    await this.getCategories()
-    await this.getDuration()
-    await this.getPaymentTypes()
-    await this.getEducationFormats()
-    await this.getSchoolsList(this.filters)
-
-    this.isLoading = false
   },
 }
 </script>

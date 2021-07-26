@@ -125,7 +125,7 @@ export default {
   methods: {
     ...mapActions('posts', ['getPost']),
   },
-  async created () {
+  async fetch () {
     await this.getPost(this.$route.params.slug)
 
     /*for (const sn in this.socNets) {

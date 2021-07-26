@@ -65,7 +65,7 @@ export default {
   methods: {
     ...mapActions('posts', ['getPosts']),
   },
-  async created () {
+  async fetch () {
     await this.getPosts()
 
     this.isLoading = false

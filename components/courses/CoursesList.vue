@@ -313,7 +313,7 @@ export default {
       this.isLoadingMore = false
     },
   },
-  async created () {
+  async fetch () {
 
     await this.getCategories()
     const parentCategorySlug = this.$route.params.categorySlug
