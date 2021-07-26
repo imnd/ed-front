@@ -28,6 +28,7 @@ footer {
   margin-top: 80px;
 
   .container {
+    margin-top: 0;
     display: flex;
     justify-content: space-between;
 
