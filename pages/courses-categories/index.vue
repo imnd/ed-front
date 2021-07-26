@@ -39,6 +39,7 @@
           <p
             class="toggle"
             v-on:click="foldUnfoldCategory(category)"
+            v-if="category.subCategories.length > 6"
             :data-category="`${category.id}`"
             data-prev-text="Свернуть"
           >
