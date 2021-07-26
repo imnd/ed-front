@@ -29,7 +29,7 @@
             >
               <a
                 :title="`${subCategory.title}`"
-                :href="`/courses/${category.slug}/${subCategory.slug}/`"
+                :href="`/courses/${subCategory.slug}/`"
               >
                 {{ subCategory.title }}
               </a>
@@ -91,7 +91,6 @@ export default {
         subCategory.hidden = j > 5
       }
     }
-    this.isLoading = false
   },
 }
 </script>
@@ -118,6 +117,10 @@ export default {
       display: flex;
       align-items: center;
       min-height: 70px;
+
+      & img {
+        width: 64px;
+      }
     }
 
     & span {

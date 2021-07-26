@@ -1,9 +1,6 @@
 <template>
   <div class="container">
-    <div class="posts-page__loader" v-if="isLoading">
-      <EdvisorLoader />
-    </div>
-    <div v-else class="edvisor-blog-post">
+    <div class="edvisor-blog-post">
       <div class="row">
         <div class="col-12">
           <div
@@ -52,35 +49,13 @@
           <div class="edvisor-blog-post__share-block">
             <div class="edvisor-blog-post__share-block-title">Поделиться статьей:</div>
             <ul class="edvisor-blog-post__share-block-list">
-              <li>
-                <a
-                  :href="`https://vk.com/share.php?url=${link}`"
-                  target="_blank">
-                  <img src="~/assets/images/vk.svg">
-                </a>
-              </li>
-              <li>
-                <a
-                  :href="`https://www.facebook.com/sharer/sharer.php?u=${link}`"
-                  target="_blank">
-                  <img src="~/assets/images/fb.svg">
-                </a>
-              </li>
-              <li>
-                <a
-                  :href="`http://twitter.com/share?text=Чем отличается реклама от маркетинга?&amp;url=${link}`"
-                  target="_blank">
-                  <img src="~/assets/images/twitter.svg">
-                </a>
-              </li>
-
-              <!--li v-for="socNet in socNets">
+              <li v-for="socNet in socNets">
                 <a
                   :href="`${socNet.url}`"
                   target="_blank">
-                  <img :src="`~/assets/images/${socNet.logo}`"/>
+                  <img :src="require(`~/assets/images/${socNet.logo}`)" />
                 </a>
-              </li>-->
+              </li>
             </ul>
           </div>
         </div>
@@ -91,15 +66,13 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import EdvisorLoader from '@/components/common/EdvisorLoader'
 import DateTime from '@/mixins/DateTime'
 
 export default {
-  components: { EdvisorLoader },
   mixins: [DateTime],
   data () {
     return {
-      /*socNets: {
+      socNets: {
         'vk': {
           'url': 'https://vk.com/share.php?url=',
           'logo': 'vk.svg',
@@ -112,8 +85,7 @@ export default {
           'url': 'http://twitter.com/share?url=',
           'logo': 'twitter.svg',
         },
-      },*/
-      isLoading: true,
+      },
     }
   },
   computed: {
@@ -128,13 +100,12 @@ export default {
   async fetch () {
     await this.getPost(this.$route.params.slug)
 
-    /*for (const sn in this.socNets) {
+    for (const sn in this.socNets) {
       this.socNets[sn].url += `https://edvisor.ru/posts/${this.post.slug}/`
       if (sn === 'twitter') {
         this.socNets[sn].url += `&amp;text=${this.post.title}`
       }
-    }*/
-    this.isLoading = false
+    }
   },
 }
 </script>

@@ -13,48 +13,35 @@
 
       <CoursesFilters
         @filters-changed="loadCourses"
-        :is-loading="isLoading"
         :filters="filters"
       />
 
-      <div class="courses-page__loader" v-if="isLoading">
-        <EdvisorLoader />
+      <ul class="courses-page__courses-list" v-if="courses.length > 0">
+        <li
+          v-for="course in courses"
+          :key="course.id"
+        >
+          <CourseCard
+            :course="course"
+            :course-school="getSchoolById(course.school.id)"
+          />
+        </li>
+      </ul>
+
+      <div v-else>
+        <p>По Вашему запросу не найдено ни одного курса. Попробуйте изменить условия поиска.</p>
       </div>
-
-      <template v-else>
-        <ul class="courses-page__courses-list" v-if="courses.length > 0">
-          <li
-            v-for="course in courses"
-            :key="course.id"
-          >
-            <CourseCard
-              :course="course"
-              :course-school="getSchoolById(course.school.id)"
-            />
-          </li>
-        </ul>
-
-        <div v-else>
-          <p>По Вашему запросу не найдено ни одного курса. Попробуйте изменить условия поиска.</p>
-        </div>
-      </template>
     </div>
 
     <div class="courses-page__footer" v-if="courses.length > 0">
-      <template v-if="isLoadingMore">
-        <EdvisorLoader />
-      </template>
-
-      <template v-else>
-        <div class="courses-page__courses-count-info">Показано {{ courses.length }} курсов из {{ coursesCount }}</div>
-        <button
-          v-if="courses.length < coursesCount"
-          class="courses-page__button-show-more"
-          @click="loadMoreCourses"
-        >
-          Показать еще
-        </button>
-      </template>
+      <div class="courses-page__courses-count-info">Показано {{ courses.length }} курсов из {{ coursesCount }}</div>
+      <button
+        v-if="courses.length < coursesCount"
+        class="courses-page__button-show-more"
+        @click="loadMoreCourses"
+      >
+        Показать еще
+      </button>
     </div>
   </div>
 </template>
@@ -62,12 +49,11 @@
 import { mapActions, mapGetters, mapState } from 'vuex'
 import CoursesFilters from '@/components/courses/CoursesFilters'
 import CourseCard from '@/components/courses/CourseCard'
-import EdvisorLoader from '@/components/common/EdvisorLoader'
 import { debounce } from 'throttle-debounce'
 
 export default {
   name: 'CoursesPage',
-  components: { CourseCard, CoursesFilters, EdvisorLoader },
+  components: { CourseCard, CoursesFilters },
   props: {
     path: {
       type: String,
@@ -76,7 +62,6 @@ export default {
   },
   data () {
     return {
-      isLoading: true,
       isLoadingMore: false,
       filters: {
         selectedCategories: [],
@@ -292,9 +277,7 @@ export default {
     },
 
     debounceGetCourses: debounce(500, async function () {
-      this.isLoading = true
       await this.getCourses(this.filters)
-      this.isLoading = false
     }),
 
     async loadCourses (updatedFilters) {
@@ -334,8 +317,6 @@ export default {
     this.checkQueryParams()
 
     await this.getCourses(this.filters)
-
-    this.isLoading = false
   },
 }
 </script>

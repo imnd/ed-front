@@ -70,11 +70,6 @@ export default Vue.extend({
   },
   components: { CoursesList, Sales, ReviewsSlider },
   mixins: [DateTime],
-  data () {
-    return {
-      isLoading: true,
-    }
-  },
   computed: {
     ...mapState('courses-categories', ['topCategories']),
     ...mapState('courses', ['courses', 'coursesCount']),
@@ -87,8 +82,6 @@ export default Vue.extend({
   async fetch () {
     await this.getTopCategories(6)
     await this.getLastReviews()
-
-    this.isLoading = false
   },
 })
 </script>

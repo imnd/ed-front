@@ -43,7 +43,6 @@ export default {
   data () {
     return {
       currentIndex: 0,
-      isLoading: true,
     }
   },
   computed: {

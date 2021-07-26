@@ -8,7 +8,7 @@
       2021 года. Подробные описания, цены, удобное сравнение характеристик курса.
     </div>
 
-    <div class="edvlisting-row" v-if="!isLoading">
+    <div class="edvlisting-row">
       <SchoolsSidebar @update-filters="updateFilters($event, true)" />
       <SchoolsPage
         :currentPage="filters.page"
@@ -37,7 +37,6 @@ export default {
         searchString: null,
         limit: 20,
       },
-      isLoading: true,
     }
   },
   async fetch () {
@@ -46,8 +45,6 @@ export default {
     await this.getPaymentTypes()
     await this.getEducationFormats()
     await this.getSchoolsList(this.filters)
-
-    this.isLoading = false
   },
   methods: {
     ...mapActions('courses-categories', ['getCategories']),
