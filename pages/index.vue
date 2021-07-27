@@ -25,11 +25,11 @@
         <CoursesList path="/" />
       </div>
     </div>
-    <!--<Sales />-->
+    <!--<SalesList />-->
     <div class="review">
       <div class="container">
         <h2>Новые отзывы о школах</h2>
-        <ReviewsSlider />
+        <ReviewsList />
       </div>
     </div>
     <div class="block-seo">
@@ -61,8 +61,8 @@ import Vue from 'vue'
 import { mapActions, mapState } from 'vuex'
 import DateTime from '@/mixins/DateTime'
 import CoursesList from '@/components/courses/CoursesList'
-import Sales from '@/components/sales/Sales'
-import ReviewsSlider from '@/components/school-reviews/ReviewsSlider'
+import SalesList from '@/components/sales/SalesList'
+import ReviewsList from '@/components/school-reviews/ReviewsList'
 
 export default Vue.extend({
   data () {
@@ -73,7 +73,7 @@ export default Vue.extend({
   head: {
     title: 'Edvisor — Все онлайн курсы по Digital и IT профессиям'
   },
-  components: { CoursesList, Sales, ReviewsSlider },
+  components: { CoursesList, SalesList, ReviewsList },
   mixins: [DateTime],
   computed: {
     ...mapState('courses-categories', ['topCategories']),

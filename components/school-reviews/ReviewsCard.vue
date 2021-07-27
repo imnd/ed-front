@@ -71,7 +71,7 @@
 import moment from 'moment'
 
 export default {
-  name: 'SliderItem',
+  name: 'ReviewsCard',
   props: {
     review: {
       type: Object,

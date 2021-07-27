@@ -2391,7 +2391,7 @@
 import { mapActions, mapState } from 'vuex'
 
 export default {
-  name: 'Sales',
+  name: 'SalesList',
   computed: {
     ...mapState('sales', ['sales']),
   },

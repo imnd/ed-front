@@ -18,7 +18,7 @@
           :key="review.id"
           class="reviews-slider__list-item"
         >
-          <SliderItem :review="review" />
+          <ReviewsCard :review="review" />
         </li>
       </ul>
     </div>
@@ -38,11 +38,11 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 
-import SliderItem from '@/components/school-reviews/SliderItem'
+import ReviewsCard from '@/components/school-reviews/ReviewsCard'
 
 export default {
-  name: 'ReviewsSlider',
-  components: { SliderItem },
+  name: 'ReviewsList',
+  components: { ReviewsCard },
   data () {
     return {
       currentIndex: 0,
