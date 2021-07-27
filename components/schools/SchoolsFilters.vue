@@ -69,7 +69,7 @@ import EdvisorCheckboxGroup from '@/components/common/EdvisorCheckboxGroup'
 import EdvisorCheckboxList from '@/components/common/EdvisorCheckboxList'
 
 export default {
-  name: 'SchoolsSidebar',
+  name: 'SchoolsFilters',
   components: { EdvisorCheckboxGroup, EdvisorCheckboxList },
   data () {
     return {

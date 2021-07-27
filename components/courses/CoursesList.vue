@@ -52,7 +52,7 @@ import CourseCard from '@/components/courses/CourseCard'
 import { debounce } from 'throttle-debounce'
 
 export default {
-  name: 'CoursesPage',
+  name: 'CoursesList',
   components: { CourseCard, CoursesFilters },
   props: {
     path: {

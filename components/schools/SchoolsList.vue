@@ -81,7 +81,7 @@ import EdvisorPagination from '@/components/common/EdvisorPagination'
 import EdvisorSelect from '@/components/common/EdvisorSelect'
 
 export default {
-  name: 'SchoolsPage',
+  name: 'SchoolsList',
   components: { SchoolCard, EdvisorPagination, EdvisorSelect },
   props: {
     currentPage: {

@@ -11,10 +11,10 @@
     </div>
 
     <div class="edvlisting-row">
-      <SchoolsSidebar
+      <SchoolsFilters
         @update-filters="updateFilters($event, true)"
       />
-      <SchoolsPage
+      <SchoolsList
         @update-filters="updateFilters"
         @show-more="showMoreHandler"
         :currentPage="filters.page"
