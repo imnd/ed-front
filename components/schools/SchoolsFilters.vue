@@ -58,7 +58,10 @@
       </aside>
     </div>
     <aside class="show-filter-phone-aside">
-      <button class="btn-feo show-filter-phone">Показать {{ schoolsCount || '' }} школ(ы)</button>
+      <button class="btn-feo show-filter-phone">
+        <span v-if="schoolsCount">Показать {{ schoolsCount || '' }} школ(ы)</span>
+        <span v-else>Ничего не найдено</span>
+      </button>
     </aside>
   </div>
 </template>

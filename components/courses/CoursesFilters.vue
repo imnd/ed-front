@@ -182,7 +182,8 @@
         />
 
         <button class="courses-filters__modal-button" @click="isShowModal = false">
-          Закрыть
+          <span v-if="coursesCount">Показать {{ coursesCount || '' }} курс(а)</span>
+          <span v-else>Ничего не найдено</span>
         </button>
       </div>
     </EdvisorModal>
@@ -229,7 +230,7 @@ export default {
     ...mapState('duration', ['duration']),
     ...mapState('payment-types', ['paymentTypes']),
     ...mapState('education-formats', ['educationFormats']),
-    ...mapState('courses', ['courses']),
+    ...mapState('courses', ['courses', 'coursesCount']),
 
     selectedFiltersCount () {
       return this.selectedCategories.length
