@@ -9,6 +9,7 @@ export default {
     baseAppUrl,
     baseApiUrl,
     redirectUrl: baseAppUrl + 'redirect?link=',
+    cdnUrl: process.env.CDN_URL || '',
   },
   head: {
     title: 'edvisor',

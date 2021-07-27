@@ -8,7 +8,7 @@
     <div class="course-card__school-block">
       <img
         v-if="courseSchool"
-        :src="courseSchool.logo"
+        :src="cdnUrl + courseSchool.logo"
         class="course-card__school-logo"
       />
 
@@ -124,6 +124,7 @@ export default {
   },
   data () {
     return {
+      cdnUrl: process.env.cdnUrl,
       isDetailsShowed: false,
     }
   },

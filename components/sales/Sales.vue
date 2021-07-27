@@ -401,9 +401,16 @@
         <div class="tab-pane" id="tab-2" role="tabpanel">
           <div class="slider-tab slick-initialized slick-slider">
             <div class="slick-list draggable">
-              <div class="slick-track" style="opacity: 1; width: 0px; transform: translate3d(0px, 0px, 0px);">
-                <div class="slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false"
-                     style="width: 0px;">
+              <div
+                class="slick-track"
+                style="opacity: 1; width: 0px; transform: translate3d(0px, 0px, 0px);"
+              >
+                <div
+                  class="slick-slide slick-current slick-active"
+                  data-slick-index="0"
+                  aria-hidden="false"
+                  style="width: 0px;"
+                >
                   <div>
                     <div class="item" style="width: 100%; display: inline-block;">
                       <div class="top">
@@ -418,7 +425,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="slick-slide slick-active" data-slick-index="1" aria-hidden="false" style="width: 0px;">
+                <div
+                  class="slick-slide slick-active"
+                  data-slick-index="1"
+                  aria-hidden="false"
+                  style="width: 0px;"
+                >
                   <div>
                     <div class="item" style="width: 100%; display: inline-block;">
                       <div class="top">
@@ -433,7 +445,12 @@
                     </div>
                   </div>
                 </div>
-                <div class="slick-slide slick-active" data-slick-index="2" aria-hidden="false" style="width: 0px;">
+                <div
+                  class="slick-slide slick-active"
+                  data-slick-index="2"
+                  aria-hidden="false"
+                  style="width: 0px;"
+                >
                   <div>
                     <div class="item" style="width: 100%; display: inline-block;">
                       <div class="top">

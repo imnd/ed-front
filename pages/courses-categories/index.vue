@@ -13,7 +13,7 @@
         >
           <p class="group-title">
             <a :href="`/courses/${category.slug}/`">
-              <img :src="category.icon" />
+              <img :src="cdnUrl + category.icon" />
               <span>{{ category.title }}</span>
             </a>
           </p>
@@ -60,8 +60,8 @@ export default {
   },
   data () {
     return {
+      cdnUrl: process.env.cdnUrl,
       unfoldedCategories: [],
-      cdnUrl: process.env.cdnUrl
     }
   },
   computed: {

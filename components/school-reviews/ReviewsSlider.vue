@@ -1,7 +1,10 @@
 <template>
   <div class="container reviews-slider">
     <div class="reviews-slider__control reviews-slider__control_left">
-      <button class="reviews-slider__control-button reviews-slider__control-button_left" @click="handleControl('left')">
+      <button
+        class="reviews-slider__control-button reviews-slider__control-button_left"
+        @click="handleControl('left')"
+      >
         <svg>
           <path d="M2.90872 6.99997L8 11.978L6.54564 13.4L0 6.99997L6.54564 0.599976L8 2.02197L2.90872 6.99997Z" />
         </svg>

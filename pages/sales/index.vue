@@ -15,7 +15,11 @@
         class="item"
       >
         <div class="img">
-          <img v-if="sale.school.logo" :src="sale.school.logo" class="img img-fluid">
+          <img
+            v-if="sale.school.logo"
+            :src="cdnUrl + sale.school.logo"
+            class="img img-fluid"
+          >
         </div>
         <div class="reviews">
           <div class="title">{{ sale.school.title }}</div>
@@ -47,6 +51,11 @@ import { mapActions, mapState } from 'vuex'
 import DateTime from '@/mixins/DateTime'
 
 export default {
+  data () {
+    return {
+      cdnUrl: process.env.cdnUrl,
+    }
+  },
   mixins: [DateTime],
   computed: {
     ...mapState('sales', ['sales']),

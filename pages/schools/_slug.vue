@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="objectlogo">
-      <img v-if="school.logo" :src="school.logo" />
+      <img v-if="school.logo" :src="cdnUrl + school.logo" />
     </div>
   </div>
 </template>
@@ -60,6 +60,7 @@ export default {
   components: { Reviews, About, PhotoAndVideo, SchoolCard },
   data () {
     return {
+      cdnUrl: process.env.cdnUrl,
       tabs: [
         { title: 'Отзывы', component: 'Reviews' },
         { title: 'О школе', component: 'About' },

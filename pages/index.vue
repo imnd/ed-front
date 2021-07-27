@@ -16,7 +16,7 @@
             <span class="sub-title">Топ 10 курсов</span>
             <span class="title">{{ category.title }}</span>
             <span class="icon">
-              <img :src="`${category.icon}`">
+              <img :src="cdnUrl + category.icon" />
             </span>
           </a>
         </div>
@@ -61,10 +61,15 @@ import Vue from 'vue'
 import { mapActions, mapState } from 'vuex'
 import DateTime from '@/mixins/DateTime'
 import CoursesList from '@/components/courses/CoursesList'
-import Sales from '@/components/Sales'
+import Sales from '@/components/sales/Sales'
 import ReviewsSlider from '@/components/school-reviews/ReviewsSlider'
 
 export default Vue.extend({
+  data () {
+    return {
+      cdnUrl: process.env.cdnUrl,
+    }
+  },
   head: {
     title: 'Edvisor — Все онлайн курсы по Digital и IT профессиям'
   },

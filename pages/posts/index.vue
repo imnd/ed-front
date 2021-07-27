@@ -17,7 +17,7 @@
           <div class="posts-page__list-item">
             <div
               class="posts-page__list-item-cover"
-              :style="{ backgroundImage: 'url(' + post.cover + ')' }"
+              :style="{ backgroundImage: 'url(' + cdnUrl + post.cover + ')' }"
             ></div>
 
             <div class="posts-page__list-item-date-views-block">
@@ -27,15 +27,11 @@
 
             <div class="posts-page__list-item-title">{{ post.title }}</div>
 
-            <div class="posts-page__list-item-text">{{ post.shortText }}</div>
+            <div class="posts-page__list-item-text" v-html="post.shortText"></div>
           </div>
         </a>
       </li>
     </ul>
-
-    <div v-else>
-      <p></p>
-    </div>
   </div>
 </template>
 
@@ -46,6 +42,11 @@ import DateTime from '@/mixins/DateTime'
 export default {
   name: 'PostsPage',
   mixins: [DateTime],
+  data () {
+    return {
+      cdnUrl: process.env.cdnUrl,
+    }
+  },
   computed: {
     ...mapState('posts', ['posts']),
   },

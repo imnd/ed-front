@@ -3,7 +3,7 @@
     <header class="reviews-slider-item__header">
       <img
         v-if="review.user.avatar"
-        :src="review.user.avatar"
+        :src="cdnUrl + review.user.avatar"
         class="reviews-slider-item__avatar"
       />
 
@@ -40,7 +40,7 @@
 
       <img
         v-if="review.school.logo"
-        :src="review.school.logo"
+        :src="cdnUrl + review.school.logo"
         class="reviews-slider-item__schoolLogo"
       />
     </section>
@@ -80,6 +80,7 @@ export default {
   },
   data () {
     return {
+      cdnUrl: process.env.cdnUrl,
       maxBodyLength: 162,
       delimiter: '...',
       isFullTextShown: false,

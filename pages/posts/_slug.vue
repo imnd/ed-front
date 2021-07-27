@@ -5,7 +5,7 @@
         <div class="col-12">
           <div
             class="edvisor-blog-post__cover"
-            :style="{ backgroundImage: 'url(' + post.cover + ')' }">
+            :style="{ backgroundImage: 'url(' + cdnUrl + post.cover + ')' }">
           </div>
         </div>
       </div>
@@ -23,9 +23,9 @@
         <div class="col-xl-8">
           <h1 class="edvisor-blog-post__title">{{ post.title }}</h1>
 
-          <p class="edvisor-blog-post__lead-paragraph">{{ post.shortText }}</p>
+          <p class="edvisor-blog-post__lead-paragraph" v-html="post.shortText"></p>
 
-          <div class="edvisor-blog-post__content">{{ post.text }}</div>
+          <div class="edvisor-blog-post__content" v-html="post.text"></div>
 
           <div class="edvisor-blog-post__banner">
             <div class="edvisor-blog-post__banner-title">И что с этим делать?</div>
@@ -72,6 +72,7 @@ export default {
   mixins: [DateTime],
   data () {
     return {
+      cdnUrl: process.env.cdnUrl,
       socNets: {
         'vk': {
           'url': 'https://vk.com/share.php?url=',

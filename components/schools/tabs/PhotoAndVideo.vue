@@ -11,12 +11,11 @@
             width="560"
             height="315"
             :src="media.link"
-            frameborder="0"
             allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen=""
           />
         </div>
-        <img v-else :src="media.link"/>
+        <img v-else :src="cdnUrl + media.link" />
         <h5>{{ media.title }}</h5>
       </div>
     </div>
@@ -31,6 +30,11 @@ export default {
     school: {
       type: Object,
     },
+  },
+  data () {
+    return {
+      cdnUrl: process.env.cdnUrl,
+    }
   },
 }
 </script>
