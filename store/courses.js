@@ -1,27 +1,29 @@
 import qs from 'qs'
-
 import axios from '~/plugins/axios'
 
 export default {
   namespaced: true,
-  state () {
+  state() {
     return {
       courses: [],
       coursesCount: 0,
     }
   },
   mutations: {
-    setState (state, { key, value }) {
+    setState(state, { key, value }) {
       state[key] = value
     },
   },
   actions: {
-    async getCourses ({ commit }, filters = {}) {
-      const { data: { data: courses, meta: { total } } } = await axios.get('courses', {
-        params: {
-          ...filters,
+    async getCourses({ commit }, filters = {}) {
+      const {
+        data: {
+          data: courses,
+          meta: { total },
         },
-        paramsSerializer (params) {
+      } = await axios.get('courses', {
+        params: { ...filters },
+        paramsSerializer(params) {
           return qs.stringify(params, {
             arrayFormat: 'brackets',
             encode: false,
@@ -33,12 +35,14 @@ export default {
       commit('setState', { key: 'coursesCount', value: total })
     },
 
-    async loadMore ({ commit, state }, filters = {}) {
-      const { data: { data: courses } } = await axios.get('courses', {
+    async loadMore({ commit, state }, filters = {}) {
+      const {
+        data: { data: courses },
+      } = await axios.get('courses', {
         params: {
           ...filters,
         },
-        paramsSerializer (params) {
+        paramsSerializer(params) {
           return qs.stringify(params, {
             arrayFormat: 'brackets',
             encode: false,
@@ -46,7 +50,10 @@ export default {
         },
       })
 
-      commit('setState', { key: 'courses', value: [...state.courses, ...courses] })
+      commit('setState', {
+        key: 'courses',
+        value: [...state.courses, ...courses],
+      })
     },
-  }
+  },
 }

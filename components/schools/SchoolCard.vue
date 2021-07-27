@@ -1,11 +1,11 @@
 <template>
   <div class="edvlisting-item">
     <div class="logo-item" v-if="school.logo">
-      <a :href="`/schools/${school.slug}/`"><img :src="school.logo"/></a>
+      <a :href="`/schools/${school.slug}/`"><img :src="cdnUrl + school.logo" /></a>
     </div>
     <div class="reviews">
       <div class="title">
-        <a :href="`/schools/${school.slug}/`">{{ school.post_title }}</a>
+        <a :href="`/schools/${school.slug}/`">{{ school.title }}</a>
       </div>
       <div class="edv-rating">
         <div class="star"></div>
@@ -29,7 +29,6 @@
       </div>
 
       <div class="buttons">
-        <a :href="`${redirectUrl}${school.id}`" class="btn-feo btn-feo-arrow" target="_blank">На сайт школы</a>
         <a :href="`${school.link}`" class="btn-feo btn-feo-arrow" target="_blank">На сайт школы</a>
         <!--<a :href="`${redirectUrl}${school.id}`" target="_blank" class="btn-feo-arrow btn-feo">На сайт школы</a>-->
         <!--<a :href="`http://edvisor/goto?sg=3&obj=${school.id}`" class="btn-feo btn-feo-arrow" target="_blank">
@@ -48,6 +47,11 @@ export default {
       type: Object,
     }
   },
+  data () {
+    return {
+      cdnUrl: process.env.cdnUrl,
+    }
+  },
   computed: {
     redirectUrl () {
       return process.env.redirectUrl
@@ -55,3 +59,23 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="scss">
+.edvlisting-item {
+  box-shadow: 0 2px 20px rgb(0 0 0 / 10%);
+  border-radius: 5px;
+  background: #fff;
+  padding: 28px 32px;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+.edvlisting-item .logo-item {
+  max-width: 221px;
+  width: 100%;
+  padding-right: 20px;
+  margin-bottom: 12px;
+  font-size: 24px;
+  font-weight: 800;
+}
+</style>

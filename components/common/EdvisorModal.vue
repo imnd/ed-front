@@ -5,7 +5,7 @@
            @click="model = false">
         <path
           d="M2.828 6.99999L7.778 11.95L6.364 13.364L0 6.99999L6.364 0.635986L7.778 2.04999L2.828 6.99999Z"
-          fill="#B8B8B8"/>
+          fill="#B8B8B8" />
       </svg>
       <svg
         width="14"
@@ -16,13 +16,13 @@
       >
         <path
           d="M6.99974 5.58599L11.9497 0.635986L13.3637 2.04999L8.41374 6.99999L13.3637 11.95L11.9497 13.364L6.99974 8.41399L2.04974 13.364L0.635742 11.95L5.58574 6.99999L0.635742 2.04999L2.04974 0.635986L6.99974 5.58599Z"
-          fill="#B8B8B8"/>
+          fill="#B8B8B8" />
       </svg>
 
       <div v-if="title" class="edvisor-modal__title">{{ title }}</div>
 
       <div class="edvisor-modal__content-body">
-        <slot/>
+        <slot />
       </div>
     </div>
   </div>
@@ -131,7 +131,7 @@ export default {
   .edvisor-modal {
     &__content {
       margin: 50px;
-      height: calc(100% - 100px);
+      height: calc(100% - 200px);
       border-radius: 8px;
     }
   }

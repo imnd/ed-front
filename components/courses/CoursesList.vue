@@ -13,16 +13,10 @@
 
       <CoursesFilters
         @filters-changed="loadCourses"
-        :is-loading="isLoading"
         :filters="filters"
       />
-
-      <div class="courses-page__loader" v-if="isLoading">
-        <EdvisorLoader />
-      </div>
-
-      <template v-else>
-        <ul class="courses-page__courses-list" v-if="courses.length > 0">
+      <div class="courses-page__courses-list">
+        <ul v-if="courses.length > 0">
           <li
             v-for="course in courses"
             :key="course.id"
@@ -33,28 +27,21 @@
             />
           </li>
         </ul>
-
         <div v-else>
           <p>По Вашему запросу не найдено ни одного курса. Попробуйте изменить условия поиска.</p>
         </div>
-      </template>
+      </div>
     </div>
 
     <div class="courses-page__footer" v-if="courses.length > 0">
-      <template v-if="isLoadingMore">
-        <EdvisorLoader />
-      </template>
-
-      <template v-else>
-        <div class="courses-page__courses-count-info">Показано {{ courses.length }} курсов из {{ coursesCount }}</div>
-        <button
-          v-if="courses.length < coursesCount"
-          class="courses-page__button-show-more"
-          @click="loadMoreCourses"
-        >
-          Показать еще
-        </button>
-      </template>
+      <div class="courses-page__courses-count-info">Показано {{ courses.length }} курсов из {{ coursesCount }}</div>
+      <button
+        v-if="courses.length < coursesCount"
+        class="courses-page__button-show-more"
+        @click="loadMoreCourses"
+      >
+        Показать еще
+      </button>
     </div>
   </div>
 </template>
@@ -62,12 +49,11 @@
 import { mapActions, mapGetters, mapState } from 'vuex'
 import CoursesFilters from '@/components/courses/CoursesFilters'
 import CourseCard from '@/components/courses/CourseCard'
-import EdvisorLoader from '@/components/common/EdvisorLoader'
 import { debounce } from 'throttle-debounce'
 
 export default {
-  name: 'CoursesPage',
-  components: { CourseCard, CoursesFilters, EdvisorLoader },
+  name: 'CoursesList',
+  components: { CourseCard, CoursesFilters },
   props: {
     path: {
       type: String,
@@ -76,7 +62,6 @@ export default {
   },
   data () {
     return {
-      isLoading: true,
       isLoadingMore: false,
       filters: {
         selectedCategories: [],
@@ -94,6 +79,7 @@ export default {
   computed: {
     ...mapState('courses', ['courses', 'coursesCount']),
     ...mapState('courses-categories', ['categories']),
+    ...mapState('duration', ['duration']),
     ...mapState('payment-types', ['paymentTypes']),
     ...mapState('education-formats', ['educationFormats']),
     ...mapState('schools', ['schools']),
@@ -110,21 +96,13 @@ export default {
     ...mapActions('payment-types', ['getPaymentTypes']),
     ...mapActions('schools', ['getSchools']),
 
-    setCategoriesFromUrl (parentCategorySlug, subCategorySlug) {
-      const parentCategory = this.categories.find(c => c.slug === parentCategorySlug)
-      if (!parentCategory) {
+    setCategoriesFromUrl (categorySlug) {
+      const category = this.categories.find(c => c.slug === categorySlug)
+      if (!category) {
         return
       }
 
-      if (subCategorySlug) {
-        const subCategory = parentCategory.subCategories.find(sc => sc.slug === subCategorySlug)
-        if (!subCategory) {
-          return
-        }
-        this.filters.selectedCategories.push(subCategory.id)
-      }
-
-      this.filters.selectedCategories.push(parentCategory.id, ...parentCategory.subCategories.map(sc => sc.id))
+      this.filters.selectedCategories.push(category.id, ...category.subCategories.map(sc => sc.id))
     },
 
     checkQueryParams () {
@@ -214,13 +192,13 @@ export default {
         } else {
           query.category = this.categories
             .reduce(
-              (result, parentCategory) => {
-                if (this.filters.selectedCategories.includes(parentCategory.id)) {
-                  result.push(parentCategory.slug)
+              (result, category) => {
+                if (this.filters.selectedCategories.includes(category.id)) {
+                  result.push(category.slug)
                 }
 
                 result.push(
-                  ...parentCategory.subCategories
+                  ...category.subCategories
                     .filter(subCat => this.filters.selectedCategories.includes(subCat.id))
                     .map(subCat => subCat.slug)
                 )
@@ -292,9 +270,7 @@ export default {
     },
 
     debounceGetCourses: debounce(500, async function () {
-      this.isLoading = true
       await this.getCourses(this.filters)
-      this.isLoading = false
     }),
 
     async loadCourses (updatedFilters) {
@@ -313,14 +289,8 @@ export default {
       this.isLoadingMore = false
     },
   },
-  async created () {
-
+  async fetch () {
     await this.getCategories()
-    const parentCategorySlug = this.$route.params.categorySlug
-    const subCategorySlug = this.$route.params.subCategorySlug
-    if (parentCategorySlug || subCategorySlug) {
-      this.setCategoriesFromUrl(parentCategorySlug, subCategorySlug)
-    }
     const categorySlug = this.$route.params.slug
     if (categorySlug) {
       this.setCategoriesFromUrl(categorySlug)
@@ -334,8 +304,6 @@ export default {
     this.checkQueryParams()
 
     await this.getCourses(this.filters)
-
-    this.isLoading = false
   },
 }
 </script>
@@ -345,18 +313,10 @@ export default {
   font-family: Raleway, sans-serif;
   font-size: 16px;
   font-weight: 500;
-  line-height: 150%;
   max-width: 1440px;
 
   &__header {
     margin-bottom: 32px;
-  }
-
-  &__title {
-    font-weight: 800;
-    font-size: 40px;
-    line-height: 120%;
-    margin: 0 0 16px 0;
   }
 
   &__description {
@@ -397,6 +357,9 @@ export default {
     line-height: 120%;
     color: #9B5DE5;
     width: 100%;
+    @media (min-width: 768px) {
+      width: auto;
+    }
     cursor: pointer;
     transition: 0.25s ease-in-out;
     outline: none;
@@ -407,22 +370,16 @@ export default {
     }
   }
 
-  @media (min-width: 768px) {
-    &__button-show-more {
-      width: auto;
-    }
-  }
-
   &__courses-list {
-    margin: 0;
+    margin: 32px 0 0;
+    @media (min-width: 1440px) {
+      margin: 0;
+    }
     padding: 0;
-    list-style-type: none;
-    margin-top: 32px;
-  }
 
-  @media (min-width: 1440px) {
-    &__courses-list {
-      margin-top: 0;
+    & ul {
+      list-style-type: none;
+      padding-left: 0;
     }
   }
 }

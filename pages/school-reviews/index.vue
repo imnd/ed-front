@@ -1,13 +1,13 @@
 <template>
-  <div class="middle-container">
-    <ReviewsSlider />
+  <div>
+    <ReviewsList />
   </div>
 </template>
 
 <script>
-import ReviewsSlider from '@/components/school-reviews/ReviewsSlider'
+import ReviewsList from '@/components/school-reviews/ReviewsList'
 
 export default {
-  components: { ReviewsSlider },
+  components: { ReviewsList },
 }
 </script>

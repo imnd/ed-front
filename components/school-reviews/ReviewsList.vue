@@ -1,7 +1,10 @@
 <template>
-  <div class="reviews-slider">
+  <div class="container reviews-slider">
     <div class="reviews-slider__control reviews-slider__control_left">
-      <button class="reviews-slider__control-button reviews-slider__control-button_left" @click="handleControl('left')">
+      <button
+        class="reviews-slider__control-button reviews-slider__control-button_left"
+        @click="handleControl('left')"
+      >
         <svg>
           <path d="M2.90872 6.99997L8 11.978L6.54564 13.4L0 6.99997L6.54564 0.599976L8 2.02197L2.90872 6.99997Z" />
         </svg>
@@ -15,7 +18,7 @@
           :key="review.id"
           class="reviews-slider__list-item"
         >
-          <SliderItem :review="review" />
+          <ReviewsCard :review="review" />
         </li>
       </ul>
     </div>
@@ -35,15 +38,14 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 
-import SliderItem from '@/components/school-reviews/SliderItem'
+import ReviewsCard from '@/components/school-reviews/ReviewsCard'
 
 export default {
-  name: 'ReviewsSlider',
-  components: { SliderItem },
+  name: 'ReviewsList',
+  components: { ReviewsCard },
   data () {
     return {
       currentIndex: 0,
-      isLoading: true,
     }
   },
   computed: {
@@ -77,7 +79,7 @@ export default {
       this.$refs.list.style['transform'] = `translateX(calc(-${this.currentIndex / multiplier * 100}%))`
     },
   },
-  async created () {
+  async fetch () {
     await this.getLastReviews()
   },
 }

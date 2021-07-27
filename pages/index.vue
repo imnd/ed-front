@@ -1,6 +1,6 @@
 <template>
-  <div class="front-page">
-    <div class="container">
+  <div class="container front-page">
+    <div>
       <div class="front-header">
         <h1>Мы анализируем весь рынок онлайн-образования, чтобы подсказать самое <span>лучшее</span></h1>
         <h3>Мы собрали все онлайн-курсы по digital и IT профессиям. Читайте отзывы о школах, сравнивайте и
@@ -8,7 +8,7 @@
       </div>
       <div class="front-category">
         <div
-          v-for="(category, index) in categories"
+          v-for="(category, index) in topCategories"
           :key="category.id"
           :class="`front-category__item front-category__item-color-${index + 1}`"
         >
@@ -16,7 +16,7 @@
             <span class="sub-title">Топ 10 курсов</span>
             <span class="title">{{ category.title }}</span>
             <span class="icon">
-              <img :src="`${category.icon}`">
+              <img :src="cdnUrl + category.icon" />
             </span>
           </a>
         </div>
@@ -25,11 +25,11 @@
         <CoursesList path="/" />
       </div>
     </div>
-    <!--<Sales />-->
+    <!--<SalesList />-->
     <div class="review">
       <div class="container">
         <h2>Новые отзывы о школах</h2>
-        <ReviewsSlider />
+        <ReviewsList />
       </div>
     </div>
     <div class="block-seo">
@@ -61,22 +61,22 @@ import Vue from 'vue'
 import { mapActions, mapState } from 'vuex'
 import DateTime from '@/mixins/DateTime'
 import CoursesList from '@/components/courses/CoursesList'
-import Sales from '@/components/Sales'
-import ReviewsSlider from '@/components/school-reviews/ReviewsSlider'
+import SalesList from '@/components/sales/SalesList'
+import ReviewsList from '@/components/school-reviews/ReviewsList'
 
 export default Vue.extend({
+  data () {
+    return {
+      cdnUrl: process.env.cdnUrl,
+    }
+  },
   head: {
     title: 'Edvisor — Все онлайн курсы по Digital и IT профессиям'
   },
-  components: { CoursesList, Sales, ReviewsSlider },
+  components: { CoursesList, SalesList, ReviewsList },
   mixins: [DateTime],
-  data () {
-    return {
-      isLoading: true,
-    }
-  },
   computed: {
-    ...mapState('courses-categories', ['categories']),
+    ...mapState('courses-categories', ['topCategories']),
     ...mapState('courses', ['courses', 'coursesCount']),
     ...mapState('school-reviews', ['lastReviews']),
   },
@@ -84,11 +84,9 @@ export default Vue.extend({
     ...mapActions('courses-categories', ['getTopCategories']),
     ...mapActions('school-reviews', ['getLastReviews']),
   },
-  async created () {
+  async fetch () {
     await this.getTopCategories(6)
     await this.getLastReviews()
-
-    this.isLoading = false
   },
 })
 </script>

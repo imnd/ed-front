@@ -4,8 +4,8 @@
       <div class="header-rating">
         <div class="left">
           <svg class="progress-rating" width="132" height="132" viewBox="0 0 120 120">
-            <circle class="progress__meter" cx="60" cy="60" r="54" stroke-width="8"/>
-            <circle class="progress__value" cx="60" cy="60" r="54" stroke-width="9"/>
+            <circle class="progress__meter" cx="60" cy="60" r="54" stroke-width="8" />
+            <circle class="progress__value" cx="60" cy="60" r="54" stroke-width="9" />
           </svg>
 
           <span>{{ averageRating }}</span>
@@ -77,30 +77,33 @@
           >
             <div class="left">
               <div class="avatar">
-                <img v-if="review.user.avatar" :src="review.user.avatar"/>
+                <img v-if="review.user.avatar" :src="cdnUrl + review.user.avatar" />
               </div>
-              <div class="name">{{ review.comments[0].user.firstName }} {{ review.comments[0].user.lastName }}</div>
-              <div class="date">{{ formatDate(review.comments[0].createdAt) }}</div>
-              <div class="edv-stars">
-                <i v-for="n in parseInt(review.comments[0].rating || 0)" :key="n"></i>
-                <i v-for="n in (5 - parseInt(review.comments[0].rating || 0))" :key="n" class="star-gray"></i>
-              </div>
+
+              <template v-if="review.comments[0]">
+                <div class="name">{{ review.comments[0].user.firstName }} {{ review.comments[0].user.lastName }}</div>
+                <div class="date">{{ formatDate(review.comments[0].createdAt) }}</div>
+                <div class="edv-stars">
+                  <i v-for="n in parseInt(review.comments[0].rating || 0)" :key="n"></i>
+                  <i v-for="n in (5 - parseInt(review.comments[0].rating || 0))" :key="n" class="star-gray"></i>
+                </div>
+              </template>
             </div>
             <div class="right">
               <EdvisorContentLimiter
-                v-if="review.comments[0].text"
+                v-if="review.comments[0] && review.comments[0].text"
                 :text="review.comments[0].text"
                 class="review-content"
               />
 
               <EdvisorContentLimiter
-                v-if="review.comments[0].advantages"
+                v-if="review.comments[0] && review.comments[0].advantages"
                 :text="review.comments[0].advantages"
                 class="plus"
               />
 
               <EdvisorContentLimiter
-                v-if="review.comments[0].disadvantages"
+                v-if="review.comments[0] && review.comments[0].disadvantages"
                 :text="review.comments[0].disadvantages"
                 class="minus"
               />
@@ -172,6 +175,7 @@ export default {
   },
   data () {
     return {
+      cdnUrl: process.env.cdnUrl,
       pageLimits: [6, 12, 24, 48],
       currentPageLimit: initPageLimit,
       currentPage: 1,
@@ -185,7 +189,7 @@ export default {
       return Math.ceil(this.reviews.length / this.currentPageLimit)
     },
     averageRating () {
-      return (this.reviews.reduce((sum, review) => sum + parseInt(review.comments[0].rating || 0), 0) / this.reviews.length).toFixed(1)
+      return (this.reviews.reduce((sum, review) => sum + parseInt(review.comments[0] && review.comments[0].rating || 0), 0) / this.reviews.length).toFixed(1)
     },
     reviews () {
       if (this.school.reviews) {
@@ -216,7 +220,7 @@ export default {
       this.currentReviews = [...showedReviews, ...this.currentReviews]
     },
     calcRatingPercent (ratingValue) {
-      const reviewsWithRatingValue = this.reviews.filter(review => parseInt(review.comments[0].rating) === ratingValue)
+      const reviewsWithRatingValue = this.reviews.filter(review => parseInt(review.comments[0] && review.comments[0].rating || 0) === ratingValue)
 
       return Math.floor((reviewsWithRatingValue.length / this.reviews.length) * 100)
     },

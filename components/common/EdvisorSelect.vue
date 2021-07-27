@@ -12,7 +12,8 @@
       <span class="edvisor-select__field-title" :class="{ 'edvisor-select__field-title_not-empty': !!model }">
         {{ title }}
       </span>
-      <svg width="10" height="6" viewBox="0 0 10 6" class="edvisor-select__field-icon" :class="{ 'edvisor-select__field-icon_active': isActive }">
+      <svg width="10" height="6" viewBox="0 0 10 6" class="edvisor-select__field-icon"
+           :class="{ 'edvisor-select__field-icon_active': isActive }">
         <path d="M5 5.33325L0 0.333252H10L5 5.33325Z" />
       </svg>
     </div>
@@ -22,8 +23,8 @@
       class="edvisor-select__list"
     >
       <li
-        v-for="item in items"
-        :key="item[itemValuePropName]"
+        v-for="(item, index) in items"
+        :key="item[itemValuePropName] + index"
         class="edvisor-select__list-item edvisor-select__list-item_selectable"
         @click="model = item[itemValuePropName]; isActive = false"
       >
@@ -57,31 +58,31 @@ export default {
       default: 'title',
     },
   },
-  data() {
+  data () {
     return {
       isActive: false,
-    };
+    }
   },
   computed: {
     model: {
-      get() {
-        return this.value;
+      get () {
+        return this.value
       },
-      set(value) {
-        return this.$emit('input', value);
+      set (value) {
+        return this.$emit('input', value)
       },
     },
-    title() {
+    title () {
       if (this.model) {
-        let selected = this.items.find(item => item[this.itemValuePropName] === this.model);
+        let selected = this.items.find(item => item[this.itemValuePropName] === this.model)
         if (selected !== undefined) {
-          return selected[this.itemTitlePropName];
+          return selected[this.itemTitlePropName]
         }
       }
-      return this.selectTitle;
+      return this.selectTitle
     }
   },
-};
+}
 </script>
 
 <style scoped lang="scss">

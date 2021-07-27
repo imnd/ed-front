@@ -8,7 +8,7 @@
     <div class="course-card__school-block">
       <img
         v-if="courseSchool"
-        :src="courseSchool.logo"
+        :src="cdnUrl + courseSchool.logo"
         class="course-card__school-logo"
       />
 
@@ -16,7 +16,7 @@
         <svg width="16" height="16" viewBox="0 0 16 16" class="course-card__rating-icon">
           <path
             d="M8.0002 12.6666L3.10186 15.6583L4.43353 10.0749L0.0751953 6.34159L5.79603 5.88325L8.0002 0.583252L10.2044 5.88325L15.926 6.34159L11.5669 10.0749L12.8985 15.6583L8.0002 12.6666Z"
-            fill="#FEE440"/>
+            fill="#FEE440" />
         </svg>
         <span class="course-card__school-rating-value">{{
             courseSchool ? courseSchool.averageRating : null
@@ -27,8 +27,9 @@
       </div>
 
       <div class="course-card__reviews">
-        <a :href="courseSchool ? `/schools/${courseSchool.title}/` : '#'">Отзывы о школе
-          {{ courseSchool ? `(${courseSchool.reviewsCount})` : null }}</a>
+        <a :href="courseSchool ? `/schools/${courseSchool.slug}/` : '#'">
+          Отзывы о школе {{ courseSchool ? `(${courseSchool.reviewsCount})` : null }}
+        </a>
       </div>
     </div>
 
@@ -64,7 +65,7 @@
           <svg width="7" height="10" viewBox="0 0 7 10" class="course-card__button-course-site-icon">
             <path
               d="M4.28145 4.99999L0.981445 1.69999L1.92411 0.757324L6.16678 4.99999L1.92411 9.24266L0.981445 8.29999L4.28145 4.99999Z"
-              fill="white"/>
+              fill="white" />
           </svg>
         </button>
       </a>
@@ -74,7 +75,7 @@
       <ul class="course-card__duration-list">
         <li
           v-for="(duration, index) in (course.durations || [])"
-          :key="index"
+          :key="duration + course.id"
         >
           {{ duration.title }}
         </li>
@@ -84,7 +85,7 @@
     <ul v-if="isDetailsShowed" class="course-card__format-list">
       <li
         v-for="(educationFormat, index) in (course.educationFormats || [])"
-        :key="index"
+        :key="index + educationFormat"
         class="course-card__format-list-item"
       >
         {{ educationFormat.title }}
@@ -101,7 +102,7 @@
              :class="{ 'course-card__button-show-details-icon_showed': isDetailsShowed }">
           <path
             d="M5.99962 4.97656L10.1246 0.851562L11.303 2.0299L5.99962 7.33323L0.696289 2.0299L1.87462 0.851562L5.99962 4.97656Z"
-            fill="#00BBF9"/>
+            fill="#00BBF9" />
         </svg>
       </button>
     </div>
@@ -123,6 +124,7 @@ export default {
   },
   data () {
     return {
+      cdnUrl: process.env.cdnUrl,
       isDetailsShowed: false,
     }
   },
@@ -146,7 +148,7 @@ export default {
       return intPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
     },
   },
-  created () {
+  mounted () {
     this.isDetailsShowed = window.innerWidth > 1440
   },
 }

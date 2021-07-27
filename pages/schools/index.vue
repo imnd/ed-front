@@ -1,16 +1,23 @@
 <template>
-  <div class="container edvlisting listing-page middle-container">
-    <h2>Онлайн-школы, преподающие Онлайн-курсы</h2>
-    <div class="toptext">Список онлайн-школ, преподающих Онлайн-курсы с рейтингом, отзывами и детальным описанием курса
-      2021 года. Подробные описания, цены, удобное сравнение характеристик курса.
+  <div class="container listing-page">
+    <div class="top_h1_text">
+      <h1 class="top-h1">Онлайн-школы, преподающие Онлайн-курсы</h1>
     </div>
 
-    <div class="edvlisting-row" v-if="!isLoading">
-      <SchoolsSidebar @update-filters="updateFilters($event, true)"/>
-      <SchoolsPage
-        :currentPage="filters.page"
+    <div class="toptext">
+      Список онлайн-школ, преподающих Онлайн-курсы с рейтингом,
+      отзывами и детальным описанием курса 2021 года.
+      Подробные описания, цены, удобное сравнение характеристик курса.
+    </div>
+
+    <div class="edvlisting-row">
+      <SchoolsFilters
+        @update-filters="updateFilters($event, true)"
+      />
+      <SchoolsList
         @update-filters="updateFilters"
         @show-more="showMoreHandler"
+        :currentPage="filters.page"
       />
     </div>
   </div>
@@ -30,11 +37,10 @@ export default {
         selectedEducationFormats: null,
 
         page: 1,
-        sortingType: null,
+        sorting: null,
         searchString: null,
         limit: 20,
       },
-      isLoading: true,
     }
   },
   methods: {
@@ -42,30 +48,35 @@ export default {
     ...mapActions('duration', ['getDuration']),
     ...mapActions('education-formats', ['getEducationFormats']),
     ...mapActions('payment-types', ['getPaymentTypes']),
-    ...mapActions('schools', ['getSchoolsList', 'loadMore']),
+    ...mapActions('schools', ['getSchools', 'loadMore']),
 
-    async updateFilters (payload, needToRefreshPage = false) {
+    async updateFilters (updatedFilters, needToRefreshPage = false) {
       if (needToRefreshPage) {
         this.filters.page = 1
       }
-      this.filters = { ...this.filters, ...payload }
+      this.filters = { ...this.filters, ...updatedFilters }
 
-      await this.getSchoolsList({ ...this.filters })
+      await this.getSchools({ ...this.filters })
     },
-    async showMoreHandler (payload) {
-      this.filters = { ...this.filters, ...payload }
+    async showMoreHandler (updatedFilters) {
+      this.filters = { ...this.filters, ...updatedFilters }
 
       await this.loadMore({ ...this.filters })
     },
   },
-  async created () {
+  async fetch () {
     await this.getCategories()
     await this.getDuration()
     await this.getPaymentTypes()
     await this.getEducationFormats()
-    await this.getSchoolsList(this.filters)
-
-    this.isLoading = false
+    await this.getSchools(this.filters)
   },
 }
 </script>
+
+<style scoped>
+.edvlisting-row {
+  display: flex;
+  align-items: flex-start;
+}
+</style>

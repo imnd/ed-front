@@ -1,5 +1,5 @@
 <template>
-  <div class="edv-object middle-container">
+  <div class="container edv-object">
     <div class="content-edv-object">
       <h1 class="object-title">{{ school.title }}</h1>
       <h1 class="object-title">{{ school.post_title }}</h1>
@@ -38,11 +38,11 @@
       </div>
 
       <div class="tab-content">
-        <component :is="currentTabComponent" :school="school"/>
+        <component :is="currentTabComponent" :school="school" />
       </div>
     </div>
     <div class="objectlogo">
-      <img v-if="school.logo" :src="school.logo"/>
+      <img v-if="school.logo" :src="cdnUrl + school.logo" />
     </div>
   </div>
 </template>
@@ -54,37 +54,13 @@ import About from '@/components/schools/tabs/About'
 import PhotoAndVideo from '@/components/schools/tabs/PhotoAndVideo'
 import SchoolCard from '@/components/schools/SchoolCard'
 
-/*import axios from 'axios';*/
+import axios from 'axios'
 
 export default {
   components: { Reviews, About, PhotoAndVideo, SchoolCard },
-  /*async fetch() {
-    // await this.getSchool(this.$route.params.slug);
-
-    try {
-      const slug = this.$route.params.slug
-      const { data: school } = await axios.get(`/schools/${slug}`);
-      this.school = school;
-      commit('setState', {
-        key:  'school',
-        value: school
-      });
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  },*/
-  /*async asyncData({route, params}) {
-    try {
-      const { data: school } = await axios.get(`/schools/${params.slug}`);
-      return { school };
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  },*/
   data () {
     return {
+      cdnUrl: process.env.cdnUrl,
       tabs: [
         { title: 'Отзывы', component: 'Reviews' },
         { title: 'О школе', component: 'About' },
@@ -93,8 +69,11 @@ export default {
       activeTab: 'Отзывы',
     }
   },
+  async fetch () {
+    await this.getSchool(this.$route.params.slug)
+  },
   computed: {
-    ...mapState('schools', ['school', 'reviews']),
+    ...mapState('schools', ['school']),
     currentTabComponent () {
       const currentTab = this.tabs.find(tab => tab.title === this.activeTab)
 
@@ -106,9 +85,6 @@ export default {
   },
   methods: {
     ...mapActions('schools', ['getSchool']),
-  },
-  async created () {
-    await this.getSchool(this.$route.params.slug)
   },
 }
 </script>

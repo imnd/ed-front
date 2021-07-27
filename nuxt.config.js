@@ -1,5 +1,5 @@
-const baseAppUrl = process.env.EDVISOR_API_URL || 'http://localhost'
-const baseApiUrl = baseAppUrl + '/api/v1/'
+const baseAppUrl = process.env.EDVISOR_API_URL || 'http://localhost/'
+const baseApiUrl = baseAppUrl + 'api/v1/'
 
 export default {
   mode: 'universal',
@@ -9,6 +9,7 @@ export default {
     baseAppUrl,
     baseApiUrl,
     redirectUrl: baseAppUrl + 'redirect?link=',
+    cdnUrl: process.env.CDN_URL || '',
   },
   head: {
     title: 'edvisor',
@@ -25,8 +26,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
-        href:
-          'https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap',
       },
     ],
   },

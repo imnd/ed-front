@@ -27,27 +27,28 @@ footer {
   background: #333333;
   margin-top: 80px;
 
-  .container {
+  & .container {
+    margin-top: 0;
     display: flex;
     justify-content: space-between;
 
-    .info {
-      .ogrn {
+    & .info {
+      & .ogrn {
         margin-bottom: 12px;
       }
 
-      .mail {
+      & .mail {
         color: #ffffff;
       }
     }
 
-    .links {
+    & .links {
       display: flex;
       align-items: flex-start;
       flex-wrap: wrap;
       gap: 32px;
 
-      a {
+      & a {
         color: #ffffff;
       }
     }
