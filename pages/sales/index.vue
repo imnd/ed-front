@@ -2,8 +2,9 @@
   <div class="container">
     <div class="top_h1_text">
       <h1 class="top-h1">Акции</h1>
-      <div class="top-text"><p>На этой странице мы предоставляем все текущие промо-акции и скидки онлайн-школ!
-        Надеемся, они будут вам полезны!</p>
+      <div class="top-text">
+        <p>На этой странице мы предоставляем все текущие промо-акции и скидки онлайн-школ!
+          Надеемся, они будут вам полезны!</p>
       </div>
     </div>
 
@@ -29,7 +30,7 @@
         </div>
         <div class="title-shares">{{ sale.title }}</div>
         <div class="text">
-          {{ sale.promo_description }}
+          {{ sale.description }}
         </div>
         <a :href="sale.saleUrl" target="_blank" class="btn-feo btn-feo-arrow">Акция на сайте школы</a>
       </div>
