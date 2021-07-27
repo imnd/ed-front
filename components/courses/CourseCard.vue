@@ -27,8 +27,9 @@
       </div>
 
       <div class="course-card__reviews">
-        <a :href="courseSchool ? `/schools/${courseSchool.title}/` : '#'">Отзывы о школе
-          {{ courseSchool ? `(${courseSchool.reviewsCount})` : null }}</a>
+        <a :href="courseSchool ? `/schools/${courseSchool.slug}/` : '#'">
+          Отзывы о школе {{ courseSchool ? `(${courseSchool.reviewsCount})` : null }}
+        </a>
       </div>
     </div>
 
@@ -74,7 +75,7 @@
       <ul class="course-card__duration-list">
         <li
           v-for="(duration, index) in (course.durations || [])"
-          :key="index"
+          :key="duration + course.id"
         >
           {{ duration.title }}
         </li>
@@ -84,7 +85,7 @@
     <ul v-if="isDetailsShowed" class="course-card__format-list">
       <li
         v-for="(educationFormat, index) in (course.educationFormats || [])"
-        :key="index"
+        :key="index + educationFormat"
         class="course-card__format-list-item"
       >
         {{ educationFormat.title }}

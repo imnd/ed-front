@@ -15,21 +15,21 @@
         @filters-changed="loadCourses"
         :filters="filters"
       />
-
-      <ul class="courses-page__courses-list" v-if="courses.length > 0">
-        <li
-          v-for="course in courses"
-          :key="course.id"
-        >
-          <CourseCard
-            :course="course"
-            :course-school="getSchoolById(course.school.id)"
-          />
-        </li>
-      </ul>
-
-      <div v-else>
-        <p>По Вашему запросу не найдено ни одного курса. Попробуйте изменить условия поиска.</p>
+      <div class="courses-page__courses-list">
+        <ul v-if="courses.length > 0">
+          <li
+            v-for="course in courses"
+            :key="course.id"
+          >
+            <CourseCard
+              :course="course"
+              :course-school="getSchoolById(course.school.id)"
+            />
+          </li>
+        </ul>
+        <div v-else>
+          <p>По Вашему запросу не найдено ни одного курса. Попробуйте изменить условия поиска.</p>
+        </div>
       </div>
     </div>
 
@@ -79,6 +79,7 @@ export default {
   computed: {
     ...mapState('courses', ['courses', 'coursesCount']),
     ...mapState('courses-categories', ['categories']),
+    ...mapState('duration', ['duration']),
     ...mapState('payment-types', ['paymentTypes']),
     ...mapState('education-formats', ['educationFormats']),
     ...mapState('schools', ['schools']),
@@ -95,21 +96,13 @@ export default {
     ...mapActions('payment-types', ['getPaymentTypes']),
     ...mapActions('schools', ['getSchools']),
 
-    setCategoriesFromUrl (parentCategorySlug, subCategorySlug) {
-      const parentCategory = this.categories.find(c => c.slug === parentCategorySlug)
-      if (!parentCategory) {
+    setCategoriesFromUrl (categorySlug) {
+      const category = this.categories.find(c => c.slug === categorySlug)
+      if (!category) {
         return
       }
 
-      if (subCategorySlug) {
-        const subCategory = parentCategory.subCategories.find(sc => sc.slug === subCategorySlug)
-        if (!subCategory) {
-          return
-        }
-        this.filters.selectedCategories.push(subCategory.id)
-      }
-
-      this.filters.selectedCategories.push(parentCategory.id, ...parentCategory.subCategories.map(sc => sc.id))
+      this.filters.selectedCategories.push(category.id, ...category.subCategories.map(sc => sc.id))
     },
 
     checkQueryParams () {
@@ -199,13 +192,13 @@ export default {
         } else {
           query.category = this.categories
             .reduce(
-              (result, parentCategory) => {
-                if (this.filters.selectedCategories.includes(parentCategory.id)) {
-                  result.push(parentCategory.slug)
+              (result, category) => {
+                if (this.filters.selectedCategories.includes(category.id)) {
+                  result.push(category.slug)
                 }
 
                 result.push(
-                  ...parentCategory.subCategories
+                  ...category.subCategories
                     .filter(subCat => this.filters.selectedCategories.includes(subCat.id))
                     .map(subCat => subCat.slug)
                 )
@@ -297,13 +290,7 @@ export default {
     },
   },
   async fetch () {
-
     await this.getCategories()
-    const parentCategorySlug = this.$route.params.categorySlug
-    const subCategorySlug = this.$route.params.subCategorySlug
-    if (parentCategorySlug || subCategorySlug) {
-      this.setCategoriesFromUrl(parentCategorySlug, subCategorySlug)
-    }
     const categorySlug = this.$route.params.slug
     if (categorySlug) {
       this.setCategoriesFromUrl(categorySlug)
@@ -370,6 +357,9 @@ export default {
     line-height: 120%;
     color: #9B5DE5;
     width: 100%;
+    @media (min-width: 768px) {
+      width: auto;
+    }
     cursor: pointer;
     transition: 0.25s ease-in-out;
     outline: none;
@@ -380,22 +370,16 @@ export default {
     }
   }
 
-  @media (min-width: 768px) {
-    &__button-show-more {
-      width: auto;
-    }
-  }
-
   &__courses-list {
-    margin: 0;
+    margin: 32px 0 0;
+    @media (min-width: 1440px) {
+      margin: 0;
+    }
     padding: 0;
-    list-style-type: none;
-    margin-top: 32px;
-  }
 
-  @media (min-width: 1440px) {
-    &__courses-list {
-      margin-top: 0;
+    & ul {
+      list-style-type: none;
+      padding-left: 0;
     }
   }
 }
