@@ -58,7 +58,7 @@
       </aside>
     </div>
     <aside class="show-filter-phone-aside">
-      <button class="btn-feo show-filter-phone">Показать {{ schoolsListElementsCount || '' }} школ(ы)</button>
+      <button class="btn-feo show-filter-phone">Показать {{ schoolsCount || '' }} школ(ы)</button>
     </aside>
   </div>
 </template>
@@ -84,7 +84,7 @@ export default {
     ...mapState('duration', ['duration']),
     ...mapState('education-formats', ['educationFormats']),
     ...mapState('payment-types', ['paymentTypes']),
-    ...mapState('schools', ['schoolsListElementsCount']),
+    ...mapState('schools', ['schoolsCount']),
     model: {
       get () {
         return this.value

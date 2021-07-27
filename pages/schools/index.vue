@@ -4,16 +4,20 @@
       <h1 class="top-h1">Онлайн-школы, преподающие Онлайн-курсы</h1>
     </div>
 
-    <div class="toptext">Список онлайн-школ, преподающих Онлайн-курсы с рейтингом, отзывами и детальным описанием курса
-      2021 года. Подробные описания, цены, удобное сравнение характеристик курса.
+    <div class="toptext">
+      Список онлайн-школ, преподающих Онлайн-курсы с рейтингом,
+      отзывами и детальным описанием курса 2021 года.
+      Подробные описания, цены, удобное сравнение характеристик курса.
     </div>
 
     <div class="edvlisting-row">
-      <SchoolsSidebar @update-filters="updateFilters($event, true)" />
+      <SchoolsSidebar
+        @update-filters="updateFilters($event, true)"
+      />
       <SchoolsPage
-        :currentPage="filters.page"
         @update-filters="updateFilters"
         @show-more="showMoreHandler"
+        :currentPage="filters.page"
       />
     </div>
   </div>
@@ -33,39 +37,39 @@ export default {
         selectedEducationFormats: null,
 
         page: 1,
-        sortingType: null,
+        sorting: null,
         searchString: null,
         limit: 20,
       },
     }
-  },
-  async fetch () {
-    await this.getCategories()
-    await this.getDuration()
-    await this.getPaymentTypes()
-    await this.getEducationFormats()
-    await this.getSchoolsList(this.filters)
   },
   methods: {
     ...mapActions('courses-categories', ['getCategories']),
     ...mapActions('duration', ['getDuration']),
     ...mapActions('education-formats', ['getEducationFormats']),
     ...mapActions('payment-types', ['getPaymentTypes']),
-    ...mapActions('schools', ['getSchoolsList', 'loadMore']),
+    ...mapActions('schools', ['getSchools', 'loadMore']),
 
-    async updateFilters (payload, needToRefreshPage = false) {
+    async updateFilters (updatedFilters, needToRefreshPage = false) {
       if (needToRefreshPage) {
         this.filters.page = 1
       }
-      this.filters = { ...this.filters, ...payload }
+      this.filters = { ...this.filters, ...updatedFilters }
 
-      await this.getSchoolsList({ ...this.filters })
+      await this.getSchools({ ...this.filters })
     },
-    async showMoreHandler (payload) {
-      this.filters = { ...this.filters, ...payload }
+    async showMoreHandler (updatedFilters) {
+      this.filters = { ...this.filters, ...updatedFilters }
 
       await this.loadMore({ ...this.filters })
     },
+  },
+  async fetch () {
+    await this.getCategories()
+    await this.getDuration()
+    await this.getPaymentTypes()
+    await this.getEducationFormats()
+    await this.getSchools(this.filters)
   },
 }
 </script>

@@ -21,35 +21,25 @@
         <input v-model="searchString" type="text" placeholder="Поиск..." @input="debounceLoadData">
       </div>
 
-      <div class="sorting">
-        <select
-          class="select-sorting"
-          v-model="sortingType"
-          @change="loadData"
-        >
-          <option
-            v-for="availableSortingType in availableSortingTypes"
-            :key="availableSortingType.value"
-            :value="availableSortingType.value"
-            :selected="availableSortingType.value === sortingType"
-          >
-            {{ availableSortingType.title }}
-          </option>
-        </select>
-      </div>
+      <EdvisorSelect
+        v-model="sorting"
+        :items="availableSortings"
+        select-title="Сортировка"
+        class="sorting select-sorting"
+        @input="loadData"
+      />
     </div>
 
-    <h3 class="edvlisting-items_title">{{ schoolsListElementsCount }} школ(а/ы)</h3>
+    <h3 class="edvlisting-items_title">{{ schoolsCount }} школ(а/ы)</h3>
 
-    <div v-if="schoolsList.length > 0">
+    <div v-if="schools.length > 0">
       <SchoolCard
-        v-for="school in schoolsList"
+        v-for="school in schools"
         :key="school.id"
         :school="school"
       />
-
       <div class="text-center">
-        <div class="shows-course">Показано {{ schoolsList.length }} школ из {{ schoolsListElementsCount }}</div>
+        <div class="shows-course">Показано {{ schools.length }} школ из {{ schoolsCount }}</div>
         <a
           v-if="pagesCount > 0 && page < pagesCount"
           href="#"
@@ -59,7 +49,6 @@
           Показать еще
         </a>
       </div>
-
       <div class="pagination-showsitem">
         <edvisor-pagination
           :pages-count="pagesCount"
@@ -89,10 +78,11 @@ import { mapState } from 'vuex'
 import { debounce } from 'throttle-debounce'
 import SchoolCard from '@/components/schools/SchoolCard'
 import EdvisorPagination from '@/components/common/EdvisorPagination'
+import EdvisorSelect from '@/components/common/EdvisorSelect'
 
 export default {
   name: 'SchoolsPage',
-  components: { SchoolCard, EdvisorPagination },
+  components: { SchoolCard, EdvisorPagination, EdvisorSelect },
   props: {
     currentPage: {
       type: Number,
@@ -101,23 +91,23 @@ export default {
   data () {
     return {
       page: 1,
-      sortingType: 'HIGH_RATING_FIRST',
       searchString: '',
       limit: 20,
       availableLimits: [20, 50, 100],
-      availableSortingTypes: [
-        { value: 'HIGH_RATING_FIRST', title: 'Сначала высокий рейтинг' },
-        { value: 'BY_REVIEWS_COUNT_DESC', title: 'По количеству отзывов' },
-        { value: 'BY_SCHOOL_NAME_ASC', title: 'По названию A-Z' },
-        { value: 'BY_SCHOOL_NAME_DESC', title: 'По названию Z-A' },
+      sorting: {},
+      availableSortings: [
+        { value: { field: 'rating', type: 'DESC' }, title: 'Сначала высокий рейтинг' },
+        { value: { field: 'reviewsCount', type: 'DESC' }, title: 'По количеству отзывов' },
+        { value: { field: 'schoolName', type: 'ASC' }, title: 'По названию A-Z' },
+        { value: { field: 'schoolName', type: 'DESC' }, title: 'По названию Z-A' },
       ],
     }
   },
   computed: {
     ...mapState('courses', ['courses', 'coursesCount']),
-    ...mapState('schools', ['schoolsList', 'schoolsListElementsCount']),
+    ...mapState('schools', ['schools', 'schoolsCount']),
     pagesCount () {
-      return Math.ceil(this.schoolsListElementsCount / this.limit)
+      return Math.ceil(this.schoolsCount / this.limit)
     },
   },
   watch: {
@@ -134,13 +124,14 @@ export default {
       })
     },
     loadData (changedPropName) {
+
       if (changedPropName !== 'page') {
         this.page = 1
       }
 
       this.$emit('update-filters', {
         page: this.page,
-        sortingType: this.sortingType,
+        sorting: this.sorting,
         searchString: this.searchString,
         limit: this.limit,
       })
@@ -152,7 +143,6 @@ export default {
 }
 </script>
 
-`
 <style scoped lang="scss">
 .select-sorting,
 .showsitem_select {

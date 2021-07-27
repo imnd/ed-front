@@ -27,9 +27,9 @@
         </svg>
       </button>
 
-      <edvisor-select
+      <EdvisorSelect
         v-model="sorting"
-        :items="availableSortingTypes"
+        :items="availableSortings"
         select-title="Сортировка"
         class="courses-filters__sort"
         @input="filterChangedHandler"
@@ -182,7 +182,7 @@
         />
 
         <button class="courses-filters__modal-button" @click="isShowModal = false">
-          Показать курсы
+          Закрыть
         </button>
       </div>
     </EdvisorModal>
@@ -208,7 +208,8 @@ export default {
   },
   data () {
     return {
-      availableSortingTypes: [
+      sorting: {},
+      availableSortings: [
         { value: { field: 'courseName', type: 'ASC' }, title: 'По названию курса A-Z' },
         { value: { field: 'courseName', type: 'DESC' }, title: 'По названию курса Z-A' },
         { value: { field: 'schoolName', type: 'ASC' }, title: 'По названию школы A-Z' },
@@ -218,7 +219,6 @@ export default {
         { value: { field: 'duration', type: 'ASC' }, title: 'По возрастанию длительности' },
         { value: { field: 'duration', type: 'DESC' }, title: 'По убыванию длительности' },
       ],
-      sorting: {},
       doesSearchFieldHaveVisibleModifier: false,
       isShowModal: false,
     }
@@ -317,9 +317,9 @@ export default {
     },
     handleSorting (sortField) {
       if (!this.sorting || this.sorting.field !== sortField) {
-        this.sorting = this.availableSortingTypes.find(s => s.value.field === sortField && s.value.type === 'ASC').value
+        this.sorting = this.availableSortings.find(s => s.value.field === sortField && s.value.type === 'ASC').value
       } else if (this.sorting.type === 'ASC') {
-        this.sorting = this.availableSortingTypes.find(s => s.value.field === sortField && s.value.type === 'DESC').value
+        this.sorting = this.availableSortings.find(s => s.value.field === sortField && s.value.type === 'DESC').value
       } else if (this.sorting.type === 'DESC') {
         this.sorting = null
       }

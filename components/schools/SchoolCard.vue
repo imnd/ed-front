@@ -5,7 +5,7 @@
     </div>
     <div class="reviews">
       <div class="title">
-        <a :href="`/schools/${school.slug}/`">{{ school.post_title }}</a>
+        <a :href="`/schools/${school.slug}/`">{{ school.title }}</a>
       </div>
       <div class="edv-rating">
         <div class="star"></div>
@@ -54,6 +54,7 @@ export default {
   },
 }
 </script>
+
 <style scoped lang="scss">
 .edvlisting-item {
   box-shadow: 0 2px 20px rgb(0 0 0 / 10%);
