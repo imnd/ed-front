@@ -5,15 +5,13 @@
     </div>
 
     <div class="toptext">
-      Список онлайн-школ, преподающих Онлайн-курсы с рейтингом,
-      отзывами и детальным описанием курса 2021 года.
-      Подробные описания, цены, удобное сравнение характеристик курса.
+      Список онлайн-школ, преподающих Онлайн-курсы с рейтингом, отзывами и
+      детальным описанием курса 2021 года. Подробные описания, цены, удобное
+      сравнение характеристик курса.
     </div>
 
     <div class="edvlisting-row">
-      <SchoolsFilters
-        @update-filters="updateFilters($event, true)"
-      />
+      <SchoolsFilters @update-filters="updateFilters($event, true)" />
       <SchoolsList
         @update-filters="updateFilters"
         @show-more="showMoreHandler"
@@ -27,7 +25,7 @@
 import { mapActions } from 'vuex'
 
 export default {
-  data () {
+  data() {
     return {
       filters: {
         selectedCategories: null,
@@ -50,7 +48,7 @@ export default {
     ...mapActions('payment-types', ['getPaymentTypes']),
     ...mapActions('schools', ['getSchools', 'loadMore']),
 
-    async updateFilters (updatedFilters, needToRefreshPage = false) {
+    async updateFilters(updatedFilters, needToRefreshPage = false) {
       if (needToRefreshPage) {
         this.filters.page = 1
       }
@@ -58,13 +56,13 @@ export default {
 
       await this.getSchools({ ...this.filters })
     },
-    async showMoreHandler (updatedFilters) {
+    async showMoreHandler(updatedFilters) {
       this.filters = { ...this.filters, ...updatedFilters }
 
       await this.loadMore({ ...this.filters })
     },
   },
-  async fetch () {
+  async fetch() {
     await this.getCategories()
     await this.getDuration()
     await this.getPaymentTypes()
