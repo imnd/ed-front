@@ -1,15 +1,69 @@
-const baseAppUrl = process.env.EDVISOR_API_URL || 'http://localhost/'
-const baseApiUrl = baseAppUrl + 'api/v1/'
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
+const baseAppUrl = process.env.EDVISOR_API_URL || 'http://localhost'
+const baseApiUrl = baseAppUrl + '/api/v1/'
 
 export default {
   mode: 'universal',
   target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   env: {
+    baseUrl,
     baseAppUrl,
     baseApiUrl,
     redirectUrl: baseAppUrl + 'redirect?link=',
-    cdnUrl: process.env.CDN_URL || '',
+    seo: {
+      index: {
+        robots: true,
+        title: '',
+        description: '',
+        og: {
+          title: '',
+          description: '',
+          image: {
+            path: '',
+            width: '',
+            height: '',
+          },
+        },
+        twitter_card: '',
+      },
+      posts: {
+        robots: true,
+        title: '',
+        description: '',
+        og: {
+          title: '',
+          description: '',
+          image: {
+            path: '',
+            width: '',
+            height: '',
+          },
+        },
+        twitter_card: '',
+      },
+      categories: {
+        '': '',
+      },
+      schools: {
+        '': '',
+      },
+      sales: {
+        '': '',
+      },
+      courses: {
+        '': '',
+      },
+      'privacy-policy': {
+        '': '',
+      },
+      'terms-of-use': {
+        '': '',
+      },
+      'about-us': {
+        '': '',
+      },
+    },
   },
   head: {
     title: 'edvisor',
@@ -49,7 +103,7 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     '@nuxtjs/dotenv',
-    'nuxt-purgecss'
+    'nuxt-purgecss',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules

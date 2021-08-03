@@ -5,7 +5,7 @@
         <div class="col-12">
           <div
             class="edvisor-blog-post__cover"
-            :style="{ backgroundImage: 'url(' + cdnUrl + post.cover + ')' }">
+            :style="{ backgroundImage: 'url(' + post.cover + ')' }">
           </div>
         </div>
       </div>
@@ -67,12 +67,12 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import DateTime from '@/mixins/DateTime'
+import Seo from '@/mixins/Seo'
 
 export default {
-  mixins: [DateTime],
+  mixins: [DateTime, Seo],
   data () {
     return {
-      cdnUrl: process.env.cdnUrl,
       socNets: {
         'vk': {
           'url': 'https://vk.com/share.php?url=',
@@ -87,7 +87,11 @@ export default {
           'logo': 'twitter.svg',
         },
       },
+      seo: null,
     }
+  },
+  head () {
+    return this.getHeadData(this.seo)
   },
   computed: {
     ...mapState('posts', ['post']),
@@ -100,6 +104,7 @@ export default {
   },
   async fetch () {
     await this.getPost(this.$route.params.slug)
+    this.seo = this.getSeoData(this.post.seo, this.$route.fullPath)
 
     for (const sn in this.socNets) {
       this.socNets[sn].url += `https://edvisor.ru/posts/${this.post.slug}/`

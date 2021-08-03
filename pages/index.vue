@@ -16,7 +16,7 @@
             <span class="sub-title">Топ 10 курсов</span>
             <span class="title">{{ category.title }}</span>
             <span class="icon">
-              <img :src="cdnUrl + category.icon" />
+              <img :src="category.icon" />
             </span>
           </a>
         </div>
@@ -65,11 +65,6 @@ import SalesList from '@/components/sales/SalesList'
 import ReviewsList from '@/components/school-reviews/ReviewsList'
 
 export default Vue.extend({
-  data () {
-    return {
-      cdnUrl: process.env.cdnUrl,
-    }
-  },
   head: {
     title: 'Edvisor — Все онлайн курсы по Digital и IT профессиям'
   },

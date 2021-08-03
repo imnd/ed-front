@@ -13,7 +13,7 @@
         >
           <p class="group-title">
             <a :href="`/courses/${category.slug}/`">
-              <img :src="cdnUrl + category.icon" />
+              <img :src="category.icon" />
               <span>{{ category.title }}</span>
             </a>
           </p>
@@ -60,7 +60,6 @@ export default {
   },
   data () {
     return {
-      cdnUrl: process.env.cdnUrl,
       unfoldedCategories: [],
     }
   },
@@ -85,13 +84,6 @@ export default {
   },
   async fetch () {
     await this.getTopCategories()
-    for (let i in this.categories) {
-      let category = this.categories[i]
-      for (let j in category.subCategories) {
-        let subCategory = category.subCategories[j]
-        subCategory.hidden = j > 5
-      }
-    }
   },
 }
 </script>

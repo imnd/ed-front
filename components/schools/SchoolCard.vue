@@ -1,7 +1,7 @@
 <template>
   <div class="edvlisting-item">
     <div class="logo-item" v-if="school.logo">
-      <a :href="`/schools/${school.slug}/`"><img :src="cdnUrl + school.logo" /></a>
+      <a :href="`/schools/${school.slug}/`"><img :src="school.logo" /></a>
     </div>
     <div class="reviews">
       <div class="title">
@@ -45,11 +45,6 @@ export default {
   props: {
     school: {
       type: Object,
-    }
-  },
-  data () {
-    return {
-      cdnUrl: process.env.cdnUrl,
     }
   },
   computed: {

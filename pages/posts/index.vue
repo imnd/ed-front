@@ -17,7 +17,7 @@
           <div class="posts-page__list-item">
             <div
               class="posts-page__list-item-cover"
-              :style="{ backgroundImage: 'url(' + cdnUrl + post.cover + ')' }"
+              :style="{ backgroundImage: 'url(' + post.cover + ')' }"
             ></div>
 
             <div class="posts-page__list-item-date-views-block">
@@ -38,14 +38,18 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import DateTime from '@/mixins/DateTime'
+import Seo from '@/mixins/Seo'
 
 export default {
   name: 'PostsPage',
-  mixins: [DateTime],
+  mixins: [DateTime, Seo],
   data () {
     return {
-      cdnUrl: process.env.cdnUrl,
+      seo: null,
     }
+  },
+  head () {
+    return this.getHeadData(this.seo)
   },
   computed: {
     ...mapState('posts', ['posts']),
@@ -56,6 +60,10 @@ export default {
   async fetch () {
     await this.getPosts()
   },
+  created () {
+    console.log(process.env.seo.posts)
+    this.seo = this.getSeoData(process.env.seo.posts, this.$route.fullPath)
+  }
 }
 </script>
 
