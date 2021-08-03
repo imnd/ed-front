@@ -17,7 +17,7 @@
           <div class="posts-page__list-item">
             <div
               class="posts-page__list-item-cover"
-              :style="{ backgroundImage: 'url(' + cdnUrl + post.cover + ')' }"
+              :style="{ backgroundImage: 'url(' + post.cover + ')' }"
             ></div>
 
             <div class="posts-page__list-item-date-views-block">
@@ -42,11 +42,6 @@ import DateTime from '@/mixins/DateTime'
 export default {
   name: 'PostsPage',
   mixins: [DateTime],
-  data () {
-    return {
-      cdnUrl: process.env.cdnUrl,
-    }
-  },
   computed: {
     ...mapState('posts', ['posts']),
   },

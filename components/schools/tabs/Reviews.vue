@@ -77,7 +77,7 @@
           >
             <div class="left">
               <div class="avatar">
-                <img v-if="review.user.avatar" :src="cdnUrl + review.user.avatar" />
+                <img v-if="review.user.avatar" :src="review.user.avatar" />
               </div>
 
               <template v-if="review.comments[0]">
@@ -175,7 +175,6 @@ export default {
   },
   data () {
     return {
-      cdnUrl: process.env.cdnUrl,
       pageLimits: [6, 12, 24, 48],
       currentPageLimit: initPageLimit,
       currentPage: 1,

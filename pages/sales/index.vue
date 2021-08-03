@@ -17,7 +17,7 @@
         <div class="img">
           <img
             v-if="sale.school.logo"
-            :src="cdnUrl + sale.school.logo"
+            :src="sale.school.logo"
             class="img img-fluid"
           >
         </div>
@@ -51,11 +51,6 @@ import { mapActions, mapState } from 'vuex'
 import DateTime from '@/mixins/DateTime'
 
 export default {
-  data () {
-    return {
-      cdnUrl: process.env.cdnUrl,
-    }
-  },
   mixins: [DateTime],
   computed: {
     ...mapState('sales', ['sales']),

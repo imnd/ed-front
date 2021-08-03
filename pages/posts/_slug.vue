@@ -5,7 +5,7 @@
         <div class="col-12">
           <div
             class="edvisor-blog-post__cover"
-            :style="{ backgroundImage: 'url(' + cdnUrl + post.cover + ')' }">
+            :style="{ backgroundImage: 'url(' + post.cover + ')' }">
           </div>
         </div>
       </div>
@@ -72,7 +72,6 @@ export default {
   mixins: [DateTime],
   data () {
     return {
-      cdnUrl: process.env.cdnUrl,
       socNets: {
         'vk': {
           'url': 'https://vk.com/share.php?url=',
