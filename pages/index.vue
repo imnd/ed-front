@@ -63,6 +63,7 @@ import DateTime from '@/mixins/DateTime'
 import CoursesList from '@/components/courses/CoursesList'
 import SalesList from '@/components/sales/SalesList'
 import ReviewsList from '@/components/school-reviews/ReviewsList'
+import axios from '~/plugins/axios'
 
 export default Vue.extend({
   head: {

@@ -61,7 +61,6 @@ export default {
     await this.getPosts()
   },
   created () {
-    console.log(process.env.seo.posts)
     this.seo = this.getSeoData(process.env.seo.posts, this.$route.fullPath)
   }
 }
