@@ -1,15 +1,73 @@
-const baseAppUrl = process.env.EDVISOR_API_URL || 'http://localhost/'
-const baseApiUrl = baseAppUrl + 'api/v1/'
+const baseUrl = process.env.BASE_URL || 'http://localhost:3000'
+const baseAppUrl = process.env.EDVISOR_API_URL || 'http://localhost'
+const baseApiUrl = baseAppUrl + '/api/v1/'
+
+import axios from 'axios'
+
+const api = axios.create({ baseURL: baseApiUrl })
 
 export default {
   mode: 'universal',
   target: 'static',
   // Global page headers: https://go.nuxtjs.dev/config-head
   env: {
+    baseUrl,
     baseAppUrl,
     baseApiUrl,
     redirectUrl: baseAppUrl + 'redirect?link=',
-    cdnUrl: process.env.CDN_URL || '',
+    seo: {
+      index: {
+        robots: true,
+        title: '',
+        description: '',
+        og: {
+          title: '',
+          description: '',
+          image: {
+            path: '',
+            width: '',
+            height: '',
+          },
+        },
+        twitter_card: '',
+      },
+      posts: {
+        robots: true,
+        title: '',
+        description: '',
+        og: {
+          title: '',
+          description: '',
+          image: {
+            path: '',
+            width: '',
+            height: '',
+          },
+        },
+        twitter_card: '',
+      },
+      categories: {
+        '': '',
+      },
+      schools: {
+        '': '',
+      },
+      sales: {
+        '': '',
+      },
+      courses: {
+        '': '',
+      },
+      'privacy-policy': {
+        '': '',
+      },
+      'terms-of-use': {
+        '': '',
+      },
+      'about-us': {
+        '': '',
+      },
+    },
   },
   head: {
     title: 'edvisor',
@@ -54,7 +112,12 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@nuxtjs/axios', '@nuxtjs/style-resources', '@nuxtjs/google-fonts'],
+  modules: [
+    '@nuxtjs/axios',
+    '@nuxtjs/style-resources',
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/sitemap',
+  ],
 
   axios: {
     // proxy: true
@@ -87,5 +150,48 @@ export default {
     },
     display: 'swap',
     download: true,
+  },
+
+  sitemap: {
+    hostname: baseUrl,
+    cacheTime: 1000 * 60 * 60 * 24, // 24 hours
+    trailingSlash: true,
+    defaults: {
+      changefreq: 'daily',
+      priority: 1,
+      lastmod: new Date(),
+    },
+    gzip: true,
+
+    sitemaps: [
+      {
+        path: '/posts.xml',
+        routes: async () => {
+          let urls = [
+            'privacy-policy',
+            'terms-of-use',
+            'about-us',
+            'sales',
+            'posts',
+          ]
+          const { data } = await api.get(`sitemap/posts`)
+          return [...urls, ...data]
+        },
+      },
+      {
+        path: '/categories.xml',
+        routes: async () => {
+          const { data } = await api.get(`sitemap/categories`)
+          return data
+        },
+      },
+      {
+        path: '/schools.xml',
+        routes: async () => {
+          const { data } = await api.get(`sitemap/schools`)
+          return data
+        },
+      },
+    ],
   },
 }

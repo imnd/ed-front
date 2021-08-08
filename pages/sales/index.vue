@@ -74,56 +74,6 @@ export default {
   max-width: 1440px;
 }
 
-.edv-shares {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 32px;
-
-  & .item {
-    background: #fff;
-    box-shadow: 0 2px 20px rgb(0 0 0 / 10%);
-    border-radius: 5px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  & .img, .title-shares {
-    margin-bottom: 8px;
-  }
-
-  & .reviews {
-    display: flex;
-    align-items: center;
-
-    & .title {
-      margin-bottom: 0;
-    }
-  }
-
-  & .date {
-    color: #b8b8b8;
-    font-size: 14px;
-    font-weight: 500;
-  }
-
-  & .text {
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 140%;
-    flex-grow: 1;
-    margin-bottom: 16px;
-  }
-
-  & .btn-feo {
-    width: 100%;
-  }
-
-  & .img {
-    margin-bottom: 8px;
-  }
-}
-
 .title-shares {
   margin-bottom: 8px;
   margin-top: 16px;

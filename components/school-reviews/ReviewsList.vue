@@ -63,18 +63,13 @@ export default {
       multiplier = windowWidth >= 768 ? 2 : multiplier
       multiplier = windowWidth >= 1440 ? 3 : multiplier
 
-      console.log('multiplier', multiplier)
-
       this.currentIndex += direction === 'right' ? multiplier : -multiplier
 
-      console.log('currentIndex', this.currentIndex)
       if (this.currentIndex >= this.itemsCount) {
         this.currentIndex = 0
       } else if (this.currentIndex < 0) {
         this.currentIndex = this.itemsCount - multiplier
       }
-
-      console.log('currentIndex', this.currentIndex)
 
       this.$refs.list.style['transform'] = `translateX(calc(-${this.currentIndex / multiplier * 100}%))`
     },

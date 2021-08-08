@@ -50,10 +50,12 @@ import { mapActions, mapGetters, mapState } from 'vuex'
 import CoursesFilters from '@/components/courses/CoursesFilters'
 import CourseCard from '@/components/courses/CourseCard'
 import { debounce } from 'throttle-debounce'
+import Seo from '@/mixins/Seo'
 
 export default {
   name: 'CoursesList',
   components: { CourseCard, CoursesFilters },
+  mixins: [Seo],
   props: {
     path: {
       type: String,
@@ -74,7 +76,11 @@ export default {
         searchString: null,
         limit: 20,
       },
+      seo: null,
     }
+  },
+  head () {
+    return this.getHeadData(this.seo)
   },
   computed: {
     ...mapState('courses', ['courses', 'coursesCount']),
@@ -95,9 +101,9 @@ export default {
     ...mapActions('education-formats', ['getEducationFormats']),
     ...mapActions('payment-types', ['getPaymentTypes']),
     ...mapActions('schools', ['getSchools']),
+    ...mapActions('breadcrumbs', ['setBreadcrumbs']),
 
-    setCategoriesFromUrl (categorySlug) {
-      const category = this.categories.find(c => c.slug === categorySlug)
+    setCategories (category) {
       if (!category) {
         return
       }
@@ -107,7 +113,6 @@ export default {
 
     checkQueryParams () {
       const query = this.$route.query
-
       const categoriesSlugsString = query.category
       if (categoriesSlugsString) {
         const categoriesSlugs = categoriesSlugsString.split(',')
@@ -293,7 +298,9 @@ export default {
     await this.getCategories()
     const categorySlug = this.$route.params.slug
     if (categorySlug) {
-      this.setCategoriesFromUrl(categorySlug)
+      const category = this.categories.find(c => c.slug === categorySlug)
+      this.setCategories(category)
+      this.seo = this.getSeoData(category.seo, this.$route.fullPath)
     }
 
     await this.getSchools()

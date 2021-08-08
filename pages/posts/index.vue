@@ -38,10 +38,19 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import DateTime from '@/mixins/DateTime'
+import Seo from '@/mixins/Seo'
 
 export default {
   name: 'PostsPage',
-  mixins: [DateTime],
+  mixins: [DateTime, Seo],
+  data () {
+    return {
+      seo: null,
+    }
+  },
+  head () {
+    return this.getHeadData(this.seo)
+  },
   computed: {
     ...mapState('posts', ['posts']),
   },
@@ -51,6 +60,9 @@ export default {
   async fetch () {
     await this.getPosts()
   },
+  created () {
+    this.seo = this.getSeoData(process.env.seo.posts, this.$route.fullPath)
+  }
 }
 </script>
 
